@@ -90,7 +90,9 @@ const RegisterScreen = ({navigation}) => {
           />
           {/* password */}
         </View>
-        <TouchableOpacity style={empty() ? styles.btn : styles.btnActive}>
+        <TouchableOpacity style={empty() ? styles.btn : styles.btnActive} onPress={() => {
+          navigation.navigate('Active')
+        }}>
           <Text style={empty() ? styles.textNon : styles.textActive}>
             Sign Up
           </Text>

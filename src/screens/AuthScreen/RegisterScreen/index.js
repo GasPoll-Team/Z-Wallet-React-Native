@@ -10,7 +10,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconUser from 'react-native-vector-icons/Feather';
 
-const RegisterScreen = () => {
+const RegisterScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
   const [user, setUser] = useState('');
@@ -95,9 +95,12 @@ const RegisterScreen = () => {
             Sign Up
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => {
+          navigation.navigate('Login')
+        }}>
           <Text style={styles.acc}>
-            Already have an account? <Text style={styles.login}>Login</Text>
+            Already have an account? Let's
+            <Text style={styles.login}>Login</Text>
           </Text>
         </TouchableOpacity>
       </View>

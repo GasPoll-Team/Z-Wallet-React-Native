@@ -3,42 +3,46 @@ import {
   View,
   Text,
   TouchableOpacity,
-  ScrollView,
   StyleSheet,
+  ScrollView,
   Touchable,
 } from 'react-native';
-import OTPField from 'react-native-otp-field';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {Input} from 'react-native-elements';
 
-const PinScreen = ({navigation}) => {
-  const [pin, setPin] = useState('');
+const ForgotScreen = ({navigation}) => {
+  const [email, setEmail] = useState('');
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <Text style={styles.name}>Zwallet</Text>
       <View style={styles.content}>
         <View style={styles.subContent}>
-          <Text style={styles.header}>Create Security PIN</Text>
+          <Text style={styles.header}>Reset Password</Text>
           <Text style={styles.subHeader}>
-            Create a PIN that's contain 6 digits number for
+            Enter your Zwallet e-mail so we can send
           </Text>
-          <Text style={styles.subHeader}>security purpose in Zwallet</Text>
+          <Text style={styles.subHeader}>you a password reset link</Text>
         </View>
         <View style={styles.form}>
-          <OTPField
-            length={6}
-            value={pin.toString()}
-            onChange={(text) => setPin(text)}
+          <Input
+            placeholder="Enter your e-mail"
+            leftIcon={
+              <Icon
+                name="email-outline"
+                size={24}
+                color={email === '' ? '#878787' : '#6379F4'}
+              />
+            }
+            onChangeText={(text) => setEmail(text)}
           />
         </View>
         <View style={{marginTop: 150}}>
-        <TouchableOpacity
-          style={pin.length !== 6 ? styles.btn : styles.btnActive} onPress={() => {
-            navigation.navigate('PinSuccess')
+          <TouchableOpacity style={styles.btnActive} onPress={() => {
+            navigation.navigate('Reset')
           }}>
-          <Text style={pin.length !== 6 ? styles.textNon : styles.textActive}>
-            Confrim
-          </Text>
-        </TouchableOpacity>
+            <Text style={styles.textActive}>Confrim</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </ScrollView>
@@ -79,19 +83,7 @@ const styles = StyleSheet.create({
     color: '#878787',
   },
   form: {
-    marginTop: 20,
-    alignItems: 'center',
-    marginBottom: 20,
-    paddingHorizontal: 15,
-  },
-  btn: {
-    width: '90%',
-    backgroundColor: '#DADADA',
-    padding: 18,
-    alignItems: 'center',
-    alignSelf: 'center',
-    marginTop: 25,
-    borderRadius: 12,
+    marginTop: 10,
   },
   btnActive: {
     width: '90%',
@@ -101,11 +93,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 25,
     borderRadius: 12,
-  },
-  textNon: {
-    fontWeight: 'bold',
-    color: '#88888F',
-    fontSize: 20,
+    marginBottom: 20,
   },
   textActive: {
     fontWeight: 'bold',
@@ -114,4 +102,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PinScreen;
+export default ForgotScreen;

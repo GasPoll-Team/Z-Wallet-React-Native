@@ -102,7 +102,7 @@ const RegisterScreen = ({navigation}) => {
         }}>
           <Text style={styles.acc}>
             Already have an account? Let's
-            <Text style={styles.login}>Login</Text>
+            <Text style={styles.login}> Login</Text>
           </Text>
         </TouchableOpacity>
       </View>

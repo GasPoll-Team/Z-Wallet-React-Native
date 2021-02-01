@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import axios from 'axios';
 import {
   View,
   Text,
@@ -14,6 +15,49 @@ import profileImg from '../../assets/images/profile-img.png';
 import spotifyImg from '../../assets/images/spotify.png';
 
 const HomeScreen = ({navigation}) => {
+  const [user, setUser] = useState();
+  const [history, setHistory] = useState();
+
+  const toPrice = (x) => {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  };
+
+  // 192.168.8.100 bisa diganti sama IP laptop kalian/ pake backend deploy
+  const url = 'http://192.168.8.100:8000';
+
+  // Sementara token masih copy-paste dari postman, nanti bisa diget di redux
+  let token =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJicm9ueWF6YXljaGlrOTZAZ21haWwuY29tIiwiaWF0IjoxNjEyMTc0Nzg2LCJleHAiOjE2MTIyNjExODZ9.yGrl1s0e00xC3VpWNU4oD98PdgTaCApiO1NT7D9WUBA';
+
+  useEffect(() => {
+    const config = {
+      headers: {
+        'x-access-token': 'bearer ' + token,
+      },
+    };
+    axios
+      .get(`${url}/home/getBalance`, config)
+      .then(({data}) => {
+        console.log(typeof data.data.balance);
+        setUser(data.data);
+      })
+      .catch((err) => console.log(err));
+  }, [token]);
+
+  useEffect(() => {
+    const config = {
+      headers: {
+        'x-access-token': 'bearer ' + token,
+      },
+    };
+    axios
+      .get(`${url}/home/getAllInvoice?from=2021-01-15&to=2021-02-01`, config)
+      .then(({data}) => {
+        setHistory(data.data);
+      })
+      .catch((err) => console.log(err));
+  }, [token]);
+
   return (
     <ScrollView>
       <StatusBar translucent backgroundColor="transparent" />
@@ -27,7 +71,7 @@ const HomeScreen = ({navigation}) => {
             </Text>
             {/* Price will integrated with backend */}
             <Text style={{color: 'white', fontSize: 24, fontWeight: '700'}}>
-              Rp. 120.000
+              Rp. {user !== undefined ? toPrice(user.balance) : null}
             </Text>
           </View>
         </View>
@@ -68,72 +112,57 @@ const HomeScreen = ({navigation}) => {
           </TouchableOpacity>
         </View>
         {/* Card transaction */}
-        <TouchableOpacity style={styles.cardTransaction}>
-          <View style={styles.cardWrapper}>
-            <Image source={profileImg} style={styles.profileImage} />
-            <View style={styles.cardText}>
-              <Text style={{fontSize: 16, color: '#4D4B57', fontWeight: '700'}}>
-                Samuel Suhi
-              </Text>
-              <Text style={{fontSize: 14, color: '#4D4B57', fontWeight: '400'}}>
-                Transfer
-              </Text>
-            </View>
-          </View>
-          <Text
-            style={{
-              fontSize: 18,
-              color: '#1EC15F',
-              fontWeight: '700',
-              marginTop: 20,
-            }}>
-            +Rp50.000
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.cardTransaction}>
-          <View style={styles.cardWrapper}>
-            <Image source={spotifyImg} style={styles.profileImage} />
-            <View style={styles.cardText}>
-              <Text style={{fontSize: 16, color: '#4D4B57', fontWeight: '700'}}>
-                Spotify
-              </Text>
-              <Text style={{fontSize: 14, color: '#4D4B57', fontWeight: '400'}}>
-                Subscription
-              </Text>
-            </View>
-          </View>
-          <Text
-            style={{
-              fontSize: 18,
-              color: '#FF5B37',
-              fontWeight: '700',
-              marginTop: 20,
-            }}>
-            -Rp49.000
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.cardTransaction}>
-          <View style={styles.cardWrapper}>
-            <Image source={spotifyImg} style={styles.profileImage} />
-            <View style={styles.cardText}>
-              <Text style={{fontSize: 16, color: '#4D4B57', fontWeight: '700'}}>
-                Spotify
-              </Text>
-              <Text style={{fontSize: 14, color: '#4D4B57', fontWeight: '400'}}>
-                Subscription
-              </Text>
-            </View>
-          </View>
-          <Text
-            style={{
-              fontSize: 18,
-              color: '#FF5B37',
-              fontWeight: '700',
-              marginTop: 20,
-            }}>
-            -Rp150.000
-          </Text>
-        </TouchableOpacity>
+        {history !== undefined
+          ? history.map((data) => (
+              <TouchableOpacity style={styles.cardTransaction} key={data.id}>
+                <View style={styles.cardWrapper}>
+                  <Image
+                    source={{uri: `http://192.168.8.100:8000/${data.image}`}}
+                    style={styles.profileImage}
+                  />
+                  <View style={styles.cardText}>
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        color: '#4D4B57',
+                        fontWeight: '700',
+                      }}>
+                      {data.name}
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 14,
+                        color: '#4D4B57',
+                        fontWeight: '400',
+                      }}>
+                      {data.notes}
+                    </Text>
+                  </View>
+                </View>
+                {data.type === 'out' ? (
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      color: '#FF5B37',
+                      fontWeight: '700',
+                      marginTop: 20,
+                    }}>
+                    -Rp{toPrice(data.amount)}
+                  </Text>
+                ) : (
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      color: 'green',
+                      fontWeight: '700',
+                      marginTop: 20,
+                    }}>
+                    +Rp{toPrice(data.amount)}
+                  </Text>
+                )}
+              </TouchableOpacity>
+            ))
+          : null}
       </View>
     </ScrollView>
   );

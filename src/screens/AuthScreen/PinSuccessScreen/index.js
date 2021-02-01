@@ -28,7 +28,7 @@ const PinSucessScreen = ({navigation}) => {
           </View>
         </View>
         <View style={styles.form}>
-          <TouchableOpacity style={styles.btnActive}>
+          <TouchableOpacity style={styles.btnActive} onPress={() => navigation.navigate('Home')}>
             <Text style={styles.textActive}>Login Now</Text>
           </TouchableOpacity>
         </View>

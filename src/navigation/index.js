@@ -1,7 +1,6 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
-import TopupScreen from '../screens/TopupScreen';
 
 import {
   RegisterScreen,
@@ -12,12 +11,12 @@ import {
   ForgotScreen,
   ResetPassScreen,
   HomeScreen,
-  TopupScreen
+  TopUpScreen,
 } from '../screens';
 
 const Stack = createStackNavigator();
 
-const Navigation  = ({navigation}) => {
+const Navigation = ({navigation}) => {
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -50,27 +49,22 @@ const Navigation  = ({navigation}) => {
         component={ForgotScreen}
         options={{headerShown: false}}
       />
-      <Stack.Screen
-        name="Reset"
-        component={ResetPassScreen}
-      />
+      <Stack.Screen name="Reset" component={ResetPassScreen} />
       <Stack.Screen
         name="Home"
         component={HomeScreen}
         options={{headerShown: false}}
       />
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Topup"
-          component={TopupScreen}
-          options={{
-            headerShown: false,
-            headerStyle: {backgroundColor: '#6379F4'},
-          }}
+      <Stack.Screen
+        name="Topup"
+        component={TopUpScreen}
+        options={{
+          headerShown: false,
+          headerStyle: {backgroundColor: '#6379F4'},
+        }}
       />
     </Stack.Navigator>
   );
 };
 
 export default Navigation;
-

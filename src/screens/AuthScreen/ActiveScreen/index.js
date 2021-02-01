@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import axios from 'axios';
 import {
   View,
   Text,
@@ -9,16 +10,37 @@ import {
 import {Input} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconUser from 'react-native-vector-icons/Feather';
+// import {API_URL} from '@env';
 
 const ActiveScreen = ({navigation}) => {
+  const API_URL = 'http://192.168.1.2:8000';
   const [email, setEmail] = useState('');
   const [otp, setOtp] = useState('');
+  const [errMsg, setErrMsg] = useState('');
 
   const empty = () => {
     if (email === '' || otp === '') {
       return true;
     } else {
       return false;
+    }
+  };
+  const activate = () => {
+    if (!empty()) {
+      if (email === '' || otp === '') {
+        setErrMsg('filed email or otp');
+      } else {
+        axios
+          .get(API_URL + `/auth/activate/${email}/${otp}`)
+          .then((res) => {
+            console.log('email aktive', res);
+            navigation.navigate('Login');
+          })
+          .catch((err) => {
+            console.log(err.response.data)
+            console.log('error disokin', err);
+          });
+      }
     }
   };
 
@@ -44,7 +66,7 @@ const ActiveScreen = ({navigation}) => {
                 color={email === '' ? '#878787' : '#6379F4'}
               />
             }
-            onChangeText={(text) => setEmail(text)}
+            onChangeText={(email) => setEmail(email)}
           />
           <Input
             placeholder="Enter your OTP"
@@ -55,18 +77,21 @@ const ActiveScreen = ({navigation}) => {
                 color={otp === '' ? '#878787' : '#6379F4'}
               />
             }
-            onChangeText={(text) => setOtp(text)}
+            onChangeText={(otp) => setOtp(otp)}
           />
         </View>
-       
-        <TouchableOpacity style={empty() ? styles.btn : styles.btnActive} onPress={() => {
-            navigation.navigate('Login')
-        }}>
+
+        <TouchableOpacity
+          style={empty() ? styles.btn : styles.btnActive}
+          onPress={() => {
+            if(!empty()) {
+              activate();
+            }
+          }}>
           <Text style={empty() ? styles.textNon : styles.textActive}>
-            Active
+            Activate
           </Text>
         </TouchableOpacity>
-       
       </View>
     </ScrollView>
   );

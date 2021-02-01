@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import axios from 'axios';
 import {
   View,
   Text,
@@ -8,17 +9,62 @@ import {
 } from 'react-native';
 import {Input} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+// import {API_URL} from '@env';
 
-const LoginScreen = ({navigation}) => {
+// redux
+import {connect} from 'react-redux';
+import {login} from '../../../utils/redux/action/authAction';
+
+const LoginScreen = ({navigation, login}) => {
+  const API_URL = 'http://192.168.1.2:8000';
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
   const [show, setShow] = useState(true);
+  const [errMsg, setErrMsg] = useState('');
 
   const empty = () => {
     if (email === '' || pass === '') {
       return true;
     } else {
       return false;
+    }
+  };
+
+  const handleSubmit = () => {
+    const emailFormat = /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    const checkPass = /^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{8,}$/;
+
+    const data = {
+      email: email,
+      password: pass,
+    };
+
+    if (!empty()) {
+      if (email === '' || pass === '') {
+        setErrMsg('please fill email or password first');
+      } else if (!email.match(emailFormat)) {
+        setErrMsg('Invalid email');
+      } else if (!checkPass.test(pass)) {
+        setErrMsg(
+          'Password must contain at least 1 number, and be longer than 8 character',
+        );
+      } else {
+        axios.post(API_URL + '/auth/login', data).then((res) => {
+          const token = res.data.data.token;
+          const id = res.data.data.id;
+          const email = res.data.data.email;
+          login(token, id, email);
+          console.log("ini email", email)
+
+          if (res.response.data.status === 203) {
+            navigation.navigate('Pin')
+          } else if (res.response.data.status === 200) {
+            navigation.navigate('PinSuccess')
+          }
+        }).catch((err) => {
+          console.log('error disokin', err)
+        })
+      }
     }
   };
 
@@ -71,19 +117,26 @@ const LoginScreen = ({navigation}) => {
             secureTextEntry={show}
           />
         </View>
-        <Text style={styles.forgot} onPress={() => {
-          navigation.navigate('Forgot')
-        }}>Forgot password?</Text>
-        <TouchableOpacity style={empty() ? styles.btn : styles.btnActive} onPress={() => {
-            navigation.navigate('Pin')
-        }}>
+        <Text
+          style={styles.forgot}
+          onPress={() => {
+            navigation.navigate('Forgot');
+          }}>
+          Forgot password?
+        </Text>
+        <TouchableOpacity
+          style={empty() ? styles.btn : styles.btnActive}
+          onPress={() => {
+            navigation.navigate('Pin');
+          }}>
           <Text style={empty() ? styles.textNon : styles.textActive}>
             Login
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => {
-            navigation.navigate('Register')
-        }}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('Register');
+          }}>
           <Text style={styles.acc}>
             Don't have an account? Let's
             <Text style={styles.login}> Sign Up</Text>
@@ -174,4 +227,11 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    login: (token, id, email, fullname) =>
+      dispatch(login(token, id, email, fullname)),
+  };
+};
+export default connect(null, mapDispatchToProps)(LoginScreen);
+// export default LoginScreen;

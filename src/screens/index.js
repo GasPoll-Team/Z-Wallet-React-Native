@@ -8,6 +8,7 @@ import ResetPassScreen from './AuthScreen/ResetPassScreen';
 import HomeScreen from './HomeScreen';
 import TopUpScreen from './TopupScreen';
 import ContactList from './ContactList';
+import Splash from './SplashScreen';
 
 export {
     RegisterScreen,
@@ -20,4 +21,5 @@ export {
     HomeScreen,
     TopUpScreen,
     ContactList,
+    Splash,
 };

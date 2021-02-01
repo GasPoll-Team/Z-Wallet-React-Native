@@ -12,6 +12,7 @@ import {
   HomeScreen,
   TopUpScreen,
   ContactList,
+  Splash
 } from '../screens';
 
 const Stack = createStackNavigator();
@@ -19,6 +20,12 @@ const Stack = createStackNavigator();
 const Navigation = ({navigation}) => {
   return (
     <Stack.Navigator>
+      <Stack.Screen
+          initialRouteName="Splash"
+          name="Splash"
+          component={Splash}
+          options={{headerShown: false}}
+        />
       <Stack.Screen
         name="Login"
         component={LoginScreen}

@@ -7,7 +7,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import PinScreen from '../PinScreen';
+// import PinScreen from '../PinScreen';
 
 const PinSucessScreen = ({navigation}) => {
   return (
@@ -28,8 +28,8 @@ const PinSucessScreen = ({navigation}) => {
           </View>
         </View>
         <View style={styles.form}>
-          <TouchableOpacity style={styles.btnActive} onPress={() => navigation.navigate('Home')}>
-            <Text style={styles.textActive}>Login Now</Text>
+          <TouchableOpacity style={styles.btnActive} onPress={() => navigation.replace('Home')}>
+            <Text style={styles.textActive}>Home</Text>
           </TouchableOpacity>
         </View>
       </View>

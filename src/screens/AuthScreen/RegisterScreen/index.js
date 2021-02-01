@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import axios from 'axios';
 import {Input} from 'react-native-elements';
 import {
   View,
@@ -9,18 +10,53 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconUser from 'react-native-vector-icons/Feather';
+// import {API_URL} from '@env';
+// import {API_URL} from "@env"
 
 const RegisterScreen = ({navigation}) => {
+  const API_URL = 'http://192.168.1.2:8000';
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
   const [user, setUser] = useState('');
   const [show, setShow] = useState(true);
+  const [errMsg, setErrMsg] = useState('');
 
   const empty = () => {
     if (user === '' || email === '' || pass === '') {
       return true;
     } else {
       return false;
+    }
+  };
+
+  const register = () => {
+    const emailFormat = /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    const checkPass = /^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{8,}$/;
+
+    if (!empty()) {
+      if (!email.match(emailFormat)) {
+        setErrMsg('Invalid Format email');
+      } else if (!checkPass.test(pass)) {
+        setErrMsg(
+          'Password must contain at least 1 number, and be longer than 8 character',
+        );
+      } else {
+        const data = {
+          username: user,
+          email: email,
+          password: pass,
+        };
+        axios
+          .post(API_URL + '/auth/signup', data)
+          .then((res) => {
+            console.log('Regis Done', res);
+            navigation.navigate('Active');
+          })
+          .catch((err) => {
+            console.log(err.response.data);
+            console.log('error disokin', err);
+          });
+      }
     }
   };
 
@@ -35,6 +71,17 @@ const RegisterScreen = ({navigation}) => {
           </Text>
         </View>
         <View style={styles.form}>
+          <Text
+            style={{
+              marginBottom: 10,
+              color: 'red',
+              paddingRight: 10,
+              fontSize: 15,
+              textAlign: 'center',
+            }}>
+            {errMsg}
+          </Text>
+
           {/* username */}
           <Input
             placeholder="Enter your username"
@@ -45,7 +92,7 @@ const RegisterScreen = ({navigation}) => {
                 color={user === '' ? '#878787' : '#6379F4'}
               />
             }
-            onChangeText={(text) => setUser(text)}
+            onChangeText={(user) => setUser(user)}
           />
           {/* username */}
 
@@ -59,7 +106,7 @@ const RegisterScreen = ({navigation}) => {
                 color={email === '' ? '#878787' : '#6379F4'}
               />
             }
-            onChangeText={(text) => setEmail(text)}
+            onChangeText={(email) => setEmail(email)}
           />
           {/* email */}
 
@@ -83,23 +130,25 @@ const RegisterScreen = ({navigation}) => {
                 }}
               />
             }
-            onChangeText={(text) => {
-              setPass(text);
+            onChangeText={(pass) => {
+              setPass(pass);
             }}
             secureTextEntry={show}
           />
           {/* password */}
         </View>
-        <TouchableOpacity style={empty() ? styles.btn : styles.btnActive} onPress={() => {
-          navigation.navigate('Active')
-        }}>
+        <TouchableOpacity
+          style={empty() ? styles.btn : styles.btnActive}
+          onPress={register}
+          >
           <Text style={empty() ? styles.textNon : styles.textActive}>
             Sign Up
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => {
-          navigation.navigate('Login')
-        }}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('Login');
+          }}>
           <Text style={styles.acc}>
             Already have an account? Let's
             <Text style={styles.login}> Login</Text>

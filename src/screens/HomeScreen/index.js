@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import {Image, Button} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useSelector } from 'react-redux';
 
 import profileImg from '../../assets/images/profile-img.png';
 import spotifyImg from '../../assets/images/spotify.png';
@@ -22,12 +23,12 @@ const HomeScreen = ({navigation}) => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
   };
 
-  // 192.168.8.100 bisa diganti sama IP laptop kalian/ pake backend deploy
-  const url = 'http://192.168.8.100:8000';
+  const token = useSelector((state) => state.authReducer.token);
 
-  // Sementara token masih copy-paste dari postman, nanti bisa diget di redux
-  let token =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJicm9ueWF6YXljaGlrOTZAZ21haWwuY29tIiwiaWF0IjoxNjEyMTc0Nzg2LCJleHAiOjE2MTIyNjExODZ9.yGrl1s0e00xC3VpWNU4oD98PdgTaCApiO1NT7D9WUBA';
+  // 192.168.8.100 bisa diganti sama IP laptop kalian/ pake backend deploy
+  const url = 'http://192.168.1.2:8000';
+
+  
 
   useEffect(() => {
     const config = {
@@ -117,7 +118,7 @@ const HomeScreen = ({navigation}) => {
               <TouchableOpacity style={styles.cardTransaction} key={data.id}>
                 <View style={styles.cardWrapper}>
                   <Image
-                    source={{uri: `http://192.168.8.100:8000/${data.image}`}}
+                    source={{uri: `http://192.168.1.2:8000/${data.image}`}}
                     style={styles.profileImage}
                   />
                   <View style={styles.cardText}>

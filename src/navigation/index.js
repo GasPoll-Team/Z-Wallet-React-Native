@@ -10,6 +10,7 @@ import {
   PinSuccessScreen,
   ForgotScreen,
   ResetPassScreen,
+  HomeScreen,
 } from '../screens';
 
 const Stack = createStackNavigator();
@@ -50,6 +51,10 @@ const StackScreen = ({navigation}) => {
       <Stack.Screen
         name="Reset"
         component={ResetPassScreen}
+      />
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

@@ -5,9 +5,7 @@ import ActiveScreen from './AuthScreen/ActiveScreen';
 import PinSuccessScreen from './AuthScreen/PinSuccessScreen';
 import ForgotScreen from './AuthScreen/ForgotScreen';
 import ResetPassScreen from './AuthScreen/ResetPassScreen';
-
-
-
+import HomeScreen from './HomeScreen';
 
 export {
     RegisterScreen,
@@ -17,4 +15,5 @@ export {
     PinSuccessScreen,
     ForgotScreen,
     ResetPassScreen,
+    HomeScreen
 };

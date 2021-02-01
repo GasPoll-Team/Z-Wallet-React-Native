@@ -5,9 +5,10 @@ import ActiveScreen from './AuthScreen/ActiveScreen';
 import PinSuccessScreen from './AuthScreen/PinSuccessScreen';
 import ForgotScreen from './AuthScreen/ForgotScreen';
 import ResetPassScreen from './AuthScreen/ResetPassScreen';
-
-
-
+import HomeScreen from './HomeScreen';
+import TopUpScreen from './TopupScreen';
+import ContactList from './ContactList';
+import Splash from './SplashScreen';
 
 export {
     RegisterScreen,
@@ -17,4 +18,8 @@ export {
     PinSuccessScreen,
     ForgotScreen,
     ResetPassScreen,
+    HomeScreen,
+    TopUpScreen,
+    ContactList,
+    Splash,
 };

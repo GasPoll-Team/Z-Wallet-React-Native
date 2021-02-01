@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import axios from 'axios';
 import {
   View,
   Text,
@@ -8,9 +9,34 @@ import {
   Touchable,
 } from 'react-native';
 import OTPField from 'react-native-otp-field';
+import {useSelector} from 'react-redux';
 
 const PinScreen = ({navigation}) => {
+  const API_URL = 'http://192.168.1.2:8000';
   const [pin, setPin] = useState('');
+
+  const token = useSelector((state) => state.authReducer.token);
+  console.log("ini token", token);
+
+  const handlePin = () => {
+    const data = {
+      PIN: pin,
+    };
+
+    const config = {
+      headers: {
+        'x-access-token': 'bearer ' + token,
+      },
+    };
+
+    axios.patch(API_URL + '/auth/PIN', data, config).then((res) => {
+      console.log("berhasil update PIN", res.data)
+      navigation.replace('PinSuccess')
+    }).catch((err) => {
+      console.log(err.response.data)
+      console.log("error disokin", err)
+    })
+  };
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -26,19 +52,18 @@ const PinScreen = ({navigation}) => {
         <View style={styles.form}>
           <OTPField
             length={6}
-            value={pin.toString()}
-            onChange={(text) => setPin(text)}
+            value={pin}
+            onChange={(pin) => setPin(pin)}
           />
         </View>
         <View style={{marginTop: 150}}>
-        <TouchableOpacity
-          style={pin.length !== 6 ? styles.btn : styles.btnActive} onPress={() => {
-            navigation.navigate('PinSuccess')
-          }}>
-          <Text style={pin.length !== 6 ? styles.textNon : styles.textActive}>
-            Confrim
-          </Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.btnActive}
+            onPress={handlePin}>
+            <Text style={styles.textActive}>
+              Confrim
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     </ScrollView>

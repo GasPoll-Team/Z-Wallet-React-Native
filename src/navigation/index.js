@@ -1,7 +1,6 @@
-import React, {useEffect, useState} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
+import React from 'react';
+import {StyleSheet} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
-
 import {
   RegisterScreen,
   LoginScreen,
@@ -10,13 +9,23 @@ import {
   PinSuccessScreen,
   ForgotScreen,
   ResetPassScreen,
+  HomeScreen,
+  TopUpScreen,
+  ContactList,
+  Splash
 } from '../screens';
 
 const Stack = createStackNavigator();
 
-const StackScreen = ({navigation}) => {
+const Navigation = ({navigation}) => {
   return (
     <Stack.Navigator>
+      <Stack.Screen
+          initialRouteName="Splash"
+          name="Splash"
+          component={Splash}
+          options={{headerShown: false}}
+        />
       <Stack.Screen
         name="Login"
         component={LoginScreen}
@@ -47,19 +56,32 @@ const StackScreen = ({navigation}) => {
         component={ForgotScreen}
         options={{headerShown: false}}
       />
+      <Stack.Screen name="Reset" component={ResetPassScreen} />
       <Stack.Screen
-        name="Reset"
-        component={ResetPassScreen}
+        name="Home"
+        component={HomeScreen}
         options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Topup"
+        component={TopUpScreen}
+        options={{
+          headerShown: false,
+          headerStyle: {backgroundColor: '#6379F4'},
+        }}
+      />
+      <Stack.Screen
+        name="Contact"
+        component={ContactList}
+        options={{
+          headerShown: true,
+          title: 'Find Receiver',
+          headerStyle: {backgroundColor: '#6379F4', elevation: 0},
+          headerTintColor: '#fff',
+        }}
       />
     </Stack.Navigator>
   );
 };
 
-export const MainNavigation = () => {
-  return (
-    <NavigationContainer>
-      <StackScreen />
-    </NavigationContainer>
-  );
-};
+export default Navigation;

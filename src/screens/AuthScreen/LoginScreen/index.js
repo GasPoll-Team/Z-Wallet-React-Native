@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import {Input} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useSelector} from 'react-redux';
 // import {API_URL} from '@env';
 
 // redux
@@ -21,6 +22,8 @@ const LoginScreen = ({navigation, login}) => {
   const [pass, setPass] = useState('');
   const [show, setShow] = useState(true);
   const [errMsg, setErrMsg] = useState('');
+
+  const token = useSelector((state) => state.authReducer.token);
 
   const empty = () => {
     if (email === '' || pass === '') {
@@ -49,101 +52,110 @@ const LoginScreen = ({navigation, login}) => {
           'Password must contain at least 1 number, and be longer than 8 character',
         );
       } else {
-        axios.post(API_URL + '/auth/login', data).then((res) => {
-          const token = res.data.data.token;
-          const id = res.data.data.id;
-          const email = res.data.data.email;
-          login(token, id, email);
-          console.log("ini email", email)
+        axios
+          .post(API_URL + '/auth/login', data)
+          .then((res) => {
+            const token = res.data.data.token;
+            const id = res.data.data.id;
+            const email = res.data.data.email;
+            login(token, id, email);
+            console.log('ini email', email);
 
-          if (res.response.data.status === 203) {
-            navigation.navigate('Pin')
-          } else if (res.response.data.status === 200) {
-            navigation.navigate('PinSuccess')
-          }
-        }).catch((err) => {
-          console.log('error disokin', err)
-        })
+            console.log('cek status', res.data.status);
+            if (res.data.status === 203) {
+              navigation.replace('Pin');
+            } else if (res.data.status === 200) {
+              navigation.replace('Home');
+            }
+          })
+          .catch((err) => {
+            // console.log(err.response.data)
+            console.log('error disokin', err);
+          });
       }
     }
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <Text style={styles.name}>Zwallet</Text>
-      <View style={styles.content}>
-        <View style={styles.subContent}>
-          <Text style={styles.header}>Login</Text>
-          <Text style={styles.subHeader}>
-            Login to your existing account to access
-          </Text>
-          <Text style={styles.subHeader}>all the features in Zwallet</Text>
-        </View>
-        <View style={styles.form}>
-          <Input
-            placeholder="Enter your e-mail"
-            keyboardAppearance="dark"
-            leftIcon={
-              <Icon
-                name="email-outline"
-                size={24}
-                color={email === '' ? '#878787' : '#6379F4'}
+    <>
+      {token === null ? (
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <Text style={styles.name}>Zwallet</Text>
+          <View style={styles.content}>
+            <View style={styles.subContent}>
+              <Text style={styles.header}>Login</Text>
+              <Text style={styles.subHeader}>
+                Login to your existing account to access
+              </Text>
+              <Text style={styles.subHeader}>all the features in Zwallet</Text>
+            </View>
+            <View style={styles.form}>
+              <Input
+                placeholder="Enter your e-mail"
+                keyboardAppearance="dark"
+                leftIcon={
+                  <Icon
+                    name="email-outline"
+                    size={24}
+                    color={email === '' ? '#878787' : '#6379F4'}
+                  />
+                }
+                onChangeText={(text) => setEmail(text)}
               />
-            }
-            onChangeText={(text) => setEmail(text)}
-          />
-          <Input
-            placeholder="Enter your password"
-            leftIcon={
-              <Icon
-                name="lock-outline"
-                size={24}
-                color={pass === '' ? '#878787' : '#6379F4'}
-              />
-            }
-            rightIcon={
-              <Icon
-                name={!show ? 'eye-outline' : 'eye-off-outline'}
-                size={24}
-                color="#878787"
-                onPress={() => {
-                  setShow(!show);
+              <Input
+                placeholder="Enter your password"
+                leftIcon={
+                  <Icon
+                    name="lock-outline"
+                    size={24}
+                    color={pass === '' ? '#878787' : '#6379F4'}
+                  />
+                }
+                rightIcon={
+                  <Icon
+                    name={!show ? 'eye-outline' : 'eye-off-outline'}
+                    size={24}
+                    color="#878787"
+                    onPress={() => {
+                      setShow(!show);
+                    }}
+                  />
+                }
+                onChangeText={(text) => {
+                  setPass(text);
                 }}
+                secureTextEntry={show}
               />
-            }
-            onChangeText={(text) => {
-              setPass(text);
-            }}
-            secureTextEntry={show}
-          />
-        </View>
-        <Text
-          style={styles.forgot}
-          onPress={() => {
-            navigation.navigate('Forgot');
-          }}>
-          Forgot password?
-        </Text>
-        <TouchableOpacity
-          style={empty() ? styles.btn : styles.btnActive}
-          onPress={() => {
-            navigation.navigate('Pin');
-          }}>
-          <Text style={empty() ? styles.textNon : styles.textActive}>
-            Login
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('Register');
-          }}>
-          <Text style={styles.acc}>
-            Don't have an account? Let's
-            <Text style={styles.login}> Sign Up</Text>
-          </Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+            </View>
+            <Text
+              style={styles.forgot}
+              onPress={() => {
+                navigation.navigate('Forgot');
+              }}>
+              Forgot password?
+            </Text>
+            <TouchableOpacity
+              style={empty() ? styles.btn : styles.btnActive}
+              onPress={handleSubmit}>
+              <Text style={empty() ? styles.textNon : styles.textActive}>
+                Login
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('Register');
+              }}>
+              <Text style={styles.acc}>
+                Don't have an account? Let's
+                <Text style={styles.login}> Sign Up</Text>
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      ) : 
+        navigation.replace('Home')
+      }
+    </>
   );
 };
 

@@ -58,16 +58,18 @@ const TopupScreen = ({navigation: {navigate}}) => {
       <View style={styles.header}>
         <View style={{flexDirection: 'row'}}>
           <TouchableOpacity style={{marginTop: 20}}>
-            <Icon name="arrow-left" color="white" size={30} />
+            <Icon name="g-translate" color="white" size={30} />
           </TouchableOpacity>
           <Text
             style={{
               marginLeft: 10,
-              marginTop: 30,
+              marginTop: 28,
               color: 'white',
-              fontSize: 18,
+              fontSize: 20,
+              fontWeight: '700',
+              lineHeight: 30,
             }}>
-            TopUp
+            Top Up
           </Text>
         </View>
         <View style={styles.cardVa}>
@@ -75,10 +77,22 @@ const TopupScreen = ({navigation: {navigate}}) => {
             icon={<Icon name="plus" size={25} color="#6379F4" />}
             buttonStyle={styles.btn}
           />
-          <Text style={{marginTop: 30, marginLeft: 10}}>
+          <Text
+            style={{
+              marginTop: 30,
+              marginLeft: 10,
+              color: '#7A7886',
+              fontSize: 14,
+            }}>
             Virtual Account Number
           </Text>
-          <Text style={{marginTop: 55, marginLeft: '-43%'}}>
+          <Text
+            style={{
+              marginTop: 55,
+              marginLeft: '-43%',
+              fontWeight: '700',
+              fontSize: 16,
+            }}>
             1234567778889890
           </Text>
         </View>
@@ -93,54 +107,32 @@ const TopupScreen = ({navigation: {navigate}}) => {
           }}>
           How to Top-Up
         </Text>
-        <View style={styles.cardHow}>
-          <Text
-            style={{
-              padding: 30,
-              color: '#6379F4',
-              fontSize: 20,
-              fontWeight: 'bold',
-            }}>
-            1
-          </Text>
-          <Text style={{marginTop: 30}}>Hello 1</Text>
-        </View>
-        <View style={styles.cardHow}>
-          <Text
-            style={{
-              padding: 30,
-              color: '#6379F4',
-              fontSize: 20,
-              fontWeight: 'bold',
-            }}>
-            2
-          </Text>
-          <Text style={{marginTop: 30}}>Hello 2</Text>
-        </View>
-        <View style={styles.cardHow}>
-          <Text
-            style={{
-              padding: 30,
-              color: '#6379F4',
-              fontSize: 20,
-              fontWeight: 'bold',
-            }}>
-            3
-          </Text>
-          <Text style={{marginTop: 30}}>Hello 3</Text>
-        </View>
-        <View style={styles.cardHow}>
-          <Text
-            style={{
-              padding: 30,
-              color: '#6379F4',
-              fontSize: 20,
-              fontWeight: 'bold',
-            }}>
-            4
-          </Text>
-          <Text style={{marginTop: 30}}>Hello 4</Text>
-        </View>
+        {data.map((x) => {
+          return (
+            <>
+              <View style={styles.cardHow}>
+                <Text
+                  style={{
+                    padding: 30,
+                    color: '#6379F4',
+                    fontSize: 20,
+                    fontWeight: 'bold',
+                  }}>
+                  {x.number}
+                </Text>
+                <Text
+                  style={{
+                    marginTop: 35,
+                    position: 'absolute',
+                    left: 50,
+                    fontSize: 12,
+                  }}>
+                  {x.value}
+                </Text>
+              </View>
+            </>
+          );
+        })}
       </ScrollView>
     </View>
   );
@@ -182,15 +174,11 @@ const styles = StyleSheet.create({
   },
   cardHow: {
     flexDirection: 'row',
-    width: windowWidth - 50,
+    width: '90%',
     height: 100,
     backgroundColor: '#FFFFFF',
-    marginLeft: 20,
+    marginLeft: 15,
     marginTop: 50,
-    shadowOffset: {width: 0, height: 1},
-    shadowColor: 'black',
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
     elevation: 3,
     borderRadius: 10,
   },

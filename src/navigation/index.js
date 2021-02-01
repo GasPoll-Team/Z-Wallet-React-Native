@@ -1,25 +1,67 @@
-import React, {useEffect, useState} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
+import React from 'react';
+import {StyleSheet} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
-
-import {RegisterScreen} from '../screens';
-import {HomeScreen} from '../screens';
-import {ContactList} from '../screens';
+import {
+  RegisterScreen,
+  LoginScreen,
+  PinScreen,
+  ActiveScreen,
+  PinSuccessScreen,
+  ForgotScreen,
+  ResetPassScreen,
+  HomeScreen,
+  TopUpScreen,
+  ContactList,
+} from '../screens';
 
 const Stack = createStackNavigator();
 
-const StackScreen = ({navigation}) => {
+const Navigation = ({navigation}) => {
   return (
     <Stack.Navigator>
+      <Stack.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{headerShown: false}}
+      />
       <Stack.Screen
         name="Register"
         component={RegisterScreen}
         options={{headerShown: false}}
       />
       <Stack.Screen
+        name="Active"
+        component={ActiveScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Pin"
+        component={PinScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="PinSuccess"
+        component={PinSuccessScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Forgot"
+        component={ForgotScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen name="Reset" component={ResetPassScreen} />
+      <Stack.Screen
         name="Home"
         component={HomeScreen}
         options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Topup"
+        component={TopUpScreen}
+        options={{
+          headerShown: false,
+          headerStyle: {backgroundColor: '#6379F4'},
+        }}
       />
       <Stack.Screen
         name="Contact"
@@ -35,10 +77,4 @@ const StackScreen = ({navigation}) => {
   );
 };
 
-export const MainNavigation = () => {
-  return (
-    <NavigationContainer>
-      <StackScreen />
-    </NavigationContainer>
-  );
-};
+export default Navigation;

@@ -9,10 +9,11 @@ import {
 import {Input} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const LoginScreen = ({navigation}) => {
-  const [email, setEmail] = useState('');
+const ResetPassScreen = ({navigation}) => {
   const [pass, setPass] = useState('');
+  const [pass2, setPass2] = useState('');
   const [show, setShow] = useState(true);
+  const [show2, setShow2] = useState(true);
 
   const empty = () => {
     if (email === '' || pass === '') {
@@ -27,27 +28,15 @@ const LoginScreen = ({navigation}) => {
       <Text style={styles.name}>Zwallet</Text>
       <View style={styles.content}>
         <View style={styles.subContent}>
-          <Text style={styles.header}>Login</Text>
+          <Text style={styles.header}>Reset Password</Text>
           <Text style={styles.subHeader}>
-            Login to your existing account to access
+            Create and confrim your new password so
           </Text>
-          <Text style={styles.subHeader}>all the features in Zwallet</Text>
+          <Text style={styles.subHeader}>you can login to Zwallet</Text>
         </View>
         <View style={styles.form}>
           <Input
-            placeholder="Enter your e-mail"
-            keyboardAppearance="dark"
-            leftIcon={
-              <Icon
-                name="email-outline"
-                size={24}
-                color={email === '' ? '#878787' : '#6379F4'}
-              />
-            }
-            onChangeText={(text) => setEmail(text)}
-          />
-          <Input
-            placeholder="Enter your password"
+            placeholder="Create your password"
             leftIcon={
               <Icon
                 name="lock-outline"
@@ -70,25 +59,40 @@ const LoginScreen = ({navigation}) => {
             }}
             secureTextEntry={show}
           />
+          <Input
+            placeholder="Confrim your password"
+            leftIcon={
+              <Icon
+                name="lock-outline"
+                size={24}
+                color={pass2 === '' ? '#878787' : '#6379F4'}
+              />
+            }
+            rightIcon={
+              <Icon
+                name={!show2 ? 'eye-outline' : 'eye-off-outline'}
+                size={24}
+                color="#878787"
+                onPress={() => {
+                  setShow2(!show2);
+                }}
+              />
+            }
+            onChangeText={(text) => {
+              setPass2(text);
+            }}
+            secureTextEntry={show2}
+          />
         </View>
-        <Text style={styles.forgot} onPress={() => {
-          navigation.navigate('Forgot')
-        }}>Forgot password?</Text>
-        <TouchableOpacity style={empty() ? styles.btn : styles.btnActive} onPress={() => {
-            navigation.navigate('Pin')
-        }}>
-          <Text style={empty() ? styles.textNon : styles.textActive}>
-            Login
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => {
-            navigation.navigate('Register')
-        }}>
-          <Text style={styles.acc}>
-            Don't have an account? Let's
-            <Text style={styles.login}> Sign Up</Text>
-          </Text>
-        </TouchableOpacity>
+        <View style={{marginTop: 60}}>
+          <TouchableOpacity
+            style={styles.btnActive}
+            onPress={() => {
+              navigation.navigate('Pin');
+            }}>
+            <Text style={styles.textActive}>Login</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </ScrollView>
   );
@@ -130,20 +134,6 @@ const styles = StyleSheet.create({
   form: {
     marginTop: 10,
   },
-  forgot: {
-    alignSelf: 'flex-end',
-    paddingRight: 15,
-    top: -8,
-  },
-  btn: {
-    width: '90%',
-    backgroundColor: '#DADADA',
-    padding: 18,
-    alignItems: 'center',
-    alignSelf: 'center',
-    marginTop: 25,
-    borderRadius: 12,
-  },
   btnActive: {
     width: '90%',
     backgroundColor: '#6379F4',
@@ -153,25 +143,11 @@ const styles = StyleSheet.create({
     marginTop: 25,
     borderRadius: 12,
   },
-  textNon: {
-    fontWeight: 'bold',
-    color: '#88888F',
-    fontSize: 20,
-  },
   textActive: {
     fontWeight: 'bold',
     color: 'white',
     fontSize: 20,
   },
-  acc: {
-    alignSelf: 'center',
-    marginTop: 20,
-    color: '#5D5757',
-  },
-  login: {
-    color: '#6379F4',
-    fontWeight: 'bold',
-  },
 });
 
-export default LoginScreen;
+export default ResetPassScreen;

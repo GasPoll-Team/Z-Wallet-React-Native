@@ -13,7 +13,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import profileImg from '../../assets/images/profile-img.png';
 import spotifyImg from '../../assets/images/spotify.png';
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
   return (
     <ScrollView>
       <StatusBar translucent backgroundColor="transparent" />
@@ -44,6 +44,7 @@ const HomeScreen = () => {
             icon={<Icon name="plus" size={25} color="#608DE2" />}
             buttonStyle={styles.btn}
             titleStyle={styles.btnText}
+            onPress={() => navigation.navigate('Contact')}
           />
         </View>
         <Button

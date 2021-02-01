@@ -1,7 +1,6 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
-
 import {
   RegisterScreen,
   LoginScreen,
@@ -12,6 +11,7 @@ import {
   ResetPassScreen,
   HomeScreen,
   TopUpScreen,
+  ContactList,
 } from '../screens';
 
 const Stack = createStackNavigator();
@@ -61,6 +61,16 @@ const Navigation = ({navigation}) => {
         options={{
           headerShown: false,
           headerStyle: {backgroundColor: '#6379F4'},
+        }}
+      />
+      <Stack.Screen
+        name="Contact"
+        component={ContactList}
+        options={{
+          headerShown: true,
+          title: 'Find Receiver',
+          headerStyle: {backgroundColor: '#6379F4', elevation: 0},
+          headerTintColor: '#fff',
         }}
       />
     </Stack.Navigator>

@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
@@ -14,3 +12,14 @@ const App = () => {
 };
 
 export default App;
+
+// import React, {useContext} from 'react';
+// import { MainNavigation } from './src/navigation';
+
+// function App() {
+//   return (
+//     <MainNavigation />
+//   )
+// }
+
+// export default App;

@@ -6,6 +6,7 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
+    "clear": "cd android && gradlew clean && cd ../",
     "test": "jest",
     "lint": "eslint ."
   },
@@ -22,6 +23,7 @@
     "react-native-dotenv": "^2.5.1",
     "react-native-elements": "^3.1.0",
     "react-native-gesture-handler": "^1.9.0",
+    "react-native-otp-field": "^0.0.10",
     "react-native-push-notification": "^7.2.0",
     "react-native-reanimated": "^1.13.2",
     "react-native-safe-area-context": "^3.1.9",

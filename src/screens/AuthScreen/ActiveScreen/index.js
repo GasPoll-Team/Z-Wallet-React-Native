@@ -1,5 +1,4 @@
-import React, {useEffect, useState} from 'react';
-import {Input} from 'react-native-elements';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -7,17 +6,16 @@ import {
   ScrollView,
   StyleSheet,
 } from 'react-native';
+import {Input} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconUser from 'react-native-vector-icons/Feather';
 
-const RegisterScreen = ({navigation}) => {
+const ActiveScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
-  const [pass, setPass] = useState('');
-  const [user, setUser] = useState('');
-  const [show, setShow] = useState(true);
+  const [otp, setOtp] = useState('');
 
   const empty = () => {
-    if (user === '' || email === '' || pass === '') {
+    if (email === '' || otp === '') {
       return true;
     } else {
       return false;
@@ -29,29 +27,16 @@ const RegisterScreen = ({navigation}) => {
       <Text style={styles.name}>Zwallet</Text>
       <View style={styles.content}>
         <View style={styles.subContent}>
-          <Text style={styles.header}>Sign Up</Text>
+          <Text style={styles.header}>Active Your account</Text>
           <Text style={styles.subHeader}>
-            Create your account to access Zwallet
+            Active to your existing account to access
           </Text>
+          <Text style={styles.subHeader}>all the features in Zwallet</Text>
         </View>
         <View style={styles.form}>
-          {/* username */}
-          <Input
-            placeholder="Enter your username"
-            leftIcon={
-              <IconUser
-                name="user"
-                size={24}
-                color={user === '' ? '#878787' : '#6379F4'}
-              />
-            }
-            onChangeText={(text) => setUser(text)}
-          />
-          {/* username */}
-
-          {/* email */}
           <Input
             placeholder="Enter your e-mail"
+            keyboardAppearance="dark"
             leftIcon={
               <Icon
                 name="email-outline"
@@ -61,50 +46,27 @@ const RegisterScreen = ({navigation}) => {
             }
             onChangeText={(text) => setEmail(text)}
           />
-          {/* email */}
-
-          {/* password */}
           <Input
-            placeholder="Enter your password"
+            placeholder="Enter your OTP"
             leftIcon={
-              <Icon
-                name="lock-outline"
+              <IconUser
+                name="user"
                 size={24}
-                color={pass === '' ? '#878787' : '#6379F4'}
+                color={otp === '' ? '#878787' : '#6379F4'}
               />
             }
-            rightIcon={
-              <Icon
-                name={!show ? 'eye-outline' : 'eye-off-outline'}
-                size={24}
-                color="#878787"
-                onPress={() => {
-                  setShow(!show);
-                }}
-              />
-            }
-            onChangeText={(text) => {
-              setPass(text);
-            }}
-            secureTextEntry={show}
+            onChangeText={(text) => setOtp(text)}
           />
-          {/* password */}
         </View>
+       
         <TouchableOpacity style={empty() ? styles.btn : styles.btnActive} onPress={() => {
-          navigation.navigate('Active')
+            navigation.navigate('Login')
         }}>
           <Text style={empty() ? styles.textNon : styles.textActive}>
-            Sign Up
+            Active
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => {
-          navigation.navigate('Login')
-        }}>
-          <Text style={styles.acc}>
-            Already have an account? Let's
-            <Text style={styles.login}> Login</Text>
-          </Text>
-        </TouchableOpacity>
+       
       </View>
     </ScrollView>
   );
@@ -115,7 +77,7 @@ const styles = StyleSheet.create({
     // marginBottom: 50,
     color: '#6379F4',
     alignSelf: 'center',
-    marginTop: 100,
+    marginTop: 150,
     fontSize: 26,
     fontWeight: 'bold',
   },
@@ -128,7 +90,8 @@ const styles = StyleSheet.create({
     borderTopWidth: 0.5,
     borderColor: '#EEEEEE',
     elevation: 1,
-    marginTop: 90,
+    marginTop: 135,
+    // height: '100%',
   },
   subContent: {
     marginTop: 30,
@@ -145,6 +108,11 @@ const styles = StyleSheet.create({
   },
   form: {
     marginTop: 10,
+  },
+  forgot: {
+    alignSelf: 'flex-end',
+    paddingRight: 15,
+    top: -8,
   },
   btn: {
     width: '90%',
@@ -185,4 +153,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RegisterScreen;
+export default ActiveScreen;

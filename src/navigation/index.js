@@ -21,6 +21,7 @@ import {
   NewPIN,
   AddNumber,
   ManageNumber,
+  ConfirmScreen,
 } from '../screens';
 
 const Stack = createStackNavigator();
@@ -79,8 +80,10 @@ const Navigation = ({navigation}) => {
         name="Topup"
         component={TopUpScreen}
         options={{
-          headerShown: false,
-          headerStyle: {backgroundColor: '#6379F4'},
+          headerShown: true,
+          title: 'Topup Balance',
+          headerStyle: {backgroundColor: '#6379F4', elevation: 0},
+          headerTintColor: '#fff',
         }}
       />
       <Stack.Screen
@@ -129,6 +132,16 @@ const Navigation = ({navigation}) => {
         name="Manage"
         component={ManageNumber}
         options={{headerShown: false}}
+      />
+       <Stack.Screen
+        name="Confirm"
+        component={ConfirmScreen}
+        options={{
+          headerShown: true,
+          title: 'Confirmation',
+          headerStyle: {backgroundColor: '#6379F4', elevation: 0},
+          headerTintColor: '#fff',
+        }}
       />
     </Stack.Navigator>
   );

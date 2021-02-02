@@ -14,8 +14,7 @@ import { vw, vh, vmax, vmin } from 'react-native-expo-viewport-units'
 //redux ngeod
 import {connect} from 'react-redux'
 import {setEmailForgot} from '../../../utils/redux/action/authAction'
-
-const API_URL = 'https://12a223fb9884.ngrok.io'
+import { API_URL } from '@env'
 
 const ForgotScreen = ({navigation, setEmailForgot}) => {
   const [email, setEmail] = useState('');

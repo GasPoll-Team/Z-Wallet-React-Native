@@ -17,7 +17,7 @@ import {connect} from 'react-redux';
 import {login} from '../../../utils/redux/action/authAction';
 
 const LoginScreen = ({navigation, login}) => {
-  const API_URL = 'https://12a223fb9884.ngrok.io'
+  const API_URL = 'https://12a223fb9884.ngrok.io';
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
   const [show, setShow] = useState(true);

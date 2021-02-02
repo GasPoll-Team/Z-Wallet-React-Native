@@ -13,7 +13,8 @@ import {
   HomeScreen,
   TopUpScreen,
   ContactList,
-  Splash
+  Splash,
+  ConfirmScreen,
 } from '../screens';
 
 const Stack = createStackNavigator();
@@ -22,11 +23,11 @@ const Navigation = ({navigation}) => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-          initialRouteName="Splash"
-          name="Splash"
-          component={Splash}
-          options={{headerShown: false}}
-        />
+        initialRouteName="Splash"
+        name="Splash"
+        component={Splash}
+        options={{headerShown: false}}
+      />
       <Stack.Screen
         name="Login"
         component={LoginScreen}
@@ -82,6 +83,16 @@ const Navigation = ({navigation}) => {
         options={{
           headerShown: true,
           title: 'Find Receiver',
+          headerStyle: {backgroundColor: '#6379F4', elevation: 0},
+          headerTintColor: '#fff',
+        }}
+      />
+      <Stack.Screen
+        name="Confirm"
+        component={ConfirmScreen}
+        options={{
+          headerShown: true,
+          title: 'Confirmation',
           headerStyle: {backgroundColor: '#6379F4', elevation: 0},
           headerTintColor: '#fff',
         }}

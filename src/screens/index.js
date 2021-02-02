@@ -10,6 +10,7 @@ import HomeScreen from './HomeScreen';
 import TopUpScreen from './TopupScreen';
 import ContactList from './ContactList';
 import Splash from './SplashScreen';
+import ConfirmScreen from './ConfirmScreen';
 
 export {
     RegisterScreen,
@@ -24,4 +25,5 @@ export {
     TopUpScreen,
     ContactList,
     Splash,
+    ConfirmScreen,
 };

@@ -10,7 +10,7 @@ import {
 import {Input} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSelector} from 'react-redux';
-// import {API_URL} from '@env';
+import {API_URL} from '@env';
 
 // redux
 import {connect} from 'react-redux';
@@ -22,6 +22,7 @@ const LoginScreen = ({navigation, login}) => {
   const [pass, setPass] = useState('');
   const [show, setShow] = useState(true);
   const [errMsg, setErrMsg] = useState('');
+
 
   const token = useSelector((state) => state.authReducer.token);
 

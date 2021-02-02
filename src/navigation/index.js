@@ -73,8 +73,10 @@ const Navigation = ({navigation}) => {
         name="Topup"
         component={TopUpScreen}
         options={{
-          headerShown: false,
-          headerStyle: {backgroundColor: '#6379F4'},
+          headerShown: true,
+          title: 'Topup Balance',
+          headerStyle: {backgroundColor: '#6379F4', elevation: 0},
+          headerTintColor: '#fff',
         }}
       />
       <Stack.Screen

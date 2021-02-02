@@ -1,4 +1,3 @@
-/* eslint-disable no-shadow */
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {
@@ -9,45 +8,12 @@ import {
   StatusBar,
   TouchableOpacity,
 } from 'react-native';
-import {Button} from 'react-native-elements';
-import {ScrollView} from 'react-native-gesture-handler';
+import {Button, Image} from 'react-native-elements';
+import {ScrollView, TextInput} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import profileImg from '../../assets/profiles/1.png';
 
-const data = [
-  {
-    number: 1,
-    value: 'Go to the nearest ATM or you can use E-Banking.',
-  },
-  {
-    number: 2,
-    value: 'Go to the nearest ATM or you can use E-Banking.',
-  },
-  {
-    number: 3,
-    value: 'Go to the nearest ATM or you can use E-Banking.',
-  },
-  {
-    number: 4,
-    value: 'Go to the nearest ATM or you can use E-Banking.',
-  },
-  {
-    number: 5,
-    value: 'Go to the nearest ATM or you can use E-Banking.',
-  },
-  {
-    number: 6,
-    value: 'Go to the nearest ATM or you can use E-Banking.',
-  },
-  {
-    number: 7,
-    value: 'Go to the nearest ATM or you can use E-Banking.',
-  },
-  {
-    number: 8,
-    value: 'Go to the nearest ATM or you can use E-Banking.',
-  },
-];
-const TopupScreen = ({navigation: {navigate}}) => {
+const TransferScreen = ({navigation: {navigate}}) => {
   return (
     <View style={styles.container}>
       <StatusBar
@@ -61,6 +27,7 @@ const TopupScreen = ({navigation: {navigate}}) => {
             icon={<Icon name="arrow-left" size={30} color="#ffffff" />}
             style={{marginTop: 20}}
             buttonStyle={styles.btnBack}
+            onPress={() => navigate('Topup')}
           />
           <Text
             style={{
@@ -71,28 +38,24 @@ const TopupScreen = ({navigation: {navigate}}) => {
               fontWeight: '700',
               lineHeight: 30,
             }}>
-            Top Up
+            Transfer
           </Text>
         </View>
         <View style={styles.cardVa}>
-          <Button
-            icon={<Icon name="plus" size={35} color="#6379F4" />}
-            buttonStyle={styles.btn}
-            onPress={() => navigate('Transfer')}
-          />
+          <Image source={profileImg} style={styles.profileImg} />
           <Text
             style={{
               marginTop: 30,
-              marginLeft: 10,
+              marginLeft: 20,
               color: '#7A7886',
               fontSize: 14,
             }}>
-            Virtual Account Number
+            Samuel
           </Text>
           <Text
             style={{
               marginTop: 55,
-              marginLeft: '-43%',
+              marginLeft: '-14%',
               fontWeight: '700',
               fontSize: 16,
             }}>
@@ -100,48 +63,18 @@ const TopupScreen = ({navigation: {navigate}}) => {
           </Text>
         </View>
       </View>
-      <ScrollView>
-        <Text
-          style={{
-            marginTop: 30,
-            marginLeft: 20,
-            fontWeight: 'bold',
-            fontSize: 22,
-          }}>
-          How to Top-Up
-        </Text>
-        {data.map((x, i) => {
-          return (
-            <View key={i}>
-              <View style={styles.cardHow}>
-                <Text
-                  style={{
-                    padding: 30,
-                    color: '#6379F4',
-                    fontSize: 20,
-                    fontWeight: 'bold',
-                  }}>
-                  {x.number}
-                </Text>
-                <Text
-                  style={{
-                    marginTop: 35,
-                    position: 'absolute',
-                    left: 50,
-                    fontSize: 12,
-                  }}>
-                  {x.value}
-                </Text>
-              </View>
-            </View>
-          );
-        })}
-      </ScrollView>
+      <View>
+        <TextInput
+          placeholder="0.00"
+          keyboardType={'phone-pad'}
+          style={styles.textInputTf}
+        />
+      </View>
     </View>
   );
 };
 
-export default TopupScreen;
+export default TransferScreen;
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -192,5 +125,15 @@ const styles = StyleSheet.create({
     marginTop: 50,
     elevation: 3,
     borderRadius: 10,
+  },
+  profileImg: {
+    width: 56,
+    height: 56,
+    top: 20,
+    marginLeft: 20,
+  },
+  textInputTf: {
+    alignSelf: 'center',
+    fontSize: 28,
   },
 });

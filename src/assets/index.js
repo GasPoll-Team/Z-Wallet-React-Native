@@ -1,2 +1,2 @@
-import IconLeft from './icons/leftIcon.svg';
-export {IconLeft};
+import profile from './profiles/1.png';
+export {profile};

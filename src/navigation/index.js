@@ -14,6 +14,13 @@ import {
   TopUpScreen,
   ContactList,
   Splash,
+  ProfileScreen,
+  PersonalInformation,
+  ChangePassword,
+  ChangePIN,
+  NewPIN,
+  AddNumber,
+  ManageNumber,
   ConfirmScreen,
 } from '../screens';
 
@@ -90,6 +97,43 @@ const Navigation = ({navigation}) => {
         }}
       />
       <Stack.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Personal"
+        component={PersonalInformation}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Change"
+        component={ChangePassword}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="ChangePIN"
+        component={ChangePIN}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="NewPIN"
+        component={NewPIN}
+        options={{headerShown: false}}
+      />
+       <Stack.Screen
+        name="AddNumber"
+        component={AddNumber}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Manage"
+        component={ManageNumber}
+        options={{headerShown: false}}
+      />
+       <Stack.Screen
         name="Confirm"
         component={ConfirmScreen}
         options={{

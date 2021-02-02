@@ -38,7 +38,6 @@ const LoginScreen = ({navigation, login}) => {
   const handleSubmit = () => {
     const emailFormat = /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     const checkPass = /^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{8,}$/;
-    console.log('here')
 
     const data = {
       email: email,
@@ -55,7 +54,6 @@ const LoginScreen = ({navigation, login}) => {
           'Password must contain at least 1 number, and be longer than 8 character',
         );
       } else {
-        console.log('here2')
         axios
           .post(API_URL + '/auth/login', data)
           .then((res) => {

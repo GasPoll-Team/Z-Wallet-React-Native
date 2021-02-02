@@ -22,6 +22,7 @@ import {
   AddNumber,
   ManageNumber,
   ConfirmScreen,
+  Notification,
 } from '../screens';
 
 const Stack = createStackNavigator();
@@ -123,7 +124,7 @@ const Navigation = ({navigation}) => {
         component={NewPIN}
         options={{headerShown: false}}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="AddNumber"
         component={AddNumber}
         options={{headerShown: false}}
@@ -133,12 +134,22 @@ const Navigation = ({navigation}) => {
         component={ManageNumber}
         options={{headerShown: false}}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="Confirm"
         component={ConfirmScreen}
         options={{
           headerShown: true,
           title: 'Confirmation',
+          headerStyle: {backgroundColor: '#6379F4', elevation: 0},
+          headerTintColor: '#fff',
+        }}
+      />
+      <Stack.Screen
+        name="Notification"
+        component={Notification}
+        options={{
+          headerShown: true,
+          title: 'Notification',
           headerStyle: {backgroundColor: '#6379F4', elevation: 0},
           headerTintColor: '#fff',
         }}

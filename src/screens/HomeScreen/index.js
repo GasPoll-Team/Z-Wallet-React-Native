@@ -72,7 +72,7 @@ const HomeScreen = ({ navigation }) => {
           <View style={styles.header}>
             <View style={styles.profileWrapper}>
               <TouchableOpacity
-                onPress={() => { navigation.navigate('Login') }}
+                onPress={() => { navigation.navigate('Profile') }}
               >
                 <Image source={profileImg} style={styles.profileImage} />
               </TouchableOpacity>

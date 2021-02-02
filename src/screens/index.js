@@ -10,6 +10,13 @@ import HomeScreen from './HomeScreen';
 import TopUpScreen from './TopupScreen';
 import ContactList from './ContactList';
 import Splash from './SplashScreen';
+import ProfileScreen from './ProfileScreen';
+import PersonalInformation from './PersonalInformation';
+import ChangePassword from './ChangePassword';
+import ChangePIN from './ChangePIN';
+import NewPIN from './NewPin';
+import AddNumber from './AddNumber';
+import ManageNumber from './ManageNumber';
 
 export {
     RegisterScreen,
@@ -24,4 +31,11 @@ export {
     TopUpScreen,
     ContactList,
     Splash,
+    ProfileScreen,
+    PersonalInformation,
+    ChangePassword,
+    ChangePIN,
+    NewPIN,
+    AddNumber,
+    ManageNumber,
 };

@@ -13,7 +13,14 @@ import {
   HomeScreen,
   TopUpScreen,
   ContactList,
-  Splash
+  Splash,
+  ProfileScreen,
+  PersonalInformation,
+  ChangePassword,
+  ChangePIN,
+  NewPIN,
+  AddNumber,
+  ManageNumber,
 } from '../screens';
 
 const Stack = createStackNavigator();
@@ -22,11 +29,11 @@ const Navigation = ({navigation}) => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-          initialRouteName="Splash"
-          name="Splash"
-          component={Splash}
-          options={{headerShown: false}}
-        />
+        initialRouteName="Splash"
+        name="Splash"
+        component={Splash}
+        options={{headerShown: false}}
+      />
       <Stack.Screen
         name="Login"
         component={LoginScreen}
@@ -85,6 +92,43 @@ const Navigation = ({navigation}) => {
           headerStyle: {backgroundColor: '#6379F4', elevation: 0},
           headerTintColor: '#fff',
         }}
+      />
+      <Stack.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Personal"
+        component={PersonalInformation}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Change"
+        component={ChangePassword}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="ChangePIN"
+        component={ChangePIN}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="NewPIN"
+        component={NewPIN}
+        options={{headerShown: false}}
+      />
+       <Stack.Screen
+        name="AddNumber"
+        component={AddNumber}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Manage"
+        component={ManageNumber}
+        options={{headerShown: false}}
       />
     </Stack.Navigator>
   );

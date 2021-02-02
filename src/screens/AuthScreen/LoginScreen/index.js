@@ -17,7 +17,7 @@ import {connect} from 'react-redux';
 import {login} from '../../../utils/redux/action/authAction';
 
 const LoginScreen = ({navigation, login}) => {
-  const API_URL = 'http://192.168.1.2:8000';
+  const API_URL = 'https://12a223fb9884.ngrok.io'
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
   const [show, setShow] = useState(true);
@@ -33,9 +33,12 @@ const LoginScreen = ({navigation, login}) => {
     }
   };
 
+  console.log(email,pass)
+
   const handleSubmit = () => {
     const emailFormat = /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     const checkPass = /^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{8,}$/;
+    console.log('here')
 
     const data = {
       email: email,
@@ -52,6 +55,7 @@ const LoginScreen = ({navigation, login}) => {
           'Password must contain at least 1 number, and be longer than 8 character',
         );
       } else {
+        console.log('here2')
         axios
           .post(API_URL + '/auth/login', data)
           .then((res) => {
@@ -69,8 +73,8 @@ const LoginScreen = ({navigation, login}) => {
             }
           })
           .catch((err) => {
-            // console.log(err.response.data)
-            console.log('error disokin', err);
+            console.log(err.response.data)
+            // console.log('error disokin', err);
           });
       }
     }
@@ -141,6 +145,7 @@ const LoginScreen = ({navigation, login}) => {
                 Login
               </Text>
             </TouchableOpacity>
+            <Text>{errMsg}</Text>
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate('Register');

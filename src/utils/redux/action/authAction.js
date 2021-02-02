@@ -12,6 +12,21 @@ export const login = (token, id, email, fullname) => {
   };
 };
 
+export const setEmailForgot = (email) =>{
+  return {
+    type:actionTypes.SETEMAIL,
+    payload:{
+      email:email
+    }
+  }
+}
+
+export const rmEmail = () =>{
+  return {
+    type:actionTypes.RMEMAIL,
+  }
+}
+
 export const logout = (token, id) => {
   return {
     type: actionTypes.LOGOUT,

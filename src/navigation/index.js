@@ -8,6 +8,7 @@ import {
   ActiveScreen,
   PinSuccessScreen,
   ForgotScreen,
+  OtpScreen,
   ResetPassScreen,
   HomeScreen,
   TopUpScreen,
@@ -54,6 +55,11 @@ const Navigation = ({navigation}) => {
       <Stack.Screen
         name="Forgot"
         component={ForgotScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Otp"
+        component={OtpScreen}
         options={{headerShown: false}}
       />
       <Stack.Screen name="Reset" component={ResetPassScreen} />

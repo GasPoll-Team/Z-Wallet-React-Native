@@ -1,22 +1,82 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
-import TopupScreen from '../screens/TopupScreen';
-import TransferScreen from '../screens/TransferScreen';
+import {
+  RegisterScreen,
+  LoginScreen,
+  PinScreen,
+  ActiveScreen,
+  PinSuccessScreen,
+  ForgotScreen,
+  OtpScreen,
+  ResetPassScreen,
+  HomeScreen,
+  TopUpScreen,
+  ContactList,
+  Splash,
+  Login,
+  TransferScreen,
+} from '../screens';
 
 const Stack = createStackNavigator();
 
-const Navigation = () => {
+const Navigation = ({navigation}) => {
   return (
     <Stack.Navigator>
       <Stack.Screen
+        initialRouteName="Splash"
+        name="Splash"
+        component={Splash}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Login"
+        component={Login}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Register"
+        component={RegisterScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Active"
+        component={ActiveScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Pin"
+        component={PinScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="PinSuccess"
+        component={PinSuccessScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Forgot"
+        component={ForgotScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Otp"
+        component={OtpScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen name="Reset" component={ResetPassScreen} />
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
         name="Topup"
-        component={TopupScreen}
+        component={TopUpScreen}
         options={{
           headerShown: false,
           headerStyle: {backgroundColor: '#6379F4'},
         }}
-        screenOp
       />
       <Stack.Screen
         name="Transfer"
@@ -25,12 +85,19 @@ const Navigation = () => {
           headerShown: false,
           headerStyle: {backgroundColor: '#6379F4'},
         }}
-        screenOp
+      />
+      <Stack.Screen
+        name="Contact"
+        component={ContactList}
+        options={{
+          headerShown: true,
+          title: 'Find Receiver',
+          headerStyle: {backgroundColor: '#6379F4', elevation: 0},
+          headerTintColor: '#fff',
+        }}
       />
     </Stack.Navigator>
   );
 };
 
 export default Navigation;
-
-const styles = StyleSheet.create({});

@@ -1,5 +1,7 @@
+/* eslint-disable no-dupe-keys */
+/* eslint-disable no-undef */
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Dimensions,
   StyleSheet,
@@ -9,11 +11,16 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {Button, Image} from 'react-native-elements';
-import {ScrollView, TextInput} from 'react-native-gesture-handler';
+import {TextInput} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import profileImg from '../../assets/profiles/1.png';
+import pensil from '../../assets/images/pensil.png';
 
 const TransferScreen = ({navigation: {navigate}}) => {
+  const [balance, setBalance] = useState('');
+  let toPrice = (x) => {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  };
   return (
     <View style={styles.container}>
       <StatusBar
@@ -67,9 +74,23 @@ const TransferScreen = ({navigation: {navigate}}) => {
         <TextInput
           placeholder="0.00"
           keyboardType={'phone-pad'}
+          placeholderTextColor="#B5BDCC"
           style={styles.textInputTf}
         />
+        <Text style={{color: '#7C7895', alignSelf: 'center', marginTop: 20}}>
+          Rp. 120.000 Available
+        </Text>
       </View>
+      <View style={styles.noteInput}>
+        <Image source={pensil} style={{width: 19, height: 19, top: 10}} />
+        <TextInput style={{marginLeft: 17}} placeholder="Add some notes" />
+      </View>
+      <View style={{height: 1, width: 343, backgroundColor: '#A9A9A9'}} />
+      <TouchableOpacity style={styles.btnTransfer}>
+        <Text style={{color: '#fff', fontSize: 18, marginTop: 10}}>
+          Transfer
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -133,7 +154,28 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
   textInputTf: {
+    width: '20%',
     alignSelf: 'center',
-    fontSize: 28,
+    fontSize: 32,
+    marginTop: 15,
+    fontWeight: '700',
+  },
+  noteInput: {
+    flexDirection: 'row',
+    height: 50,
+    width: windowWidth,
+    alignSelf: 'center',
+    marginTop: 60,
+    marginLeft: 50,
+  },
+  btnTransfer: {
+    backgroundColor: '#6379F4',
+    borderRadius: 10,
+    width: windowWidth - 100,
+    height: 50,
+    borderRadius: 10,
+    marginTop: 50,
+    alignItems: 'center',
+    marginLeft: 40,
   },
 });

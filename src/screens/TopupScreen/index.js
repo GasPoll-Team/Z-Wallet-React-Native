@@ -61,6 +61,7 @@ const TopupScreen = ({navigation: {navigate}}) => {
             icon={<Icon name="arrow-left" size={30} color="#ffffff" />}
             style={{marginTop: 20}}
             buttonStyle={styles.btnBack}
+            onPress={() => navigate('Home')}
           />
           <Text
             style={{

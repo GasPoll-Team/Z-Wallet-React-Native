@@ -9,7 +9,9 @@ const INITIAL_STATE = {
   fullname: '',
 };
 
+
 const authReducer = (state = INITIAL_STATE, action) => {
+  console.log(action)
   switch (action.type) {
     case actionTypes.LOGIN:
       return {
@@ -27,6 +29,17 @@ const authReducer = (state = INITIAL_STATE, action) => {
         token: null,
         id: null,
       };
+    case actionTypes.SETEMAIL:
+      return {
+        ...state,
+        email: action.payload.email
+      }
+
+    case actionTypes.RMEMAIL:
+      return {
+        ...state,
+        email: ''
+      }
 
     default:
       return state;

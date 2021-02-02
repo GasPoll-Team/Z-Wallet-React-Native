@@ -9,6 +9,11 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Input} from 'react-native-elements';
+<<<<<<< HEAD
+
+const ForgotScreen = ({navigation}) => {
+  const [email, setEmail] = useState('');
+=======
 import axios from 'axios';
 import { vw, vh, vmax, vmin } from 'react-native-expo-viewport-units'
 //redux ngeod
@@ -44,6 +49,7 @@ const ForgotScreen = ({navigation, setEmailForgot}) => {
       setErrMsg('Email tidak boleh kosong!')
     }
   }
+>>>>>>> 061bb1784081ee2f31b4b058e38e0c8b9a3a083c
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -69,10 +75,17 @@ const ForgotScreen = ({navigation, setEmailForgot}) => {
             onChangeText={(text) => setEmail(text)}
           />
         </View>
+<<<<<<< HEAD
+        <View style={{marginTop: 150}}>
+          <TouchableOpacity style={styles.btnActive} onPress={() => {
+            navigation.navigate('Reset')
+          }}>
+=======
         <Text style={{color:'red'}}>{errMsg}</Text>
         <Text style={{color:'green'}}>{Msg}</Text>
         <View style={{marginTop: vh(13) }}>
           <TouchableOpacity style={styles.btnActive} onPress={HandleSubmit}>
+>>>>>>> 061bb1784081ee2f31b4b058e38e0c8b9a3a083c
             <Text style={styles.textActive}>Confrim</Text>
           </TouchableOpacity>
         </View>
@@ -83,6 +96,10 @@ const ForgotScreen = ({navigation, setEmailForgot}) => {
 
 const styles = StyleSheet.create({
   name: {
+<<<<<<< HEAD
+    // marginBottom: 50,
+=======
+>>>>>>> 061bb1784081ee2f31b4b058e38e0c8b9a3a083c
     color: '#6379F4',
     alignSelf: 'center',
     marginTop: 100,
@@ -133,6 +150,9 @@ const styles = StyleSheet.create({
   },
 });
 
+<<<<<<< HEAD
+export default ForgotScreen;
+=======
 const mapDispatchToProps = (dispatch) => {
   return {
     setEmailForgot: (email) =>
@@ -140,3 +160,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 export default connect(null, mapDispatchToProps)(ForgotScreen);
+>>>>>>> 061bb1784081ee2f31b4b058e38e0c8b9a3a083c

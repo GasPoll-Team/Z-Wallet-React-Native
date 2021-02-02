@@ -59,14 +59,24 @@ const TopupScreen = ({navigation: {navigate}}) => {
         translucent={true}
       />
       <View style={styles.header}>
+<<<<<<< HEAD
+        <View style={{flexDirection: 'row', top: 18}}>
+          <Button
+            icon={<Icon name="arrow-left" size={30} color="#ffffff" />}
+            style={{marginTop: 20}}
+            buttonStyle={styles.btnBack}
+            onPress={() => navigate('Home')}
+          />
+=======
         {/* <View style={{flexDirection: 'row'}}>
           <TouchableOpacity style={{marginTop: 20}}>
             <Icon name="g-translate" color="white" size={30} />
           </TouchableOpacity>
+>>>>>>> 061bb1784081ee2f31b4b058e38e0c8b9a3a083c
           <Text
             style={{
               marginLeft: 10,
-              marginTop: 28,
+              marginTop: 8,
               color: 'white',
               fontSize: 20,
               fontWeight: '700',
@@ -77,8 +87,9 @@ const TopupScreen = ({navigation: {navigate}}) => {
         </View> */}
         <View style={styles.cardVa}>
           <Button
-            icon={<Icon name="plus" size={25} color="#6379F4" />}
+            icon={<Icon name="plus" size={35} color="#6379F4" />}
             buttonStyle={styles.btn}
+            onPress={() => navigate('Transfer')}
           />
           <Text
             style={{
@@ -110,9 +121,9 @@ const TopupScreen = ({navigation: {navigate}}) => {
           }}>
           How to Top-Up
         </Text>
-        {data.map((x) => {
+        {data.map((x, i) => {
           return (
-            <>
+            <View key={i}>
               <View style={styles.cardHow}>
                 <Text
                   style={{
@@ -133,7 +144,7 @@ const TopupScreen = ({navigation: {navigate}}) => {
                   {x.value}
                 </Text>
               </View>
-            </>
+            </View>
           );
         })}
       </ScrollView>
@@ -153,11 +164,19 @@ const styles = StyleSheet.create({
   },
   header: {
     width: windowWidth,
-    height: windowHeight * 0.3,
+    height: windowHeight * 0.4,
     padding: 20,
     backgroundColor: '#6379F4',
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
+  },
+  btnBack: {
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    opacity: 1,
+    backgroundColor: 'transparent',
   },
   btn: {
     marginTop: 25,
@@ -169,7 +188,7 @@ const styles = StyleSheet.create({
   },
   cardVa: {
     flexDirection: 'row',
-    marginTop: 15,
+    marginTop: 50,
     width: windowWidth - 40,
     height: 100,
     backgroundColor: '#FFFFFF',

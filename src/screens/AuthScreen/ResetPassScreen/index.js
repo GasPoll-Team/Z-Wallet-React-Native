@@ -1,4 +1,9 @@
+<<<<<<< HEAD
+/* eslint-disable no-undef */
+import React, {useState, useEffect} from 'react';
+=======
 import React, { useState, useEffect } from 'react';
+>>>>>>> 061bb1784081ee2f31b4b058e38e0c8b9a3a083c
 import {
   View,
   Text,
@@ -6,16 +11,34 @@ import {
   ScrollView,
   StyleSheet,
 } from 'react-native';
+<<<<<<< HEAD
+import {Input} from 'react-native-elements';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
+const ResetPassScreen = ({navigation}) => {
+=======
 import { Input } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useSelector } from 'react-redux'
 import axios from 'axios'
 
 const ResetPassScreen = ({ navigation }) => {
+>>>>>>> 061bb1784081ee2f31b4b058e38e0c8b9a3a083c
   const [pass, setPass] = useState('');
   const [pass2, setPass2] = useState('');
   const [show, setShow] = useState(true);
   const [show2, setShow2] = useState(true);
+<<<<<<< HEAD
+
+  const empty = () => {
+    if (email === '' || pass === '') {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+=======
   const [errMsg, setErrMsg] = useState('')
 
   const email = useSelector((state) => state.authReducer.email);
@@ -59,6 +82,7 @@ const ResetPassScreen = ({ navigation }) => {
     }
   }
 
+>>>>>>> 061bb1784081ee2f31b4b058e38e0c8b9a3a083c
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <Text style={styles.name}>Zwallet</Text>
@@ -120,6 +144,17 @@ const ResetPassScreen = ({ navigation }) => {
             secureTextEntry={show2}
           />
         </View>
+<<<<<<< HEAD
+        <View style={{marginTop: 60}}>
+          <TouchableOpacity
+            style={styles.btnActive}
+            onPress={() => {
+              navigation.navigate('Pin');
+            }}>
+            <Text style={styles.textActive}>Login</Text>
+          </TouchableOpacity>
+        </View>
+=======
         <Text style={{ color: 'red', fontWeight: 'bold' }}>{errMsg}</Text>
         <View>
           <TouchableOpacity
@@ -129,6 +164,7 @@ const ResetPassScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
 
+>>>>>>> 061bb1784081ee2f31b4b058e38e0c8b9a3a083c
       </View>
     </ScrollView>
   );

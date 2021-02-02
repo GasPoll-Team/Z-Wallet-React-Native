@@ -9,7 +9,6 @@ const INITIAL_STATE = {
   fullname: '',
 };
 
-
 const authReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case actionTypes.LOGIN:

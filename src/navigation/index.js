@@ -3,7 +3,6 @@ import {StyleSheet} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {
   RegisterScreen,
-  LoginScreen,
   PinScreen,
   ActiveScreen,
   PinSuccessScreen,
@@ -14,7 +13,7 @@ import {
   TopUpScreen,
   ContactList,
   Splash,
-  Login,
+  LoginScreen,
   TransferScreen,
 } from '../screens';
 
@@ -31,7 +30,7 @@ const Navigation = ({navigation}) => {
       />
       <Stack.Screen
         name="Login"
-        component={Login}
+        component={LoginScreen}
         options={{headerShown: false}}
       />
       <Stack.Screen
@@ -83,7 +82,6 @@ const Navigation = ({navigation}) => {
         component={TransferScreen}
         options={{
           headerShown: false,
-          headerStyle: {backgroundColor: '#6379F4'},
         }}
       />
       <Stack.Screen

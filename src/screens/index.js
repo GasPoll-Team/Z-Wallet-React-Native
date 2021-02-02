@@ -1,5 +1,5 @@
 import RegisterScreen from './AuthScreen/RegisterScreen';
-import Login from './AuthScreen/LoginScreen';
+import LoginScreen from './AuthScreen/LoginScreen';
 import PinScreen from './AuthScreen/PinScreen';
 import ActiveScreen from './AuthScreen/ActiveScreen';
 import PinSuccessScreen from './AuthScreen/PinSuccessScreen';
@@ -13,7 +13,7 @@ import TransferScreen from './TransferScreen';
 import OtpScreen from './AuthScreen/OtpScreen';
 
 export {
-  Login,
+  LoginScreen,
   RegisterScreen,
   PinScreen,
   ActiveScreen,

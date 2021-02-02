@@ -17,10 +17,6 @@ import profileImg from '../../assets/profiles/1.png';
 import pensil from '../../assets/images/pensil.png';
 
 const TransferScreen = ({navigation: {navigate}}) => {
-  const [balance, setBalance] = useState('');
-  let toPrice = (x) => {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-  };
   return (
     <View style={styles.container}>
       <StatusBar

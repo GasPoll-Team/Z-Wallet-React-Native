@@ -12,6 +12,7 @@ import {
 import {Button} from 'react-native-elements';
 import {ScrollView} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useSelector} from 'react-redux'
 
 const data = [
   {
@@ -47,7 +48,9 @@ const data = [
     value: 'Go to the nearest ATM or you can use E-Banking.',
   },
 ];
+
 const TopupScreen = ({navigation: {navigate}}) => {
+  const myPhone = useSelector((state) => state.myDataReducer.phone);
   return (
     <View style={styles.container}>
       <StatusBar
@@ -56,7 +59,7 @@ const TopupScreen = ({navigation: {navigate}}) => {
         translucent={true}
       />
       <View style={styles.header}>
-        <View style={{flexDirection: 'row'}}>
+        {/* <View style={{flexDirection: 'row'}}>
           <TouchableOpacity style={{marginTop: 20}}>
             <Icon name="g-translate" color="white" size={30} />
           </TouchableOpacity>
@@ -71,7 +74,7 @@ const TopupScreen = ({navigation: {navigate}}) => {
             }}>
             Top Up
           </Text>
-        </View>
+        </View> */}
         <View style={styles.cardVa}>
           <Button
             icon={<Icon name="plus" size={25} color="#6379F4" />}
@@ -93,7 +96,7 @@ const TopupScreen = ({navigation: {navigate}}) => {
               fontWeight: '700',
               fontSize: 16,
             }}>
-            1234567778889890
+            2389-{myPhone.toString().replace('+62','0')}
           </Text>
         </View>
       </View>

@@ -1,7 +1,7 @@
 /* eslint-disable no-dupe-keys */
 /* eslint-disable no-undef */
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   Dimensions,
   StyleSheet,
@@ -10,13 +10,34 @@ import {
   StatusBar,
   TouchableOpacity,
 } from 'react-native';
-import {Button, Image} from 'react-native-elements';
-import {TextInput} from 'react-native-gesture-handler';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import profileImg from '../../assets/profiles/1.png';
+import { Button, Image } from 'react-native-elements';
+import { TextInput } from 'react-native-gesture-handler';
+import {setTranfer} from './../../utils/redux/action/tranferAction'
 import pensil from '../../assets/images/pensil.png';
+import { useSelector, connect } from 'react-redux'
+import { API_URL } from '@env'
 
-const TransferScreen = ({navigation: {navigate}}) => {
+const TransferScreen = ({navigation, setTranfer}) => {
+  const [amount, setAmount] = useState(0)
+  const [notes, setNotes] = useState('')
+  const recipient = useSelector((state) => state.contactReducer)
+  const myData = useSelector((state) => state.myDataReducer)
+  const toPrice = (x) => {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  };
+
+  const handleTranfer = () => {
+    const dataTranfer = {
+      receiver: recipient.id,
+      amount: amount,
+      notes: notes
+    }
+    setTranfer(dataTranfer)
+    navigation.replace('Confirm')
+  }
+
+
+  console.log(amount, notes)
   return (
     <View style={styles.container}>
       <StatusBar
@@ -25,65 +46,63 @@ const TransferScreen = ({navigation: {navigate}}) => {
         translucent={true}
       />
       <View style={styles.header}>
-        <View style={{flexDirection: 'row', top: 18}}>
-          <Button
-            icon={<Icon name="arrow-left" size={30} color="#ffffff" />}
-            style={{marginTop: 20}}
-            buttonStyle={styles.btnBack}
-            onPress={() => navigate('Topup')}
-          />
-          <Text
-            style={{
-              marginLeft: 10,
-              marginTop: 8,
-              color: 'white',
-              fontSize: 20,
-              fontWeight: '700',
-              lineHeight: 30,
-            }}>
-            Transfer
-          </Text>
-        </View>
         <View style={styles.cardVa}>
-          <Image source={profileImg} style={styles.profileImg} />
-          <Text
-            style={{
-              marginTop: 30,
-              marginLeft: 20,
-              color: '#7A7886',
-              fontSize: 14,
-            }}>
-            Samuel
-          </Text>
-          <Text
-            style={{
-              marginTop: 55,
-              marginLeft: '-14%',
-              fontWeight: '700',
-              fontSize: 16,
-            }}>
-            1234567778889890
-          </Text>
+          <View style={{ flexDirection: 'row' }}>
+            <Image source={{ uri: API_URL + recipient.image }} style={styles.profileImg} />
+            <View>
+              <Text
+                style={{
+                  marginTop: 25,
+                  marginLeft: 20,
+                  color: '#7A7886',
+                  fontSize: 14,
+                }}>
+                {recipient.name}
+              </Text>
+              <Text
+                style={{
+                  marginTop: 5,
+                  marginLeft: 20,
+                  fontWeight: '700',
+                  fontSize: 16,
+                }}>
+                {recipient.phone}
+              </Text>
+            </View>
+          </View>
         </View>
       </View>
       <View>
-        <TextInput
-          placeholder="0.00"
-          keyboardType={'phone-pad'}
-          placeholderTextColor="#B5BDCC"
-          style={styles.textInputTf}
-        />
-        <Text style={{color: '#7C7895', alignSelf: 'center', marginTop: 20}}>
-          Rp. 120.000 Available
+        <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+          <Text
+            style={{
+              fontSize: 32,
+              marginTop: 25,
+              fontWeight: '700'
+            }}
+          >Rp.</Text>
+          <TextInput
+            value={amount}
+            placeholder="0.00"
+            keyboardType={'phone-pad'}
+            placeholderTextColor="#B5BDCC"
+            style={styles.textInputTf}
+            onChangeText={(duit) => { setAmount(duit) }}
+          />
+        </View>
+        <Text style={{ color: '#7C7895', alignSelf: 'center', marginTop: 20 }}>
+          Rp. {toPrice(myData.balance)} Available
         </Text>
       </View>
       <View style={styles.noteInput}>
-        <Image source={pensil} style={{width: 19, height: 19, top: 10}} />
-        <TextInput style={{marginLeft: 17}} placeholder="Add some notes" />
+        <Image source={pensil} style={{ width: 19, height: 19, top: 10 }} />
+        <TextInput style={{ marginLeft: 17 }} value={notes} placeholder="Add some notes" onChangeText={(text) => { setNotes(text) }} />
       </View>
-      <View style={{height: 1, width: 343, backgroundColor: '#A9A9A9'}} />
-      <TouchableOpacity style={styles.btnTransfer}>
-        <Text style={{color: '#fff', fontSize: 18, marginTop: 10}}>
+      <View style={{ height: 1, width: windowWidth * 0.95, backgroundColor: '#A9A9A9', marginHorizontal: 10 }} />
+      <TouchableOpacity style={styles.btnTransfer}
+        onPress={myData.balance > amount ? handleTranfer : null}
+      >
+        <Text style={{ color: '#fff', fontSize: 18, marginTop: 10 }}>
           Transfer
         </Text>
       </TouchableOpacity>
@@ -91,7 +110,13 @@ const TransferScreen = ({navigation: {navigate}}) => {
   );
 };
 
-export default TransferScreen;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setTranfer: (data) =>
+      dispatch(setTranfer(data)),
+  };
+};
+export default connect(null, mapDispatchToProps)(TransferScreen);
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -103,7 +128,7 @@ const styles = StyleSheet.create({
   },
   header: {
     width: windowWidth,
-    height: windowHeight * 0.4,
+    height: windowHeight * 0.3,
     padding: 20,
     backgroundColor: '#6379F4',
     borderBottomLeftRadius: 20,
@@ -150,7 +175,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
   textInputTf: {
-    width: '20%',
+    width: '40%',
     alignSelf: 'center',
     fontSize: 32,
     marginTop: 15,
@@ -170,7 +195,7 @@ const styles = StyleSheet.create({
     width: windowWidth - 100,
     height: 50,
     borderRadius: 10,
-    marginTop: 50,
+    marginTop: windowHeight * 0.15,
     alignItems: 'center',
     marginLeft: 40,
   },

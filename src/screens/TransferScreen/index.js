@@ -9,6 +9,8 @@ import {
   View,
   StatusBar,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  ScrollView
 } from 'react-native';
 import { Button, Image } from 'react-native-elements';
 import { TextInput } from 'react-native-gesture-handler';
@@ -38,7 +40,8 @@ const TransferScreen = ({navigation, setTranfer}) => {
 
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
+      <View style={styles.container}>
       <StatusBar
         barStyle="light-content"
         backgroundColor="#6379F4"
@@ -93,10 +96,12 @@ const TransferScreen = ({navigation, setTranfer}) => {
           Rp. {toPrice(myData.balance)} Available
         </Text>
       </View>
-      <View style={styles.noteInput}>
+      <KeyboardAvoidingView>
+        <View style={styles.noteInput}>
         <Image source={pensil} style={{ width: 19, height: 19, top: 10 }} />
         <TextInput style={{ marginLeft: 17 }} value={notes} placeholder="Add some notes" onChangeText={(text) => { setNotes(text) }} />
       </View>
+      </KeyboardAvoidingView>
       <View style={{ height: 1, width: windowWidth * 0.95, backgroundColor: '#A9A9A9', marginHorizontal: 10 }} />
       <TouchableOpacity style={styles.btnTransfer}
         onPress={myData.balance > amount ? handleTranfer : null}
@@ -106,6 +111,7 @@ const TransferScreen = ({navigation, setTranfer}) => {
         </Text>
       </TouchableOpacity>
     </View>
+    </ScrollView>
   );
 };
 

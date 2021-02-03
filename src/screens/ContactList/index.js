@@ -69,6 +69,7 @@ const ContactList = ({ navigation, setReceiver }) => {
 
   const setRecipients = (obj) => {
     setReceiver(obj)
+    navigation.navigate('Transfer')
   }
 
   return (

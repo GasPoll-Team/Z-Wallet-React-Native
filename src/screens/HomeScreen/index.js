@@ -7,6 +7,7 @@ import {
   StatusBar,
   TouchableOpacity,
   ScrollView,
+  ActivityIndicator
 } from 'react-native';
 import { Image, Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -76,35 +77,35 @@ const HomeScreen = ({ navigation, setDataUser }) => {
                 }}>
                 {user !== undefined ? (
                   <Image
-                    source={{ uri: API_URL + user.image, width: 52, height: 52 }}
+                    source={{uri: API_URL + user.image, width: 52, height: 52}}
                     style={styles.profileImage}
                   />
                 ) : (
-                    <Image
-                      source={{
-                        uri:
-                          'http://damuthtaxidermy.com/Content/Staff-Gary-Damuth.png',
-                        width: 52,
-                        height: 52,
-                      }}
-                      style={styles.profileImage}
-                    />
-                  )}
+                  <Image
+                    source={{
+                      uri:
+                        'http://damuthtaxidermy.com/Content/Staff-Gary-Damuth.png',
+                      width: 52,
+                      height: 52,
+                    }}
+                    style={styles.profileImage}
+                  />
+                )}
               </TouchableOpacity>
 
               <View style={styles.balanceWrapper}>
-                <Text style={{ color: 'white', fontSize: 14, fontWeight: '400' }}>
+                <Text style={{color: 'white', fontSize: 14, fontWeight: '400'}}>
                   {user !== undefined ? user.name : ''}
                 </Text>
                 {/* Price will integrated with backend */}
-                <Text style={{ color: 'white', fontSize: 24, fontWeight: '700' }}>
+                <Text style={{color: 'white', fontSize: 24, fontWeight: '700'}}>
                   Rp. {user !== undefined ? toPrice(user.balance) : null}
                 </Text>
               </View>
             </View>
             <TouchableOpacity
               onPress={() => navigation.navigate('Notification')}
-              style={{ marginTop: 75, marginRight: vw(5) }}>
+              style={{marginTop: 75, marginRight: vw(5)}}>
               <Icon name="bell-outline" size={30} color="white" />
             </TouchableOpacity>
           </View>
@@ -132,30 +133,29 @@ const HomeScreen = ({ navigation, setDataUser }) => {
           {/* Transaction history */}
           <View>
             <View style={styles.transactionHeader}>
-              <Text style={{ color: '#514F5B', fontSize: 18, fontWeight: '700' }}>
+              <Text style={{color: '#514F5B', fontSize: 18, fontWeight: '700'}}>
                 Transaction History
               </Text>
               <TouchableOpacity onPress={() => navigation.navigate('History')}>
-                <Text style={{ color: '#6379F4', fontSize: 14, marginTop: 1 }}>
+                <Text style={{color: '#6379F4', fontSize: 14, marginTop: 1}}>
                   See all
                 </Text>
               </TouchableOpacity>
             </View>
             {/* Card transaction */}
-            {history !== undefined
-              ? history.map((data) => (
+            {history !== undefined ? (
+              history.map((data) => (
                 <TouchableOpacity
                   style={styles.cardTransaction}
                   key={data.id}
                   onPress={() => {
                     navigation.navigate('Details', {
                       id: data.id,
-                    })
-                  }}
-                >
+                    });
+                  }}>
                   <View style={styles.cardWrapper}>
                     <Image
-                      source={{ uri: `${API_URL}${data.image}` }}
+                      source={{uri: `${API_URL}${data.image}`}}
                       style={styles.profileImage}
                     />
                     <View style={styles.cardText}>
@@ -189,24 +189,26 @@ const HomeScreen = ({ navigation, setDataUser }) => {
                       -Rp. {toPrice(data.amount)}
                     </Text>
                   ) : (
-                      <Text
-                        style={{
-                          fontSize: 18,
-                          color: 'green',
-                          fontWeight: '700',
-                          marginTop: 20,
-                        }}>
-                        +Rp. {toPrice(data.amount)}
-                      </Text>
-                    )}
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        color: 'green',
+                        fontWeight: '700',
+                        marginTop: 20,
+                      }}>
+                      +Rp. {toPrice(data.amount)}
+                    </Text>
+                  )}
                 </TouchableOpacity>
               ))
-              : null}
+            ) : (
+              <ActivityIndicator size="large" color="#6379F4" />
+            )}
           </View>
         </ScrollView>
       ) : (
-          navigation.replace('Login')
-        )}
+        navigation.replace('Login')
+      )}
     </>
   );
 };

@@ -1,24 +1,10 @@
-<<<<<<< HEAD
-import React, {useState} from 'react';
-=======
 import React, { useEffect, useState } from 'react';
->>>>>>> 061bb1784081ee2f31b4b058e38e0c8b9a3a083c
 import {
   View,
   Text,
   StatusBar,
   StyleSheet,
   TouchableOpacity,
-<<<<<<< HEAD
-} from 'react-native';
-import {SearchBar, Image} from 'react-native-elements';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-
-import profileImg from '../../assets/images/profile-img.png';
-
-const ContactList = ({navigation: {navigate}}) => {
-  const [search, setSearch] = useState('');
-=======
   SafeAreaView,
   ScrollView
 } from 'react-native';
@@ -85,7 +71,6 @@ const ContactList = ({ navigation, setReceiver }) => {
     setReceiver(obj)
   }
 
->>>>>>> 061bb1784081ee2f31b4b058e38e0c8b9a3a083c
   return (
     <View>
       <StatusBar translucent backgroundColor="transparent" />
@@ -94,66 +79,16 @@ const ContactList = ({ navigation, setReceiver }) => {
           placeholder="Search receiver here"
           onChangeText={(val) => setSearch(val)}
           value={search}
-<<<<<<< HEAD
-          lightTheme={true}
-          inputContainerStyle={styles.inputContainer}
-          containerStyle={styles.searchBarContainer}
-=======
           onClear={viewAll}
           lightTheme={true}
           inputContainerStyle={styles.inputContainer}
           containerStyle={styles.searchBarContainer}
           onSubmitEditing={handleSearch}
->>>>>>> 061bb1784081ee2f31b4b058e38e0c8b9a3a083c
         />
       </View>
 
       {/* List contact */}
       <View style={styles.contactHeader}>
-<<<<<<< HEAD
-        <Text style={{color: '#514F5B', fontSize: 20, fontWeight: '700'}}>
-          Contacts
-        </Text>
-        <Text
-          style={{
-            color: '#514F5B',
-            fontSize: 14,
-            fontWeight: '400',
-            marginTop: 10,
-          }}>
-          17 Contact Founds
-        </Text>
-      </View>
-      {/* Contact card */}
-      <TouchableOpacity
-        style={styles.contactCard}
-        onPress={() => navigate('Transfer')}>
-        <View style={styles.cardWrapper}>
-          <Image source={profileImg} style={styles.profileImage} />
-          <View style={styles.cardText}>
-            <Text style={{fontSize: 16, color: '#4D4B57', fontWeight: '700'}}>
-              Samuel Suhi
-            </Text>
-            <Text style={{fontSize: 14, color: '#7A7886', fontWeight: '400'}}>
-              +62 831-4159-1960
-            </Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.contactCard}>
-        <View style={styles.cardWrapper}>
-          <Image source={profileImg} style={styles.profileImage} />
-          <View style={styles.cardText}>
-            <Text style={{fontSize: 16, color: '#4D4B57', fontWeight: '700'}}>
-              julia Syen
-            </Text>
-            <Text style={{fontSize: 14, color: '#7A7886', fontWeight: '400'}}>
-              +62 831-4159-2002
-            </Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-=======
         <Text style={{ color: '#514F5B', fontSize: 20, fontWeight: '700' }}>
           Contacts
         </Text>
@@ -226,14 +161,10 @@ const ContactList = ({ navigation, setReceiver }) => {
           }
         </ScrollView>
       </SafeAreaView>
->>>>>>> 061bb1784081ee2f31b4b058e38e0c8b9a3a083c
     </View>
   );
 };
 
-<<<<<<< HEAD
-export default ContactList;
-=======
 const mapDispatchToProps = (dispatch) => {
   return {
     setReceiver: (data) =>
@@ -241,7 +172,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 export default connect(null, mapDispatchToProps)(ContactList);
->>>>>>> 061bb1784081ee2f31b4b058e38e0c8b9a3a083c
 
 const styles = StyleSheet.create({
   header: {
@@ -259,11 +189,7 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     borderRadius: 15,
     elevation: 0,
-<<<<<<< HEAD
-    width: 405,
-=======
     width: vw(97),
->>>>>>> 061bb1784081ee2f31b4b058e38e0c8b9a3a083c
     alignSelf: 'center',
   },
   contactHeader: {
@@ -272,20 +198,11 @@ const styles = StyleSheet.create({
   },
   contactCard: {
     flexDirection: 'row',
-<<<<<<< HEAD
-    padding: 10,
-    height: 96,
-    backgroundColor: '#fff',
-    borderRadius: 15,
-    marginBottom: 15,
-    marginTop: 10,
-=======
     height: 96,
     padding: 10,
     width: vw(96),
     backgroundColor: '#fff',
     borderRadius: 10,
->>>>>>> 061bb1784081ee2f31b4b058e38e0c8b9a3a083c
   },
   cardWrapper: {
     flexDirection: 'row',

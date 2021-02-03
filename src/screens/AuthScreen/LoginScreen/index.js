@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-/* eslint-disable no-shadow */
-=======
->>>>>>> 061bb1784081ee2f31b4b058e38e0c8b9a3a083c
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import {
@@ -14,31 +10,19 @@ import {
 import {Input} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSelector} from 'react-redux';
-<<<<<<< HEAD
-import {BASE_URL} from '@env';
-=======
-import {API_URL} from '@env';
->>>>>>> 061bb1784081ee2f31b4b058e38e0c8b9a3a083c
+import {API_URL} from "@env";
 
 // redux
 import {connect} from 'react-redux';
 import {login} from '../../../utils/redux/action/authAction';
 
 const LoginScreen = ({navigation, login}) => {
-<<<<<<< HEAD
-  const API_URL = 'http://192.168.100.179:8000';
-=======
-  const API_URL = 'http://192.168.1.2:8000'
->>>>>>> 061bb1784081ee2f31b4b058e38e0c8b9a3a083c
+  // const API_URL = 'http://192.168.100.179:8000';
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
   const [show, setShow] = useState(true);
   const [errMsg, setErrMsg] = useState('');
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 061bb1784081ee2f31b4b058e38e0c8b9a3a083c
   const token = useSelector((state) => state.authReducer.token);
 
   const empty = () => {
@@ -49,11 +33,6 @@ const LoginScreen = ({navigation, login}) => {
     }
   };
 
-<<<<<<< HEAD
-=======
-  console.log(email,pass)
-
->>>>>>> 061bb1784081ee2f31b4b058e38e0c8b9a3a083c
   const handleSubmit = () => {
     const emailFormat = /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     const checkPass = /^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{8,}$/;
@@ -90,13 +69,8 @@ const LoginScreen = ({navigation, login}) => {
             }
           })
           .catch((err) => {
-<<<<<<< HEAD
-            // console.log(err.response.data)
-            console.log('error disokin', err);
-=======
             console.log(err.response.data)
             // console.log('error disokin', err);
->>>>>>> 061bb1784081ee2f31b4b058e38e0c8b9a3a083c
           });
       }
     }
@@ -167,10 +141,7 @@ const LoginScreen = ({navigation, login}) => {
                 Login
               </Text>
             </TouchableOpacity>
-<<<<<<< HEAD
-=======
             <Text>{errMsg}</Text>
->>>>>>> 061bb1784081ee2f31b4b058e38e0c8b9a3a083c
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate('Register');
@@ -182,15 +153,9 @@ const LoginScreen = ({navigation, login}) => {
             </TouchableOpacity>
           </View>
         </ScrollView>
-<<<<<<< HEAD
-      ) : (
-        navigation.replace('Home')
-      )}
-=======
       ) : 
         navigation.replace('Home')
       }
->>>>>>> 061bb1784081ee2f31b4b058e38e0c8b9a3a083c
     </>
   );
 };

@@ -11,14 +11,10 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconUser from 'react-native-vector-icons/Feather';
 // import {API_URL} from '@env';
-// import {API_URL} from "@env"
+import {API_URL} from "@env"
 
 const RegisterScreen = ({navigation}) => {
-<<<<<<< HEAD
-  const API_URL = 'http://192.168.100.179:8000';
-=======
-  const API_URL = 'http://192.168.1.2:8000';
->>>>>>> 061bb1784081ee2f31b4b058e38e0c8b9a3a083c
+  // const API_URL = 'http://192.168.100.179:8000';
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
   const [user, setUser] = useState('');
@@ -143,12 +139,7 @@ const RegisterScreen = ({navigation}) => {
         </View>
         <TouchableOpacity
           style={empty() ? styles.btn : styles.btnActive}
-<<<<<<< HEAD
           onPress={register}>
-=======
-          onPress={register}
-          >
->>>>>>> 061bb1784081ee2f31b4b058e38e0c8b9a3a083c
           <Text style={empty() ? styles.textNon : styles.textActive}>
             Sign Up
           </Text>

@@ -15,6 +15,7 @@ import {
   Splash,
   LoginScreen,
   TransferScreen,
+  HistoryScreen,
 } from '../screens';
 
 const Stack = createStackNavigator();
@@ -80,6 +81,13 @@ const Navigation = ({navigation}) => {
       <Stack.Screen
         name="Transfer"
         component={TransferScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="History"
+        component={HistoryScreen}
         options={{
           headerShown: false,
         }}

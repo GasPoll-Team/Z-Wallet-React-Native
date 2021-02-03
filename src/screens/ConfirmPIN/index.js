@@ -7,20 +7,45 @@ import {
   ScrollView,
   StyleSheet,
   StatusBar,
-  ToastAndroid
+  ToastAndroid,
+  Alert,
 } from 'react-native';
 import OTPField from 'react-native-otp-field';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useSelector } from 'react-redux';
 import 'axios'
 import { API_URL } from '@env'
+import PushNotification from 'react-native-push-notification';
+import { showNotification } from '../../notification';
 
 
-const NewPIN = ({ navigation }) => {
+
+const NewPIN = ({ navigation }) => { 
   const [pin, setPin] = useState('');
 
   const token = useSelector((state) => state.authReducer.token);
   const tranferData = useSelector((state) => state.tranferReducer);
+  const channel = 'notification';
+  useEffect(() => {
+    PushNotification.createChannel(
+      {
+        channelId: 'notification',
+        channelName: 'My Notification channel',
+        channelDescription: 'A channel to categories your notification',
+        soundName: 'default',
+        importance: 4,
+        vibrate: true,
+      },
+      (created) => console.log(`createchannel returned ${created}`),
+    );
+    // code to run on component mount
+  }, []);
+  useEffect(() => {
+    PushNotification.getChannels((channel_ids) => {
+      console.log('CHANNEL', channel_ids[0]);
+      () => navigation.navigate('Home');
+    });
+  }, []);
 
   const handleSubmit = () => {
     const config = {
@@ -32,7 +57,7 @@ const NewPIN = ({ navigation }) => {
     console.log(tranferData)
     axios.post(API_URL+`/tranfer/newTranfer`,tranferData,config)
     .then(({data}) =>{
-        navigation.replace('Success')
+        
     }).catch(({response}) =>{
         if(response.data.status == 500){
             navigation.replace('Fail')
@@ -87,8 +112,35 @@ const NewPIN = ({ navigation }) => {
       <View style={{ marginBottom: 25 }}>
         <TouchableOpacity
           style={pin.length === 6 ? styles.btnActive : styles.btn}
-          onPress={pin.length === 6 ? handleSubmit : null}
-        >
+          // onPress={pin.length === 6 ? handleSubmit : null}
+          onPress={() =>
+            Alert.alert(
+              'Confirm',
+              'Are you sure to process this order ?',
+              [
+                {
+                  text: 'Cancel',
+                  onPress: () => console.log('Cancel Pressed'),
+                  style: 'cancel',
+                },
+                {
+                  text: 'OK',
+                  onPress: () => {
+                    // transaction(),
+                    {pin.length === 6 ? handleSubmit : null}
+                      showNotification(
+                        'Yeaah!',
+                        'Your Transfer is Success',
+                        channel,
+                      ),
+                      // navigation.navigate('Success');
+                      navigation.replace('Success')
+                  },
+                },
+              ],
+              {cancelable: false}
+            )
+          }>
           <Text style={pin.length === 6 ? styles.textActive : styles.textNon}>
             Confirm
           </Text>

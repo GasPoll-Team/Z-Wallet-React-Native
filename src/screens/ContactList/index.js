@@ -17,6 +17,7 @@ import { setReceiver } from '../../utils/redux/action/contactAction'
 import axios from 'axios'
 
 const ContactList = ({ navigation, setReceiver }) => {
+   
   const [search, setSearch] = useState('');
   const [listContact, setContact] = useState([])
   const token = useSelector((state) => state.authReducer.token);

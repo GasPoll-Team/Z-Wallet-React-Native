@@ -18,7 +18,7 @@ import {connect} from 'react-redux';
 import {login} from '../../../utils/redux/action/authAction';
 
 const LoginScreen = ({navigation, login}) => {
-  // const API_URL = 'http://192.168.100.179:8000';
+  // const API_URL = 'http://192.168.1.2:8000';
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
   const [show, setShow] = useState(true);

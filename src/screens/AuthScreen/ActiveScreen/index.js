@@ -10,10 +10,9 @@ import {
 import {Input} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconUser from 'react-native-vector-icons/Feather';
-// import {API_URL} from '@env';
+import {API_URL} from '@env';
 
 const ActiveScreen = ({navigation}) => {
-  const API_URL = 'http://192.168.1.2:8000';
   const [email, setEmail] = useState('');
   const [otp, setOtp] = useState('');
   const [errMsg, setErrMsg] = useState('');

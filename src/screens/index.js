@@ -12,6 +12,7 @@ import Splash from './SplashScreen';
 import TransferScreen from './TransferScreen';
 import OtpScreen from './AuthScreen/OtpScreen';
 import HistoryScreen from './HistoryScreen';
+import ProfileScreen from './ProfileScreen';
 
 export {
   LoginScreen,
@@ -28,4 +29,5 @@ export {
   Splash,
   OtpScreen,
   HistoryScreen,
+  ProfileScreen,
 };

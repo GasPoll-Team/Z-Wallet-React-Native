@@ -10,9 +10,11 @@ import {
 } from 'react-native';
 import OTPField from 'react-native-otp-field';
 import {useSelector} from 'react-redux';
+import { API_URL } from "@env"
+
 
 const PinScreen = ({navigation}) => {
-  const API_URL = 'http://192.168.1.2:8000';
+  // const API_URL = 'http://192.168.1.2:8000';
   const [pin, setPin] = useState('');
 
   const token = useSelector((state) => state.authReducer.token);

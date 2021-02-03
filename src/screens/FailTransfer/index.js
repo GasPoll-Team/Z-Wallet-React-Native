@@ -122,6 +122,9 @@ const FailTransfer = ({ navigation }) => {
       <View style={{ marginBottom: 25 }}>
         <TouchableOpacity
           style={styles.btnActive}
+          onPress={() => {
+            navigation.navigate('Confirm')
+          }}
         >
           <Text style={styles.textActive}>
             Try again

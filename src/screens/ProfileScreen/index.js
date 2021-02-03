@@ -209,7 +209,7 @@ const ProfileScreen = ({ navigation, logout }) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: vh(2),
+    // marginTop: vh(2),
     height: '100%',
     backgroundColor: 'white',
     // marginTop: 90,

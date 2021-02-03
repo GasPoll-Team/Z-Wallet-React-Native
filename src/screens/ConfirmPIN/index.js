@@ -7,40 +7,58 @@ import {
   ScrollView,
   StyleSheet,
   StatusBar,
-  ToastAndroid
+  ToastAndroid,
+  Alert,
 } from 'react-native';
 import OTPField from 'react-native-otp-field';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useSelector } from 'react-redux';
 import 'axios'
 import { API_URL } from '@env'
+import { useSocket } from './../../utils/context/SocketProvider'
+// import PushNotification from 'react-native-push-notification';
+// import { showNotification } from '../../notification';
+
 
 
 const NewPIN = ({ navigation }) => {
   const [pin, setPin] = useState('');
+  const socket = useSocket()
 
+  const receiver = useSelector((state) => state.contactReducer)
   const token = useSelector((state) => state.authReducer.token);
+  const id = useSelector((state) => state.authReducer.id);
+  const name = useSelector((state) => state.contactReducer.name)
   const tranferData = useSelector((state) => state.tranferReducer);
 
   const handleSubmit = () => {
     const config = {
       headers: {
         'x-access-token': 'bearer ' + token,
-        'x-access-PIN':pin
+        'x-access-PIN': pin
       },
     };
     console.log(tranferData)
-    axios.post(API_URL+`/tranfer/newTranfer`,tranferData,config)
-    .then(({data}) =>{
+    axios.post(API_URL + `/tranfer/newTranfer`, tranferData, config)
+      .then(({ data }) => {
+        const notifData = {
+          id: id,
+          sender: name,
+          recipient: receiver.id,
+          amount: tranferData.amount,
+          notes: tranferData.notes
+        }
+        socket.emit('transfer', notifData)
+        console.log('sukses')
         navigation.replace('Success')
-    }).catch(({response}) =>{
-        if(response.data.status == 500){
-            navigation.replace('Fail')
+      }).catch(({ response }) => {
+        if (response.data.status == 500) {
+          navigation.replace('Fail')
         }
         console.log(response.data)
         ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
 
-    })
+      })
 
   }
   return (
@@ -54,7 +72,7 @@ const NewPIN = ({ navigation }) => {
         <View style={styles.header2}>
           <View style={{ flexDirection: 'row' }}>
             <TouchableOpacity style={{ marginTop: 20 }}
-            onPress={()=>{navigation.goBack()}}
+              onPress={() => { navigation.goBack() }}
             >
               <Icon name="arrow-left" color="white" size={30} />
             </TouchableOpacity>

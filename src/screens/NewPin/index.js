@@ -13,7 +13,7 @@ import OTPField from 'react-native-otp-field';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useSelector } from 'react-redux';
 import 'axios'
-import { API_URL } from '@env'
+import { API_URL } from "@env"
 
 
 const NewPIN = ({ navigation }) => {
@@ -32,6 +32,7 @@ const NewPIN = ({ navigation }) => {
     }
     axios.patch(API_URL + `/auth/PIN`,dataPIN, config)
       .then(({ data }) => {
+        console.log("Apa ", data);
         ToastAndroid.show(data.message, ToastAndroid.SHORT);
         navigation.replace('Profile')
       }).catch(({ response }) => {

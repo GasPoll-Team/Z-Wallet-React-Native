@@ -95,7 +95,10 @@ const Navigation = ({navigation}) => {
         name="History"
         component={HistoryScreen}
         options={{
-          headerShown: false,
+          headerShown: true,
+          title: 'History',
+          headerStyle: {backgroundColor: '#6379F4', elevation: 0},
+          headerTintColor: '#fff',
         }}
       />
       <Stack.Screen

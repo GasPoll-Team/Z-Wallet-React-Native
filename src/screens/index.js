@@ -18,6 +18,7 @@ import NewPIN from './NewPin';
 import AddNumber from './AddNumber';
 import ManageNumber from './ManageNumber';
 import ConfirmScreen from './ConfirmScreen';
+import Notification from './Notification'
 
 export {
     RegisterScreen,
@@ -40,4 +41,5 @@ export {
     AddNumber,
     ManageNumber,
     ConfirmScreen,
+    Notification
 };

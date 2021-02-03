@@ -1,6 +1,6 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
-import {createStackNavigator} from '@react-navigation/stack';
+import { StyleSheet } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
 import {
   RegisterScreen,
   LoginScreen,
@@ -22,59 +22,60 @@ import {
   AddNumber,
   ManageNumber,
   ConfirmScreen,
+  Notification
 } from '../screens';
 
 const Stack = createStackNavigator();
 
-const Navigation = ({navigation}) => {
+const Navigation = ({ navigation }) => {
   return (
     <Stack.Navigator>
       <Stack.Screen
         initialRouteName="Splash"
         name="Splash"
         component={Splash}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Login"
         component={LoginScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Register"
         component={RegisterScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Active"
         component={ActiveScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Pin"
         component={PinScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="PinSuccess"
         component={PinSuccessScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Forgot"
         component={ForgotScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Otp"
         component={OtpScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen name="Reset" component={ResetPassScreen} />
       <Stack.Screen
         name="Home"
         component={HomeScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Topup"
@@ -82,7 +83,7 @@ const Navigation = ({navigation}) => {
         options={{
           headerShown: true,
           title: 'Topup Balance',
-          headerStyle: {backgroundColor: '#6379F4', elevation: 0},
+          headerStyle: { backgroundColor: '#6379F4', elevation: 0 },
           headerTintColor: '#fff',
         }}
       />
@@ -92,19 +93,19 @@ const Navigation = ({navigation}) => {
         options={{
           headerShown: true,
           title: 'Find Receiver',
-          headerStyle: {backgroundColor: '#6379F4', elevation: 0},
+          headerStyle: { backgroundColor: '#6379F4', elevation: 0 },
           headerTintColor: '#fff',
         }}
       />
       <Stack.Screen
         name="Profile"
         component={ProfileScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Personal"
         component={PersonalInformation}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Change"
@@ -116,30 +117,40 @@ const Navigation = ({navigation}) => {
       <Stack.Screen
         name="ChangePIN"
         component={ChangePIN}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="NewPIN"
         component={NewPIN}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="AddNumber"
         component={AddNumber}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Manage"
         component={ManageNumber}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
-       <Stack.Screen
+      <Stack.Screen
+        name="Notification"
+        component={Notification}
+        options={{
+          headerShown: true,
+          title: 'Notification',
+          headerStyle: { backgroundColor: '#6379F4', elevation: 0 },
+          headerTintColor: '#fff',
+        }}
+      />
+      <Stack.Screen
         name="Confirm"
         component={ConfirmScreen}
         options={{
           headerShown: true,
           title: 'Confirmation',
-          headerStyle: {backgroundColor: '#6379F4', elevation: 0},
+          headerStyle: { backgroundColor: '#6379F4', elevation: 0 },
           headerTintColor: '#fff',
         }}
       />

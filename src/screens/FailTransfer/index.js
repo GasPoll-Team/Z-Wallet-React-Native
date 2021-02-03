@@ -56,7 +56,7 @@ const FailTransfer = ({ navigation }) => {
           <View style={styles.rounded}>
             <Icon name="x" size={40} color="white" />
           </View>
-          <Text style={styles.textStatus}>Transfer Success</Text>
+          <Text style={styles.textStatus}>Transfer Failed</Text>
         </View>
         <View style={styles.content}>
           <View style={styles.subContent}>

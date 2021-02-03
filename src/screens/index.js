@@ -1,6 +1,6 @@
 import RegisterScreen from './AuthScreen/RegisterScreen';
 import LoginScreen from './AuthScreen/LoginScreen';
-import OtpScreen from './AuthScreen/OtpScreen'
+import OtpScreen from './AuthScreen/OtpScreen';
 import PinScreen from './AuthScreen/PinScreen';
 import ActiveScreen from './AuthScreen/ActiveScreen';
 import PinSuccessScreen from './AuthScreen/PinSuccessScreen';
@@ -18,26 +18,32 @@ import NewPIN from './NewPin';
 import AddNumber from './AddNumber';
 import ManageNumber from './ManageNumber';
 import ConfirmScreen from './ConfirmScreen';
+import HistoryScreen from './HistoryScreen';
+import TransferScreen from './TransferScreen';
+import Notification from './Notification';
 
 export {
-    RegisterScreen,
-    LoginScreen,
-    PinScreen,
-    ActiveScreen,
-    PinSuccessScreen,
-    ForgotScreen,
-    OtpScreen,
-    ResetPassScreen,
-    HomeScreen,
-    TopUpScreen,
-    ContactList,
-    Splash,
-    ProfileScreen,
-    PersonalInformation,
-    ChangePassword,
-    ChangePIN,
-    NewPIN,
-    AddNumber,
-    ManageNumber,
-    ConfirmScreen,
+  RegisterScreen,
+  LoginScreen,
+  PinScreen,
+  ActiveScreen,
+  PinSuccessScreen,
+  ForgotScreen,
+  OtpScreen,
+  ResetPassScreen,
+  HomeScreen,
+  TopUpScreen,
+  ContactList,
+  Splash,
+  ProfileScreen,
+  PersonalInformation,
+  ChangePassword,
+  ChangePIN,
+  NewPIN,
+  AddNumber,
+  ManageNumber,
+  ConfirmScreen,
+  HistoryScreen,
+  TransferScreen,
+  Notification,
 };

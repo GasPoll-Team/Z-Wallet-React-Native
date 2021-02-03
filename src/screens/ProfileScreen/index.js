@@ -13,7 +13,7 @@ import {
 import { vw, vh, vmax, vmin } from 'react-native-expo-viewport-units'
 import { useSelector, connect } from 'react-redux'
 import axios from 'axios'
-import { API_URL } from '@env'
+// import { API_URL } from '@env'
 import { logout } from '../../utils/redux/action/authAction'
 import ImagePicker from 'react-native-image-crop-picker'
 
@@ -22,6 +22,7 @@ import profile from '../../assets/images/profile-img.png';
 
 
 const ProfileScreen = ({ navigation, logout }) => {
+  const API_URL = 'http://192.168.1.2:8000';
   const token = useSelector((state) => state.authReducer.token);
   const id = useSelector((state) => state.authReducer.token)
   const [isEnabled, setIsEnabled] = useState(false);

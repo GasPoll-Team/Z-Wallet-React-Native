@@ -21,6 +21,8 @@ import ConfirmScreen from './ConfirmScreen';
 import HistoryScreen from './HistoryScreen';
 import TransferScreen from './TransferScreen';
 import Notification from './Notification';
+import SuccessTransfer from './SuccessTransfer';
+import FailTransfer from './FailTransfer';
 
 export {
   RegisterScreen,
@@ -46,4 +48,6 @@ export {
   HistoryScreen,
   TransferScreen,
   Notification,
+  SuccessTransfer,
+  FailTransfer,
 };

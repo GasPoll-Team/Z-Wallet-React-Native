@@ -24,7 +24,9 @@ import {
   ConfirmScreen,
   HistoryScreen,
   TransferScreen,
-  Notification
+  Notification,
+  SuccessTransfer,
+  FailTransfer,
 } from '../screens';
 
 const Stack = createStackNavigator();
@@ -175,6 +177,16 @@ const Navigation = ({navigation}) => {
           headerStyle: {backgroundColor: '#6379F4', elevation: 0},
           headerTintColor: '#fff',
         }}
+      />
+      <Stack.Screen
+        name="SuccessTrans"
+        component={SuccessTransfer}
+        options={{headerShown: false}}
+      />
+       <Stack.Screen
+        name="FailTrans"
+        component={FailTransfer}
+        options={{headerShown: false}}
       />
     </Stack.Navigator>
   );

@@ -3,6 +3,7 @@ import {StyleSheet} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {
   RegisterScreen,
+  LoginScreen,
   PinScreen,
   ActiveScreen,
   PinSuccessScreen,
@@ -13,10 +14,14 @@ import {
   TopUpScreen,
   ContactList,
   Splash,
-  LoginScreen,
-  TransferScreen,
-  HistoryScreen,
   ProfileScreen,
+  PersonalInformation,
+  ChangePassword,
+  ChangePIN,
+  NewPIN,
+  AddNumber,
+  ManageNumber,
+  ConfirmScreen,
 } from '../screens';
 
 const Stack = createStackNavigator();
@@ -34,11 +39,6 @@ const Navigation = ({navigation}) => {
         name="Login"
         component={LoginScreen}
         options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="Profile"
-        component={ProfileScreen}
-        // options={{headerShown: false}}
       />
       <Stack.Screen
         name="Register"
@@ -80,23 +80,8 @@ const Navigation = ({navigation}) => {
         name="Topup"
         component={TopUpScreen}
         options={{
-          headerShown: false,
-          headerStyle: {backgroundColor: '#6379F4'},
-        }}
-      />
-      <Stack.Screen
-        name="Transfer"
-        component={TransferScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="History"
-        component={HistoryScreen}
-        options={{
           headerShown: true,
-          title: 'History',
+          title: 'Topup Balance',
           headerStyle: {backgroundColor: '#6379F4', elevation: 0},
           headerTintColor: '#fff',
         }}
@@ -107,6 +92,56 @@ const Navigation = ({navigation}) => {
         options={{
           headerShown: true,
           title: 'Find Receiver',
+          headerStyle: {backgroundColor: '#6379F4', elevation: 0},
+          headerTintColor: '#fff',
+        }}
+      />
+      <Stack.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Personal"
+        component={PersonalInformation}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Change"
+        component={ChangePassword}
+        options={{
+          headerShown: true,
+          title: 'History',
+          headerStyle: {backgroundColor: '#6379F4', elevation: 0},
+          headerTintColor: '#fff',
+        }}
+      />
+      <Stack.Screen
+        name="ChangePIN"
+        component={ChangePIN}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="NewPIN"
+        component={NewPIN}
+        options={{headerShown: false}}
+      />
+       <Stack.Screen
+        name="AddNumber"
+        component={AddNumber}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Manage"
+        component={ManageNumber}
+        options={{headerShown: false}}
+      />
+       <Stack.Screen
+        name="Confirm"
+        component={ConfirmScreen}
+        options={{
+          headerShown: true,
+          title: 'Confirmation',
           headerStyle: {backgroundColor: '#6379F4', elevation: 0},
           headerTintColor: '#fff',
         }}

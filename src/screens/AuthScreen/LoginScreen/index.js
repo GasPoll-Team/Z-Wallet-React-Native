@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
   StyleSheet,
+  ToastAndroid
 } from 'react-native';
 import {Input} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -70,7 +71,9 @@ const LoginScreen = ({navigation, login}) => {
           })
           .catch((err) => {
             console.log(err.response.data)
-            // console.log('error disokin', err);
+            if(err.response.status == 404){
+              ToastAndroid.show(err.response.data.msg, ToastAndroid.SHORT);
+            }
           });
       }
     }

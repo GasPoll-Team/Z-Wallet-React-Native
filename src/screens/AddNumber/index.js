@@ -1,5 +1,4 @@
-import React, {useEffect, useState} from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -7,14 +6,20 @@ import {
   ScrollView,
   StyleSheet,
   StatusBar,
+  ToastAndroid
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {Input} from 'react-native-elements';
+import { Input } from 'react-native-elements';
 // import ChangePassword from '../ChangePassword';
+import axios from 'axios';
+import { } from 'react-redux'
+import { API_URL } from '@env'
 
-const AddNumber = ({navigation}) => {
+const AddNumber = ({ navigation }) => {
+  const token = useSelector((state) => state.authReducer.token);
   const [number, setNumber] = useState('');
+  const [errMsg, setErrMsg] = useState('')
 
   const empty = () => {
     if (number === '') {
@@ -23,6 +28,37 @@ const AddNumber = ({navigation}) => {
       return false;
     }
   };
+
+  const handleSubmit = () => {
+    const testNumber = /^(^\+62|62|^08)(\d{3,4}-?){2}\d{3,4}$/g
+    if (!empty()) {
+      if (testNumber.test(number)) {
+        const config = {
+          headers: {
+            'x-access-token': 'bearer ' + token,
+          },
+        };
+        const updatePhone = {
+          phone: number
+        }
+        axios.patch(API_URL + `/user/changeInfo`, updatePhone, config)
+          .then(({ data }) => {
+            ToastAndroid.show(data.message, ToastAndroid.SHORT);
+            navigation.replace('Profile')
+          }).catch(({ response }) => {
+            if(response.status == 401){
+              ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
+            }
+            console.log(response.data)
+          })
+
+      } else {
+        setErrMsg('Format penulisan No. Hp salah !')
+      }
+    } else {
+      setErrMsg('Kolom tidak boleh kosong !')
+    }
+  }
 
   return (
     <>
@@ -33,8 +69,12 @@ const AddNumber = ({navigation}) => {
           translucent={true}
         />
         <View style={styles.header2}>
-          <View style={{flexDirection: 'row'}}>
-            <TouchableOpacity style={{marginTop: 20}}>
+          <View style={{ flexDirection: 'row' }}>
+            <TouchableOpacity style={{ marginTop: 20 }}
+              onPress={() => {
+                navigation.goBack()
+              }}
+            >
               <Icon name="arrow-left" color="white" size={30} />
             </TouchableOpacity>
             <Text
@@ -75,14 +115,13 @@ const AddNumber = ({navigation}) => {
               onChangeText={(text) => setNumber(text)}
             />
           </View>
+          <Text style={{ color: 'red', fontWeight: 'bold' }}>{errMsg}</Text>
         </View>
       </ScrollView>
-      <View style={{marginBottom: 25}}>
+      <View style={{ marginBottom: 25 }}>
         <TouchableOpacity
           style={empty() ? styles.btn : styles.btnActive}
-          onPress={() => {
-            navigation.navigate('Profile');
-          }}>
+          onPress={handleSubmit}>
           <Text style={empty() ? styles.textNon : styles.textActive}>
             Submit
           </Text>

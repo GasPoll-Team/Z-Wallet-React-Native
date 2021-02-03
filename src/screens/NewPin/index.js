@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
   View,
@@ -7,39 +7,38 @@ import {
   ScrollView,
   StyleSheet,
   StatusBar,
+  ToastAndroid
 } from 'react-native';
 import OTPField from 'react-native-otp-field';
-import {useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-// import ChangePassword from '../ChangePassword';
+import { useSelector } from 'react-redux';
+import 'axios'
+import { API_URL } from '@env'
 
-const NewPIN = ({navigation}) => {
-  //   const API_URL = 'http://192.168.1.2:8000';
+
+const NewPIN = ({ navigation }) => {
   const [pin, setPin] = useState('');
 
-  //   const token = useSelector((state) => state.authReducer.token);
-  //   console.log("ini token", token);
+  const token = useSelector((state) => state.authReducer.token);
 
-  //   const handlePin = () => {
-  //     const data = {
-  //       PIN: pin,
-  //     };
+  const handleSubmit = () => {
+    const config = {
+      headers: {
+        'x-access-token': 'bearer ' + token,
+      },
+    };
+    const dataPIN = {
+      PIN:pin
+    }
+    axios.patch(API_URL + `/auth/PIN`,dataPIN, config)
+      .then(({ data }) => {
+        ToastAndroid.show(data.message, ToastAndroid.SHORT);
+        navigation.replace('Profile')
+      }).catch(({ response }) => {
+        console.log(response.data)
+      })
 
-  //     const config = {
-  //       headers: {
-  //         'x-access-token': 'bearer ' + token,
-  //       },
-  //     };
-
-  //     axios.patch(API_URL + '/auth/PIN', data, config).then((res) => {
-  //       console.log("berhasil update PIN", res.data)
-  //       navigation.replace('PinSuccess')
-  //     }).catch((err) => {
-  //       console.log(err.response.data)
-  //       console.log("error disokin", err)
-  //     })
-  //   };
-
+  }
   return (
     <>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -49,8 +48,8 @@ const NewPIN = ({navigation}) => {
           translucent={true}
         />
         <View style={styles.header2}>
-          <View style={{flexDirection: 'row'}}>
-            <TouchableOpacity style={{marginTop: 20}}>
+          <View style={{ flexDirection: 'row' }}>
+            <TouchableOpacity style={{ marginTop: 20 }}>
               <Icon name="arrow-left" color="white" size={30} />
             </TouchableOpacity>
             <Text
@@ -79,10 +78,10 @@ const NewPIN = ({navigation}) => {
           </View>
         </View>
       </ScrollView>
-      <View style={{marginBottom: 25}}>
+      <View style={{ marginBottom: 25 }}>
         <TouchableOpacity
           style={pin.length === 6 ? styles.btnActive : styles.btn}
-          // onPress={handlePin}
+          onPress={pin.length === 6 ? handleSubmit : null}
         >
           <Text style={pin.length === 6 ? styles.textActive : styles.textNon}>
             Change PIN

@@ -39,7 +39,7 @@ const HistoryScreen = () => {
 
   const getDataMonth = () => {
     axios
-      .get(`${API_URL}/home/getAllInvoice?thisWeek=true`, {
+      .get(`${API_URL}/getAllInvoice?thisMonth=true`, {
         headers: {
           'x-access-token': 'bearer ' + token,
         },

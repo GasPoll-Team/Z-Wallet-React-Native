@@ -54,6 +54,7 @@ const HistoryScreen = () => {
   // GetDataWeek
   useEffect(() => {
     getDataWeek();
+    getDataMonth()
   }, [token]);
 
   return (

@@ -30,7 +30,7 @@ const AddNumber = ({ navigation }) => {
   };
 
   const handleSubmit = () => {
-    const testNumber = /^(^\+62|62|^08)(\d{3,4}-?){2}\d{3,4}$/g
+    const testNumber = /^(^\+62)(\d{3,4}-?){2}\d{3,4}$/g
     if (!empty()) {
       if (testNumber.test(number)) {
         const config = {
@@ -103,7 +103,7 @@ const AddNumber = ({ navigation }) => {
           </View>
           <View style={styles.form}>
             <Input
-              placeholder="Enter your phone number"
+              placeholder="+62"
               keyboardAppearance="dark"
               leftIcon={
                 <Icon

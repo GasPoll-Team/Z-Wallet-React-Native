@@ -21,7 +21,10 @@ import ConfirmScreen from './ConfirmScreen';
 import Notification from './Notification'
 import HistoryScreen from './HistoryScreen';
 import TransferScreen from './TransferScreen';
-import Notification from './Notification';
+import ConfirmPINScreen from './ConfirmPIN'
+import SuccessScreen from './SuccessTransfer'
+import FailScreen from './FailTransfer'
+import DetailScreen from './DetailTranfer'
 
 export {
     RegisterScreen,
@@ -47,4 +50,8 @@ export {
     HistoryScreen,
     TransferScreen,
     Notification,
+    ConfirmPINScreen,
+    SuccessScreen,
+    FailScreen,
+    DetailScreen
 };

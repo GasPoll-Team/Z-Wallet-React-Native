@@ -24,7 +24,11 @@ import {
   ConfirmScreen,
   HistoryScreen,
   TransferScreen,
-  Notification
+  Notification,
+  ConfirmPINScreen,
+  SuccessScreen,
+  FailScreen,
+  DetailScreen
 } from '../screens';
 
 const Stack = createStackNavigator();
@@ -127,6 +131,11 @@ const Navigation = ({ navigation }) => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
+        name="ConfirmPIN"
+        component={ConfirmPINScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
         name="AddNumber"
         component={AddNumber}
         options={{ headerShown: false }}
@@ -161,7 +170,7 @@ const Navigation = ({ navigation }) => {
         component={HistoryScreen}
         options={{
           headerShown: true,
-          title: 'Hitory',
+          title: 'History',
           headerStyle: {backgroundColor: '#6379F4', elevation: 0},
           headerTintColor: '#fff',
         }}
@@ -171,20 +180,25 @@ const Navigation = ({ navigation }) => {
         component={TransferScreen}
         options={{
           headerShown: true,
-          title: 'Hitory',
+          title: 'Transfer',
           headerStyle: {backgroundColor: '#6379F4', elevation: 0},
           headerTintColor: '#fff',
         }}
       />
       <Stack.Screen
-        name="Notification"
-        component={Notification}
-        options={{
-          headerShown: true,
-          title: 'Notification',
-          headerStyle: {backgroundColor: '#6379F4', elevation: 0},
-          headerTintColor: '#fff',
-        }}
+        name="Success"
+        component={SuccessScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Fail"
+        component={FailScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Details"
+        component={DetailScreen}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );

@@ -1,4 +1,4 @@
-import React, {useEffect, useState, createRef, useCallback} from 'react';
+import React, { useEffect, useState, createRef, useCallback } from 'react';
 import {
   StyleSheet,
   Text,
@@ -12,20 +12,23 @@ import {
 import Icon from 'react-native-vector-icons/AntDesign';
 import ActionSheet from 'react-native-actions-sheet';
 
-import {API_URL} from '@env';
-import {vw, vh, vmax, vmin} from 'react-native-expo-viewport-units';
-import {useSelector, connect} from 'react-redux';
+import { API_URL } from '@env';
+import { vw, vh, vmax, vmin } from 'react-native-expo-viewport-units';
+import { useSelector, connect } from 'react-redux';
+import CalendarPicker from 'react-native-calendar-picker'
+import moment from 'moment'
 import axios from 'axios';
 
 // ariefwidiyatmoko38@gmail.com
 // Gaspoll19
 
-const HistoryScreen = ({navigation, route}) => {
+const HistoryScreen = ({ navigation, route }) => {
   const actionSheetRef = createRef();
 
   const [historyWeek, setHistoryWeek] = useState();
   const [historyMonth, setHistoryMonth] = useState();
-
+  const [selectedStartDate, setStartDate] = useState('')
+  const [selectedEndDate, setEndDate] = useState('')
   const toPrice = (x) => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
   };
@@ -39,8 +42,8 @@ const HistoryScreen = ({navigation, route}) => {
           'x-access-token': 'bearer ' + token,
         },
       })
-      .then(({data}) => {
-        console.log('Datanya Week', data.data);
+      .then(({ data }) => {
+        // console.log('Datanya Week', data.data);
         setHistoryWeek(data.data);
       })
       .catch((err) => console.log(err));
@@ -53,51 +56,82 @@ const HistoryScreen = ({navigation, route}) => {
           'x-access-token': 'bearer ' + token,
         },
       })
-      .then(({data}) => {
-        console.log('Datanya Month', data.data);
+      .then(({ data }) => {
+        // console.log('Datanya Month', data.data);
         setHistoryMonth(data.data);
       })
       .catch((err) => console.log(err));
   };
 
-  const getDataWeekIn = () => {
+  const getDataWeekIn = (flow) => {
     axios
-      .get(`${API_URL}/home/getAllInvoice?thisWeek=true&flow=in`, {
+      .get(`${API_URL}/home/getInvoice?thisWeek=true&flow=${flow}`, {
         headers: {
           'x-access-token': 'bearer ' + token,
         },
       })
-      .then(({data}) => {
-        console.log('Datanya WeekIN', data.data);
+      .then(({ data }) => {
+        // console.log('Datanya WeekIN', data.data);
         setHistoryWeek(data.data);
       })
       .catch((err) => console.log(err));
   };
 
-  const getDataMonthIn = () => {
+  const getDataMonthIn = (flow) => {
     axios
-      .get(`${API_URL}/home/getAllInvoice?thisMonth=true&flow=in`, {
+      .get(`${API_URL}/home/getInvoice?thisMonth=true&flow=${flow}`, {
         headers: {
           'x-access-token': 'bearer ' + token,
         },
       })
       .then((res) => {
         const monthIn = res.data.data;
-        console.log('Datanya MonthIN', monthIn);
+        // console.log('Datanya MonthIN', monthIn);
         setHistoryMonth(monthIn);
       })
       .catch((err) => console.log(err));
   };
 
   const getDataIn = () => {
-    getDataWeekIn();
-    getDataMonthIn();
+    getDataWeekIn('in');
+    getDataMonthIn('in');
   };
+
+  const getDataOut = () => {
+    getDataWeekIn('out');
+    getDataMonthIn('out');
+  }
   // GetDataWeek
   useEffect(() => {
     getDataWeek();
     getDataMonth();
   }, [token]);
+
+  const onDateChange = (date, type) => {
+    if (type === 'END_DATE') {
+      setEndDate(date)
+    } else {
+      setStartDate(date),
+        setEndDate(null)
+    }
+  }
+
+  const getDataRange = () => {
+    const startDate = moment(selectedStartDate).format('YYYY-MM-DD')
+    const endDate = moment(selectedEndDate).format('YYYY-MM-DD')
+    axios.get(API_URL + `/home/getAllInvoice?from=${startDate}&to=${endDate}`, {
+      headers: {
+        'x-access-token': 'bearer ' + token,
+      }
+    })
+      .then(({ data }) => {
+        setHistoryWeek([])
+        setHistoryMonth(data.data)
+        actionSheetRef.current?.hide()
+      }).catch(({ response }) => {
+        console.log(response.data)
+      })
+  }
 
   return (
     <>
@@ -111,50 +145,50 @@ const HistoryScreen = ({navigation, route}) => {
             <View>
               <View style={styles.transactionHeader}>
                 <Text
-                  style={{color: '#514F5B', fontSize: 18, fontWeight: '700'}}>
+                  style={{ color: '#514F5B', fontSize: 18, fontWeight: '700' }}>
                   This Week
                 </Text>
               </View>
               {/* Card transaction */}
               {historyWeek !== undefined
                 ? historyWeek.map((data) => (
-                    <View style={styles.cardTransaction} key={data.id}>
-                      <View style={styles.cardWrapper}>
-                        <Image
-                          source={{uri: `${API_URL}${data.image}`}}
-                          style={styles.profileImage}
-                        />
-                        <View style={styles.cardText}>
-                          <Text
-                            style={{
-                              fontSize: 16,
-                              color: '#4D4B57',
-                              fontWeight: '700',
-                            }}>
-                            {data.name}
-                          </Text>
-                          <Text
-                            style={{
-                              fontSize: 14,
-                              color: '#4D4B57',
-                              fontWeight: '400',
-                              marginTop: 10,
-                            }}>
-                            {data.notes}
-                          </Text>
-                        </View>
-                      </View>
-                      {data.type === 'out' ? (
+                  <View style={styles.cardTransaction} key={data.id}>
+                    <View style={styles.cardWrapper}>
+                      <Image
+                        source={{ uri: `${API_URL}${data.image}` }}
+                        style={styles.profileImage}
+                      />
+                      <View style={styles.cardText}>
                         <Text
                           style={{
-                            fontSize: 18,
-                            color: '#FF5B37',
+                            fontSize: 16,
+                            color: '#4D4B57',
                             fontWeight: '700',
-                            marginTop: 20,
                           }}>
-                          -Rp. {toPrice(data.amount)}
+                          {data.name}
                         </Text>
-                      ) : (
+                        <Text
+                          style={{
+                            fontSize: 14,
+                            color: '#4D4B57',
+                            fontWeight: '400',
+                            marginTop: 10,
+                          }}>
+                          {data.notes}
+                        </Text>
+                      </View>
+                    </View>
+                    {data.type === 'out' ? (
+                      <Text
+                        style={{
+                          fontSize: 18,
+                          color: '#FF5B37',
+                          fontWeight: '700',
+                          marginTop: 20,
+                        }}>
+                        -Rp. {toPrice(data.amount)}
+                      </Text>
+                    ) : (
                         <Text
                           style={{
                             fontSize: 18,
@@ -165,58 +199,58 @@ const HistoryScreen = ({navigation, route}) => {
                           +Rp. {toPrice(data.amount)}
                         </Text>
                       )}
-                    </View>
-                  ))
+                  </View>
+                ))
                 : null}
             </View>
 
             <View>
               <View style={styles.transactionHeader}>
                 <Text
-                  style={{color: '#514F5B', fontSize: 18, fontWeight: '700'}}>
+                  style={{ color: '#514F5B', fontSize: 18, fontWeight: '700' }}>
                   This Month
                 </Text>
               </View>
               {/* Card transaction */}
               {historyMonth !== undefined
                 ? historyMonth.map((data) => (
-                    <View style={styles.cardTransaction} key={data.id}>
-                      <View style={styles.cardWrapper}>
-                        <Image
-                          source={{uri: `${API_URL}${data.image}`}}
-                          style={styles.profileImage}
-                        />
-                        <View style={styles.cardText}>
-                          <Text
-                            style={{
-                              fontSize: 16,
-                              color: '#4D4B57',
-                              fontWeight: '700',
-                            }}>
-                            {data.name}
-                          </Text>
-                          <Text
-                            style={{
-                              fontSize: 14,
-                              color: '#4D4B57',
-                              fontWeight: '400',
-                              marginTop: 10,
-                            }}>
-                            {data.notes}
-                          </Text>
-                        </View>
-                      </View>
-                      {data.type === 'out' ? (
+                  <View style={styles.cardTransaction} key={data.id}>
+                    <View style={styles.cardWrapper}>
+                      <Image
+                        source={{ uri: `${API_URL}${data.image}` }}
+                        style={styles.profileImage}
+                      />
+                      <View style={styles.cardText}>
                         <Text
                           style={{
-                            fontSize: 18,
-                            color: '#FF5B37',
+                            fontSize: 16,
+                            color: '#4D4B57',
                             fontWeight: '700',
-                            marginTop: 20,
                           }}>
-                          -Rp. {toPrice(data.amount)}
+                          {data.name}
                         </Text>
-                      ) : (
+                        <Text
+                          style={{
+                            fontSize: 14,
+                            color: '#4D4B57',
+                            fontWeight: '400',
+                            marginTop: 10,
+                          }}>
+                          {data.notes}
+                        </Text>
+                      </View>
+                    </View>
+                    {data.type === 'out' ? (
+                      <Text
+                        style={{
+                          fontSize: 18,
+                          color: '#FF5B37',
+                          fontWeight: '700',
+                          marginTop: 20,
+                        }}>
+                        -Rp. {toPrice(data.amount)}
+                      </Text>
+                    ) : (
                         <Text
                           style={{
                             fontSize: 18,
@@ -227,8 +261,8 @@ const HistoryScreen = ({navigation, route}) => {
                           +Rp. {toPrice(data.amount)}
                         </Text>
                       )}
-                    </View>
-                  ))
+                  </View>
+                ))
                 : null}
             </View>
           </View>
@@ -237,7 +271,7 @@ const HistoryScreen = ({navigation, route}) => {
 
       <View style={styles.bottomSortings}>
         <View style={styles.btnUpDown}>
-          <TouchableOpacity onPress={() => Alert.alert('ANJIM')}>
+          <TouchableOpacity onPress={getDataOut}>
             <Icon name="arrowup" color="#FF5B37" size={30} />
           </TouchableOpacity>
         </View>
@@ -250,7 +284,7 @@ const HistoryScreen = ({navigation, route}) => {
           <TouchableOpacity
             // onPress={() => setVisible(true)}>
             onPress={() => actionSheetRef.current?.setModalVisible()}>
-            <Text style={{color: '#6379F4', fontSize: 20, fontWeight: 'bold'}}>
+            <Text style={{ color: '#6379F4', fontSize: 20, fontWeight: 'bold' }}>
               Filter By Date
             </Text>
           </TouchableOpacity>
@@ -260,7 +294,30 @@ const HistoryScreen = ({navigation, route}) => {
       {/* Action Sheet */}
       <ActionSheet ref={actionSheetRef}>
         <View>
-          <Text>YOUR CUSTOM COMPONENT INSIDE THE ACTIONSHEET</Text>
+          <CalendarPicker
+            startFromMonday={true}
+            allowRangeSelection={true}
+            todayBackgroundColor="#f2e6ff"
+            selectedDayColor="#7300e6"
+            selectedDayTextColor="#FFFFFF"
+            onDateChange={onDateChange}
+          />
+          <View style={{ flexDirection: 'row' , justifyContent:'space-between', marginHorizontal:vw(20)}}>
+            <TouchableOpacity
+              onPress={getDataRange}
+            >
+              <Text>
+                Apply
+            </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => actionSheetRef.current?.hide()}
+            >
+              <Text>
+                Discard
+            </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </ActionSheet>
     </>

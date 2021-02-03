@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -6,20 +6,44 @@ import {
   StatusBar,
   TouchableOpacity,
   ScrollView,
+  Alert
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useSelector } from 'react-redux'
+// import axios from 'axios'
+// import { API_URL } from '@env'
 
-const ManageNumber = ({navigation}) => {
+const ManageNumber = ({ navigation }) => {
+  const phone = useSelector((state) => state.myDataReducer.phone);
+  const [userData, setUserData] = useState({})
+
+
+  const deletePhone = () => {
+    Alert.alert(
+      "Warning!",
+      "Are you sure to delete your phone number ?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel"
+        },
+        { text: "OK", onPress: () => navigation.replace('AddNumber') }
+      ],
+      { cancelable: true }
+    );
+  }
   return (
-   <>
+    <>
       <StatusBar
         barStyle="light-content"
         backgroundColor="#6379F4"
         translucent={true}
       />
       <View style={styles.header}>
-        <View style={{flexDirection: 'row'}}>
-          <TouchableOpacity style={{marginTop: 20}}>
+        <View style={{ flexDirection: 'row' }}>
+          <TouchableOpacity style={{ marginTop: 20 }}
+            onPress={() => { navigation.goBack() }}
+          >
             <Icon name="arrow-left" color="white" size={30} />
           </TouchableOpacity>
           <Text
@@ -35,23 +59,27 @@ const ManageNumber = ({navigation}) => {
           </Text>
         </View>
       </View>
-       <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
-      <View style={styles.content}>
-        <Text style={styles.title}>
-          You can only delete the phone number and then
+      <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
+        <View style={styles.content}>
+          <Text style={styles.title}>
+            You can only delete the phone number and then
         </Text>
-        <Text style={styles.title}>
-          You must add another Phone number
+          <Text style={styles.title}>
+            You must add another Phone number
         </Text>
-        <View style={styles.list}>
-          <Text style={styles.listTitle}>Primary</Text>
-          <Text style={styles.subTitle}>1223333</Text>
-          <Text style={styles.manage}>
-              <Icon name="trash-can-outline" size={30} />
-          </Text>
+          <View style={styles.list}>
+            <Text style={styles.listTitle}>Primary</Text>
+            <Text style={styles.subTitle}>{phone}</Text>
+            <Text style={styles.manage}>
+              <TouchableOpacity
+                onPress={deletePhone}
+              >
+                <Icon name="trash-can-outline" size={30} />
+              </TouchableOpacity>
+            </Text>
+          </View>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
     </>
   );
 };

@@ -8,8 +8,28 @@ import {
   ScrollView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useSelector} from 'react-redux'
+import axios from 'axios'
+import { API_URL } from '@env'
 
 const PersonalInformation = ({navigation}) => {
+  const token = useSelector((state) => state.authReducer.token);
+  const [userData, setUserData] = useState({})
+
+  useEffect(() => {
+    const config = {
+      headers: {
+        'x-access-token': 'bearer ' + token,
+      },
+    };
+    axios.get(API_URL + `/user/myProfile`, config)
+      .then(({ data }) => {
+        // console.log('ini halaman personal info')
+        setUserData(data.data)
+      }).catch(({ response }) => {
+        console.log(response.data)
+      })
+  },[])
   return (
    <>
       <StatusBar
@@ -19,7 +39,9 @@ const PersonalInformation = ({navigation}) => {
       />
       <View style={styles.header}>
         <View style={{flexDirection: 'row'}}>
-          <TouchableOpacity style={{marginTop: 20}}>
+          <TouchableOpacity style={{marginTop: 20}}
+          onPress={()=>{navigation.goBack()}}
+          >
             <Icon name="arrow-left" color="white" size={30} />
           </TouchableOpacity>
           <Text
@@ -43,21 +65,21 @@ const PersonalInformation = ({navigation}) => {
         </Text>
         <View style={styles.list}>
           <Text style={styles.listTitle}>First Name</Text>
-          <Text style={styles.subTitle}>Akbar</Text>
+          <Text style={styles.subTitle}>{userData !== undefined? userData.firstname : ''}</Text>
         </View>
         <View style={styles.list}>
           <Text style={styles.listTitle}>Last Name</Text>
-          <Text style={styles.subTitle}>Zulfikar</Text>
+          <Text style={styles.subTitle}>{userData !== undefined? userData.lastname : ''}</Text>
         </View>
         <View style={styles.list}>
           <Text style={styles.listTitle}>Verifed E-mail</Text>
-          <Text style={styles.subTitle}>haemahe3@gmail.com</Text>
+          <Text style={styles.subTitle}>{userData !== undefined? userData.email : ''}</Text>
         </View>
         <View style={styles.list}>
           <Text style={styles.listTitle} onPress={() => {
             navigation.navigate('AddNumber')
           }}>Phone Number</Text>
-          <Text style={styles.subTitle}>1223333</Text>
+          <Text style={styles.subTitle}>{userData !== undefined? userData.phone : ''}</Text>
           <Text style={styles.manage} onPress={() => {
             navigation.navigate('Manage')
           }}>manage</Text>

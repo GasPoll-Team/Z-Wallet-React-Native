@@ -49,8 +49,7 @@ const NewPIN = ({ navigation }) => {
           notes: tranferData.notes
         }
         socket.emit('transfer', notifData)
-        console.log('sukses')
-        // navigation.replace('Success')
+        navigation.replace('Success')
       }).catch(({ response }) => {
         if (response.data.status == 500) {
           navigation.replace('Fail')

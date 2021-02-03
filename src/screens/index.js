@@ -18,32 +18,33 @@ import NewPIN from './NewPin';
 import AddNumber from './AddNumber';
 import ManageNumber from './ManageNumber';
 import ConfirmScreen from './ConfirmScreen';
+import Notification from './Notification'
 import HistoryScreen from './HistoryScreen';
 import TransferScreen from './TransferScreen';
 import Notification from './Notification';
 
 export {
-  RegisterScreen,
-  LoginScreen,
-  PinScreen,
-  ActiveScreen,
-  PinSuccessScreen,
-  ForgotScreen,
-  OtpScreen,
-  ResetPassScreen,
-  HomeScreen,
-  TopUpScreen,
-  ContactList,
-  Splash,
-  ProfileScreen,
-  PersonalInformation,
-  ChangePassword,
-  ChangePIN,
-  NewPIN,
-  AddNumber,
-  ManageNumber,
-  ConfirmScreen,
-  HistoryScreen,
-  TransferScreen,
-  Notification,
+    RegisterScreen,
+    LoginScreen,
+    PinScreen,
+    ActiveScreen,
+    PinSuccessScreen,
+    ForgotScreen,
+    OtpScreen,
+    ResetPassScreen,
+    HomeScreen,
+    TopUpScreen,
+    ContactList,
+    Splash,
+    ProfileScreen,
+    PersonalInformation,
+    ChangePassword,
+    ChangePIN,
+    NewPIN,
+    AddNumber,
+    ManageNumber,
+    ConfirmScreen,
+    HistoryScreen,
+    TransferScreen,
+    Notification,
 };

@@ -15,6 +15,7 @@ import {
   Splash,
   LoginScreen,
   TransferScreen,
+  PinTransferScreen,
 } from '../screens';
 
 const Stack = createStackNavigator();
@@ -92,6 +93,13 @@ const Navigation = ({navigation}) => {
           title: 'Find Receiver',
           headerStyle: {backgroundColor: '#6379F4', elevation: 0},
           headerTintColor: '#fff',
+        }}
+      />
+      <Stack.Screen
+        name="PinTransfer"
+        component={PinTransferScreen}
+        options={{
+          headerShown: false,
         }}
       />
     </Stack.Navigator>

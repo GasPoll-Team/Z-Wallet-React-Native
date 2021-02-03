@@ -11,7 +11,7 @@ import ContactList from './ContactList';
 import Splash from './SplashScreen';
 import TransferScreen from './TransferScreen';
 import OtpScreen from './AuthScreen/OtpScreen';
-
+import PinTransferScreen from './PinTransferScreen';
 export {
   LoginScreen,
   RegisterScreen,
@@ -26,4 +26,5 @@ export {
   ContactList,
   Splash,
   OtpScreen,
+  PinTransferScreen,
 };

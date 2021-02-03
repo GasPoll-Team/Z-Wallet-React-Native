@@ -1,7 +1,5 @@
-/* eslint-disable no-shadow */
-/* eslint-disable no-dupe-keys */
-/* eslint-disable no-undef */
 /* eslint-disable react-native/no-inline-styles */
+/* eslint-disable react/jsx-no-undef */
 import React, {useState} from 'react';
 import {
   Dimensions,
@@ -10,19 +8,22 @@ import {
   View,
   StatusBar,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
-import {Button, Image} from 'react-native-elements';
-import {TextInput} from 'react-native-gesture-handler';
+import OTPField from 'react-native-otp-field';
+import {Button} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import profileImg from '../../assets/profiles/1.png';
-import pensil from '../../assets/images/pensil.png';
 
-const TransferScreen = ({navigation: {navigate}}) => {
-  const [user, setUser] = useState();
-  const [note, setNote] = useState('add some notes');
-  const [amount, setAmount] = useState('0.00');
-  const [focus, setFocus] = useState(false);
-
+const PinTransferScreen = ({navigation: {navigate}}) => {
+  const [pin, setPin] = useState('');
+  const filled = () => {
+    if (pin.length === 6) {
+      return true;
+    } else {
+      return false;
+    }
+  };
   return (
     <View style={styles.container}>
       <StatusBar
@@ -31,7 +32,7 @@ const TransferScreen = ({navigation: {navigate}}) => {
         translucent={true}
       />
       <View style={styles.header}>
-        <View style={{flexDirection: 'row', top: 18}}>
+        <View style={{flexDirection: 'row', top: 50}}>
           <Button
             icon={<Icon name="arrow-left" size={30} color="#ffffff" />}
             style={{marginTop: 20}}
@@ -47,62 +48,47 @@ const TransferScreen = ({navigation: {navigate}}) => {
               fontWeight: '700',
               lineHeight: 30,
             }}>
-            Transfer
-          </Text>
-        </View>
-        <View style={styles.cardVa}>
-          <Image source={profileImg} style={styles.profileImg} />
-          <Text
-            style={{
-              marginTop: 30,
-              marginLeft: 20,
-              color: '#7A7886',
-              fontSize: 14,
-            }}>
-            Samuel
-          </Text>
-          <Text
-            style={{
-              marginTop: 55,
-              marginLeft: '-14%',
-              fontWeight: '700',
-              fontSize: 16,
-            }}>
-            1234567778889890
+            Enter Your PIN
           </Text>
         </View>
       </View>
       <View>
-        <TextInput
-          placeholder={amount}
-          keyboardType={'phone-pad'}
-          placeholderTextColor="#B5BDCC"
-          style={styles.textInputTf}
-        />
-        <Text style={{color: '#7C7895', alignSelf: 'center', marginTop: 20}}>
-          Rp. 120.000 Available
+        <Text style={styles.headerContent}>Enter PIN to Transfer</Text>
+        <Text style={styles.subHeaderContent}>
+          Enter Your 6 digits PIN for confirmation to continue transfering
+          money.
         </Text>
       </View>
-      <View style={styles.noteInput}>
-        <Image source={pensil} style={{width: 19, height: 19, top: 10}} />
-        <TextInput
-          style={{marginLeft: 17, fontSize: 16, fontWeight: '600'}}
-          placeholder={note}
+      <View style={styles.formOtp}>
+        <OTPField
+          textFieldStyle={!filled() ? styles.pinBlank : styles.pinFilled}
+          length={6}
+          value={pin}
+          onChange={(pin) => setPin(pin)}
         />
       </View>
-      <View style={{height: 1, width: 343, backgroundColor: '#A9A9A9'}} />
-      <TouchableOpacity
-        style={styles.btnTransfer}
-        onPress={() => navigate('PinTransfer')}>
-        <Text style={{color: '#fff', fontSize: 18, marginTop: 10}}>
-          Transfer
-        </Text>
-      </TouchableOpacity>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.container2}>
+        <TouchableOpacity
+          disabled={!filled() ? true : false}
+          style={!filled() ? styles.btnTransfer : styles.btnTfActive}
+          onPress={() => filled() && navigate('Home')}>
+          <Text
+            style={
+              !filled()
+                ? {color: '#88888F', fontSize: 18, marginTop: 10}
+                : {color: '#FFFFFF', fontSize: 18, marginTop: 10}
+            }>
+            Transfer Now
+          </Text>
+        </TouchableOpacity>
+      </KeyboardAvoidingView>
     </View>
   );
 };
 
-export default TransferScreen;
+export default PinTransferScreen;
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -114,7 +100,7 @@ const styles = StyleSheet.create({
   },
   header: {
     width: windowWidth,
-    height: windowHeight * 0.4,
+    height: windowHeight * 0.2,
     padding: 20,
     backgroundColor: '#6379F4',
     borderBottomLeftRadius: 20,
@@ -178,13 +164,59 @@ const styles = StyleSheet.create({
     marginLeft: 50,
   },
   btnTransfer: {
+    backgroundColor: '#DADADA',
+    borderRadius: 10,
+    width: windowWidth - 40,
+    height: 50,
+    // eslint-disable-next-line no-dupe-keys
+    borderRadius: 10,
+    marginTop: 300,
+    alignItems: 'center',
+    marginLeft: 20,
+  },
+  headerContent: {
+    color: '#4D4B57',
+    alignSelf: 'center',
+    marginTop: 40,
+    fontSize: 22,
+    fontWeight: '700',
+  },
+  subHeaderContent: {
+    width: windowWidth - 80,
+    color: '#4D4B57',
+    alignSelf: 'center',
+    marginTop: 20,
+    fontSize: 16,
+    fontWeight: '400',
+    textAlign: 'center',
+  },
+  formOtp: {
+    width: '80%',
+    alignContent: 'center',
+    marginLeft: 35,
+    marginTop: 50,
+  },
+  pinFilled: {
+    borderColor: '#6379F4',
+    borderWidth: 1,
+  },
+  pinBlank: {
+    borderColor: '#958E8E',
+    borderWidth: 1,
+  },
+  btnTfActive: {
     backgroundColor: '#6379F4',
     borderRadius: 10,
-    width: windowWidth - 100,
+    width: windowWidth - 40,
     height: 50,
+    // eslint-disable-next-line no-dupe-keys
     borderRadius: 10,
-    marginTop: 50,
+    marginTop: 300,
     alignItems: 'center',
-    marginLeft: 40,
+    marginLeft: 20,
+  },
+  container2: {
+    flex: 1,
+    marginBottom: 20,
   },
 });

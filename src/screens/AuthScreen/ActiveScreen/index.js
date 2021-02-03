@@ -37,11 +37,7 @@ const ActiveScreen = ({navigation}) => {
             navigation.navigate('Login');
           })
           .catch((err) => {
-<<<<<<< HEAD
             console.log(err.response.data);
-=======
-            console.log(err.response.data)
->>>>>>> 061bb1784081ee2f31b4b058e38e0c8b9a3a083c
             console.log('error disokin', err);
           });
       }
@@ -88,11 +84,7 @@ const ActiveScreen = ({navigation}) => {
         <TouchableOpacity
           style={empty() ? styles.btn : styles.btnActive}
           onPress={() => {
-<<<<<<< HEAD
             if (!empty()) {
-=======
-            if(!empty()) {
->>>>>>> 061bb1784081ee2f31b4b058e38e0c8b9a3a083c
               activate();
             }
           }}>

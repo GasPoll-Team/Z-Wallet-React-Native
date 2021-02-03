@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import {
@@ -16,7 +17,7 @@ const PinScreen = ({navigation}) => {
   const [pin, setPin] = useState('');
 
   const token = useSelector((state) => state.authReducer.token);
-  console.log("ini token", token);
+  console.log('ini token', token);
 
   const handlePin = () => {
     const data = {
@@ -29,13 +30,16 @@ const PinScreen = ({navigation}) => {
       },
     };
 
-    axios.patch(API_URL + '/auth/PIN', data, config).then((res) => {
-      console.log("berhasil update PIN", res.data)
-      navigation.replace('PinSuccess')
-    }).catch((err) => {
-      console.log(err.response.data)
-      console.log("error disokin", err)
-    })
+    axios
+      .patch(API_URL + '/auth/PIN', data, config)
+      .then((res) => {
+        console.log('berhasil update PIN', res.data);
+        navigation.replace('PinSuccess');
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+        console.log('error disokin', err);
+      });
   };
 
   return (
@@ -50,19 +54,11 @@ const PinScreen = ({navigation}) => {
           <Text style={styles.subHeader}>security purpose in Zwallet</Text>
         </View>
         <View style={styles.form}>
-          <OTPField
-            length={6}
-            value={pin}
-            onChange={(pin) => setPin(pin)}
-          />
+          <OTPField length={6} value={pin} onChange={(pin) => setPin(pin)} />
         </View>
         <View style={{marginTop: 150}}>
-          <TouchableOpacity
-            style={styles.btnActive}
-            onPress={handlePin}>
-            <Text style={styles.textActive}>
-              Confrim
-            </Text>
+          <TouchableOpacity style={styles.btnActive} onPress={handlePin}>
+            <Text style={styles.textActive}>Confrim</Text>
           </TouchableOpacity>
         </View>
       </View>

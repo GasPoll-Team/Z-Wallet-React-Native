@@ -127,7 +127,6 @@ const HistoryScreen = ({ navigation, route }) => {
       .then(({ data }) => {
         setHistoryWeek([])
         setHistoryMonth(data.data)
-        actionSheetRef.current?.hide()
       }).catch(({ response }) => {
         console.log(response.data)
       })

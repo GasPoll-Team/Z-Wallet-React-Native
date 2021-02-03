@@ -15,57 +15,50 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useSelector } from 'react-redux';
 import 'axios'
 import { API_URL } from '@env'
-import PushNotification from 'react-native-push-notification';
-import { showNotification } from '../../notification';
+import { useSocket } from './../../utils/context/SocketProvider'
+// import PushNotification from 'react-native-push-notification';
+// import { showNotification } from '../../notification';
 
 
 
-const NewPIN = ({ navigation }) => { 
+const NewPIN = ({ navigation }) => {
   const [pin, setPin] = useState('');
+  const socket = useSocket()
 
+  const receiver = useSelector((state) => state.contactReducer)
   const token = useSelector((state) => state.authReducer.token);
+  const id = useSelector((state) => state.authReducer.id);
+  const name = useSelector((state) => state.contactReducer.name)
   const tranferData = useSelector((state) => state.tranferReducer);
-  const channel = 'notification';
-  useEffect(() => {
-    PushNotification.createChannel(
-      {
-        channelId: 'notification',
-        channelName: 'My Notification channel',
-        channelDescription: 'A channel to categories your notification',
-        soundName: 'default',
-        importance: 4,
-        vibrate: true,
-      },
-      (created) => console.log(`createchannel returned ${created}`),
-    );
-    // code to run on component mount
-  }, []);
-  useEffect(() => {
-    PushNotification.getChannels((channel_ids) => {
-      console.log('CHANNEL', channel_ids[0]);
-      () => navigation.navigate('Home');
-    });
-  }, []);
 
   const handleSubmit = () => {
     const config = {
       headers: {
         'x-access-token': 'bearer ' + token,
-        'x-access-PIN':pin
+        'x-access-PIN': pin
       },
     };
     console.log(tranferData)
-    axios.post(API_URL+`/tranfer/newTranfer`,tranferData,config)
-    .then(({data}) =>{
-        
-    }).catch(({response}) =>{
-        if(response.data.status == 500){
-            navigation.replace('Fail')
+    axios.post(API_URL + `/tranfer/newTranfer`, tranferData, config)
+      .then(({ data }) => {
+        const notifData = {
+          id: id,
+          sender: name,
+          recipient: receiver.id,
+          amount: tranferData.amount,
+          notes: tranferData.notes
+        }
+        socket.emit('transfer', notifData)
+        console.log('sukses')
+        // navigation.replace('Success')
+      }).catch(({ response }) => {
+        if (response.data.status == 500) {
+          navigation.replace('Fail')
         }
         console.log(response.data)
         ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
 
-    })
+      })
 
   }
   return (
@@ -79,7 +72,7 @@ const NewPIN = ({ navigation }) => {
         <View style={styles.header2}>
           <View style={{ flexDirection: 'row' }}>
             <TouchableOpacity style={{ marginTop: 20 }}
-            onPress={()=>{navigation.goBack()}}
+              onPress={() => { navigation.goBack() }}
             >
               <Icon name="arrow-left" color="white" size={30} />
             </TouchableOpacity>
@@ -112,35 +105,8 @@ const NewPIN = ({ navigation }) => {
       <View style={{ marginBottom: 25 }}>
         <TouchableOpacity
           style={pin.length === 6 ? styles.btnActive : styles.btn}
-          // onPress={pin.length === 6 ? handleSubmit : null}
-          onPress={() =>
-            Alert.alert(
-              'Confirm',
-              'Are you sure to process this order ?',
-              [
-                {
-                  text: 'Cancel',
-                  onPress: () => console.log('Cancel Pressed'),
-                  style: 'cancel',
-                },
-                {
-                  text: 'OK',
-                  onPress: () => {
-                    // transaction(),
-                    {pin.length === 6 ? handleSubmit : null}
-                      showNotification(
-                        'Yeaah!',
-                        'Your Transfer is Success',
-                        channel,
-                      ),
-                      // navigation.navigate('Success');
-                      navigation.replace('Success')
-                  },
-                },
-              ],
-              {cancelable: false}
-            )
-          }>
+          onPress={pin.length === 6 ? handleSubmit : null}
+        >
           <Text style={pin.length === 6 ? styles.textActive : styles.textNon}>
             Confirm
           </Text>

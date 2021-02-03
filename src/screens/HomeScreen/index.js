@@ -14,6 +14,8 @@ import { useSelector, connect } from 'react-redux';
 import { setDataUser } from '../../utils/redux/action/myDataAction';
 import { vw, vh, vmax, vmin } from 'react-native-expo-viewport-units';
 import { API_URL } from "@env";
+import {useSocket} from './../../utils/context/SocketProvider'
+
 
 import profileImg from '../../assets/images/profile-img.png';
 import spotifyImg from '../../assets/images/spotify.png';
@@ -21,6 +23,7 @@ import spotifyImg from '../../assets/images/spotify.png';
 const HomeScreen = ({ navigation, setDataUser }) => {
   const [user, setUser] = useState();
   const [history, setHistory] = useState();
+  const socket = useSocket()
 
   const toPrice = (x) => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
@@ -40,12 +43,13 @@ const HomeScreen = ({ navigation, setDataUser }) => {
     axios
       .get(`${url}/home/getBalance`, config)
       .then(({ data }) => {
-        console.log(typeof data.data.balance);
+        // console.log(typeof data.data.balance);
         setUser(data.data);
         setDataUser(data.data);
       })
       .catch((err) => console.log(err));
   }, [token]);
+
 
   useEffect(() => {
     const config = {
@@ -60,6 +64,14 @@ const HomeScreen = ({ navigation, setDataUser }) => {
       })
       .catch((err) => console.log(err));
   }, [token]);
+
+  useEffect (() =>{
+    socket.on('tranferOut', (message) =>{
+      console.log('Transaksi Keluar OKE')
+      console.log(message)
+      console.log('ini di home')
+    })
+  },[])
 
   return (
     <>

@@ -20,6 +20,7 @@
     "react": "16.13.1",
     "react-native": "0.63.4",
     "react-native-actions-sheet": "^0.4.2",
+    "react-native-calendar-range-picker": "^1.4.5",
     "react-native-dotenv": "2.5.0",
     "react-native-elements": "^3.1.0",
     "react-native-expo-viewport-units": "^0.0.8",

@@ -59,20 +59,10 @@ const TopupScreen = ({navigation: {navigate}}) => {
         translucent={true}
       />
       <View style={styles.header}>
-<<<<<<< HEAD
-        <View style={{flexDirection: 'row', top: 18}}>
-          <Button
-            icon={<Icon name="arrow-left" size={30} color="#ffffff" />}
-            style={{marginTop: 20}}
-            buttonStyle={styles.btnBack}
-            onPress={() => navigate('Home')}
-          />
-=======
         {/* <View style={{flexDirection: 'row'}}>
           <TouchableOpacity style={{marginTop: 20}}>
             <Icon name="g-translate" color="white" size={30} />
           </TouchableOpacity>
->>>>>>> 061bb1784081ee2f31b4b058e38e0c8b9a3a083c
           <Text
             style={{
               marginLeft: 10,

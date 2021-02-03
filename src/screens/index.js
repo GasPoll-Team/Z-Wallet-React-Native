@@ -11,6 +11,7 @@ import ContactList from './ContactList';
 import Splash from './SplashScreen';
 import TransferScreen from './TransferScreen';
 import OtpScreen from './AuthScreen/OtpScreen';
+import HistoryScreen from './HistoryScreen';
 
 export {
   LoginScreen,
@@ -26,4 +27,5 @@ export {
   ContactList,
   Splash,
   OtpScreen,
+  HistoryScreen,
 };

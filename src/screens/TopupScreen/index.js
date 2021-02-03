@@ -21,31 +21,31 @@ const data = [
   },
   {
     number: 2,
-    value: 'Go to the nearest ATM or you can use E-Banking.',
+    value: `Type your security number on the ATM or E-Banking.`,
   },
   {
     number: 3,
-    value: 'Go to the nearest ATM or you can use E-Banking.',
+    value: 'Select “Transfer” in the menu',
   },
   {
     number: 4,
-    value: 'Go to the nearest ATM or you can use E-Banking.',
+    value: 'Type the virtual account number that we provide you at the top.',
   },
   {
     number: 5,
-    value: 'Go to the nearest ATM or you can use E-Banking.',
+    value: 'Type the amount of the money you want to top up.',
   },
   {
     number: 6,
-    value: 'Go to the nearest ATM or you can use E-Banking.',
+    value: 'Read the summary details',
   },
   {
     number: 7,
-    value: 'Go to the nearest ATM or you can use E-Banking.',
+    value: 'Press transfer / top up',
   },
   {
     number: 8,
-    value: 'Go to the nearest ATM or you can use E-Banking.',
+    value: 'You can see your money in Zwallet within 5 minutes.',
   },
 ];
 
@@ -105,14 +105,17 @@ const TopupScreen = ({navigation: {navigate}}) => {
                     fontSize: 20,
                     fontWeight: 'bold',
                   }}>
-                  {x.number}
+                  {x.number+'. '}
                 </Text>
                 <Text
                   style={{
+                    marginLeft:5,
+                    width: windowWidth * 0.67,
                     marginTop: 35,
                     position: 'absolute',
                     left: 50,
-                    fontSize: 12,
+                    fontSize: 16,
+                    fontWeight:'bold'
                   }}>
                   {x.value}
                 </Text>

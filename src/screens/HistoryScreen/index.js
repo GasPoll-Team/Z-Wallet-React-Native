@@ -8,6 +8,7 @@ import {
   Image,
   ScrollView,
   Alert,
+  RefreshControl
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import ActionSheet from 'react-native-actions-sheet';
@@ -29,9 +30,29 @@ const HistoryScreen = ({ navigation, route }) => {
   const [historyMonth, setHistoryMonth] = useState();
   const [selectedStartDate, setStartDate] = useState('')
   const [selectedEndDate, setEndDate] = useState('')
+  const [tranferType, setType] = useState('')
+  const [isFilterDate, setFiterDate] = useState(false)
   const toPrice = (x) => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
   };
+
+  const wait = (timeout) => {
+    return new Promise(resolve => {
+      setTimeout(resolve, timeout);
+    });
+  }
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    getDataWeek();
+    getDataMonth();
+    setFiterDate(false)
+
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
+
 
   const token = useSelector((state) => state.authReducer.token);
 
@@ -95,11 +116,15 @@ const HistoryScreen = ({ navigation, route }) => {
   const getDataIn = () => {
     getDataWeekIn('in');
     getDataMonthIn('in');
+    setType('- Incoming Tranfer')
+    setFiterDate(false)
   };
 
   const getDataOut = () => {
     getDataWeekIn('out');
     getDataMonthIn('out');
+    setType('- Outgoing Tranfer')
+    setFiterDate(false)
   }
   // GetDataWeek
   useEffect(() => {
@@ -127,6 +152,8 @@ const HistoryScreen = ({ navigation, route }) => {
       .then(({ data }) => {
         setHistoryWeek([])
         setHistoryMonth(data.data)
+        setType('')
+        setFiterDate(true)
       }).catch(({ response }) => {
         console.log(response.data)
       })
@@ -139,13 +166,24 @@ const HistoryScreen = ({ navigation, route }) => {
 
       {/*  Week */}
       <View style={styles.container}>
-        <ScrollView showsHorizontalScrollIndicator={false}>
+        <ScrollView showsHorizontalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+        >
           <View>
             <View>
               <View style={styles.transactionHeader}>
                 <Text
                   style={{ color: '#514F5B', fontSize: 18, fontWeight: '700' }}>
-                  This Week
+                  {isFilterDate ? (
+                    <>
+                    </>
+                  ) : (
+                      <>
+                        This Week {tranferType}
+                      </>
+                    )}
                 </Text>
               </View>
               {/* Card transaction */}
@@ -207,7 +245,13 @@ const HistoryScreen = ({ navigation, route }) => {
               <View style={styles.transactionHeader}>
                 <Text
                   style={{ color: '#514F5B', fontSize: 18, fontWeight: '700' }}>
-                  This Month
+                  {isFilterDate ? (
+                    <>
+                      History from {new Date(selectedStartDate).toDateString()} to {new Date(selectedEndDate).toDateString()}
+                    </>
+                  ) : (
+                      <>This Month</>
+                    )}
                 </Text>
               </View>
               {/* Card transaction */}
@@ -301,7 +345,7 @@ const HistoryScreen = ({ navigation, route }) => {
             selectedDayTextColor="#FFFFFF"
             onDateChange={onDateChange}
           />
-          <View style={{ flexDirection: 'row' , justifyContent:'space-between', marginHorizontal:vw(20)}}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: vw(20) }}>
             <TouchableOpacity
               onPress={getDataRange}
             >

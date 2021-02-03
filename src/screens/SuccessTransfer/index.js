@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -14,13 +14,16 @@ import user from '../../assets/images/profile-img.png';
 import { useSelector, connect } from 'react-redux'
 import { API_URL } from '@env'
 
-const SuccessTransfer = ({navigation}) => {
+const SuccessTransfer = ({ navigation }) => {
   const recipient = useSelector((state) => state.contactReducer)
   const myData = useSelector((state) => state.myDataReducer)
   const tranferData = useSelector((state => state.tranferReducer))
   const toPrice = (x) => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
   };
+
+  const date = new Date(Date.now()).toString().split(' ')
+
   return (
     <>
       <StatusBar
@@ -29,9 +32,9 @@ const SuccessTransfer = ({navigation}) => {
         translucent={true}
       />
       <View style={styles.header}>
-        <View style={{flexDirection: 'row'}}>
+        <View style={{ flexDirection: 'row' }}>
           <TouchableOpacity
-            style={{marginTop: 20}}
+            style={{ marginTop: 20 }}
             onPress={() => {
               navigation.goBack();
             }}>
@@ -73,12 +76,12 @@ const SuccessTransfer = ({navigation}) => {
           <View style={styles.subContent}>
             <View style={styles.content2}>
               <Text style={styles.title}>Date</Text>
-              <Text style={styles.item}>May, 11, 2020</Text>
+              <Text style={styles.item}>{`${date[1]}, ${date[2]}   ${date[3]}`}</Text>
             </View>
 
             <View style={styles.content3}>
               <Text style={styles.title}>Time</Text>
-              <Text style={styles.item}>12.20</Text>
+              <Text style={styles.item}>{date[4]}</Text>
             </View>
           </View>
 
@@ -92,11 +95,11 @@ const SuccessTransfer = ({navigation}) => {
           <View style={styles.receiver}>
             <View style={styles.contact}>
               <View>
-                <Image source={{uri:API_URL+myData.image}} style={styles.imgUser} />
+                <Image source={{ uri: API_URL + myData.image }} style={styles.imgUser} />
               </View>
               <View>
                 <Text style={styles.name}>{myData.name}</Text>
-          <Text style={styles.num}>{myData.phone}</Text>
+                <Text style={styles.num}>{myData.phone}</Text>
               </View>
             </View>
           </View>
@@ -106,7 +109,7 @@ const SuccessTransfer = ({navigation}) => {
           <View style={styles.receiver}>
             <View style={styles.contact}>
               <View>
-                <Image source={{uri:API_URL+recipient.image}} style={styles.imgUser} />
+                <Image source={{ uri: API_URL + recipient.image }} style={styles.imgUser} />
               </View>
               <View>
                 <Text style={styles.name}>{recipient.name}</Text>
@@ -123,7 +126,7 @@ const SuccessTransfer = ({navigation}) => {
           style={styles.btnActive}
         >
           <Text style={styles.textActive} onPress={() => {
-              navigation.navigate('Home')
+            navigation.navigate('Home')
           }}>
             Back to home
           </Text>

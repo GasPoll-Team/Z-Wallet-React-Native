@@ -58,7 +58,7 @@ const HomeScreen = ({ navigation, setDataUser }) => {
     });
   }, []);
 
-  useEffect(() => {
+  const getBalance = () => {
     const config = {
       headers: {
         'x-access-token': 'bearer ' + token,
@@ -72,10 +72,9 @@ const HomeScreen = ({ navigation, setDataUser }) => {
         setDataUser(data.data);
       })
       .catch((err) => console.log(err));
-  }, [token]);
+  }
 
-
-  useEffect(() => {
+  const getHistory = () => {
     const config = {
       headers: {
         'x-access-token': 'bearer ' + token,
@@ -87,7 +86,14 @@ const HomeScreen = ({ navigation, setDataUser }) => {
         setHistory(data.data);
       })
       .catch((err) => console.log(err));
+  }
+
+  useEffect(() => {
+    getBalance();
+    getHistory()
   }, [token]);
+
+
 
   useEffect(() => {
     socket.on('tranferOut', (message) => {
@@ -97,6 +103,8 @@ const HomeScreen = ({ navigation, setDataUser }) => {
         message,
         channel,
       )
+      getBalance();
+      getHistory()
     })
   }, [])
 
@@ -108,6 +116,8 @@ const HomeScreen = ({ navigation, setDataUser }) => {
         message,
         channel,
       )
+      getBalance();
+      getHistory()
     })
   }, [])
 

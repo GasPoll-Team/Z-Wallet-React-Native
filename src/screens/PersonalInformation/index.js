@@ -81,7 +81,7 @@ const PersonalInformation = ({navigation}) => {
           }}>Phone Number</Text>
           <Text style={styles.subTitle}>{userData !== undefined? userData.phone : ''}</Text>
           <Text style={styles.manage} onPress={() => {
-            navigation.navigate('SuccessTrans')
+            navigation.navigate('Manage')
           }}>manage</Text>
         </View>
       </View>

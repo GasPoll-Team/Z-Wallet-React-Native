@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable eol-last */
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import {

@@ -1,4 +1,5 @@
-import React, {useState, useEffect} from 'react';
+/* eslint-disable prettier/prettier */
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -6,17 +7,17 @@ import {
   ScrollView,
   StyleSheet,
 } from 'react-native';
-import {Input} from 'react-native-elements';
+import { Input } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useSelector} from 'react-redux';
-import axios from 'axios';
+import { useSelector } from 'react-redux'
+import axios from 'axios'
 
-const ResetPassScreen = ({navigation}) => {
+const ResetPassScreen = ({ navigation }) => {
   const [pass, setPass] = useState('');
   const [pass2, setPass2] = useState('');
   const [show, setShow] = useState(true);
   const [show2, setShow2] = useState(true);
-  const [errMsg, setErrMsg] = useState('');
+  const [errMsg, setErrMsg] = useState('')
 
   const email = useSelector((state) => state.authReducer.email);
 
@@ -24,41 +25,40 @@ const ResetPassScreen = ({navigation}) => {
     if (pass === '' || pass2 === '') {
       return true;
     } else {
-      return false;
+      return false
     }
   };
 
   const handleSubmit = () => {
     const checkPass = /^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{8,}$/;
-    const API_URL = 'https://12a223fb9884.ngrok.io';
+    const API_URL = 'https://12a223fb9884.ngrok.io'
     if (!empty()) {
       if (pass == pass2) {
         if (checkPass.test(pass)) {
           const dataUpdate = {
             email: email,
-            password: pass,
-          };
-          axios
-            .patch(API_URL + '/auth/reset', dataUpdate)
+            password: pass
+          }
+          axios.patch(API_URL + `/auth/reset`, dataUpdate)
             .then((res) => {
-              console.log(res.data);
+              console.log(res.data)
               navigation.navigate('Login');
             })
             .catch((err) => {
-              console.log(err.response.data);
+              console.log(err.response.data)
             });
         } else {
           setErrMsg(
-            'Password must contain at least 1 number, and be longer than 8 character',
-          );
+            'Password must contain at least 1 number, and be longer than 8 character'
+          )
         }
       } else {
-        setErrMsg('Password tidak sama!');
+        setErrMsg('Password tidak sama!')
       }
     } else {
-      setErrMsg('Password tidak boleh kosong');
+      setErrMsg('Password tidak boleh kosong')
     }
-  };
+  }
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -121,12 +121,15 @@ const ResetPassScreen = ({navigation}) => {
             secureTextEntry={show2}
           />
         </View>
-        <Text style={{color: 'red', fontWeight: 'bold'}}>{errMsg}</Text>
+        <Text style={{ color: 'red', fontWeight: 'bold' }}>{errMsg}</Text>
         <View>
-          <TouchableOpacity style={styles.btnActive} onPress={handleSubmit}>
+          <TouchableOpacity
+            style={styles.btnActive}
+            onPress={handleSubmit}>
             <Text style={styles.textActive}>Reset</Text>
           </TouchableOpacity>
         </View>
+
       </View>
     </ScrollView>
   );

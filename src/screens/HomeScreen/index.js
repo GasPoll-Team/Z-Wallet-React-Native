@@ -1,4 +1,4 @@
-/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import {
@@ -46,7 +46,7 @@ const HomeScreen = ({navigation, setDataUser}) => {
         setDataUser(data.data);
       })
       .catch((err) => console.log(err));
-  }, [setDataUser, token, url]);
+  }, [token]);
 
   useEffect(() => {
     const config = {
@@ -60,7 +60,7 @@ const HomeScreen = ({navigation, setDataUser}) => {
         setHistory(data.data);
       })
       .catch((err) => console.log(err));
-  }, [token, url]);
+  }, [token]);
 
   return (
     <>
@@ -135,7 +135,7 @@ const HomeScreen = ({navigation, setDataUser}) => {
               <Text style={{color: '#514F5B', fontSize: 18, fontWeight: '700'}}>
                 Transaction History
               </Text>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate('History')}>
                 <Text style={{color: '#6379F4', fontSize: 14, marginTop: 1}}>
                   See all
                 </Text>

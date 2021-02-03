@@ -1,5 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useEffect, useState} from 'react';
+/* eslint-disable quotes */
+/* eslint-disable semi */
+/* eslint-disable prettier/prettier */
+/* eslint-disable react-native/no-inline-styles */
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -7,21 +11,21 @@ import {
   StyleSheet,
   TouchableOpacity,
   SafeAreaView,
-  ScrollView,
+  ScrollView
 } from 'react-native';
-import {SearchBar, Image} from 'react-native-elements';
+import { SearchBar, Image } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {vw, vh, vmax, vmin} from 'react-native-expo-viewport-units';
-import {API_URL} from '@env';
-import {useSelector, connect} from 'react-redux';
-import {setReceiver} from '../../utils/redux/action/contactAction';
-import axios from 'axios';
+import { vw, vh, vmax, vmin } from 'react-native-expo-viewport-units'
+import { API_URL } from '@env'
+import { useSelector, connect } from 'react-redux';
+import { setReceiver } from '../../utils/redux/action/contactAction'
+import axios from 'axios'
 
-const ContactList = ({navigation, setReceiver}) => {
+const ContactList = ({ navigation, setReceiver }) => {
   const [search, setSearch] = useState('');
-  const [listContact, setContact] = useState([]);
+  const [listContact, setContact] = useState([])
   const token = useSelector((state) => state.authReducer.token);
-  const idSelected = useSelector((state) => state.contactReducer.id);
+  const idSelected = useSelector((state) => state.contactReducer.id)
 
   useEffect(() => {
     const config = {
@@ -30,13 +34,13 @@ const ContactList = ({navigation, setReceiver}) => {
       },
     };
     axios
-      .get(API_URL + '/tranfer/contactUser', config)
-      .then(({data}) => {
-        setContact(data.data);
+      .get(API_URL + `/tranfer/contactUser`, config)
+      .then(({ data }) => {
+        setContact(data.data)
+      }).catch(({ response }) => {
+        console.log(response.data)
+
       })
-      .catch(({response}) => {
-        console.log(response.data);
-      });
   }, []);
 
   const viewAll = () => {
@@ -46,34 +50,31 @@ const ContactList = ({navigation, setReceiver}) => {
       },
     };
     axios
-      .get(API_URL + '/tranfer/contactUser', config)
-      .then(({data}) => {
-        setContact(data.data);
+      .get(API_URL + `/tranfer/contactUser`, config)
+      .then(({ data }) => {
+        setContact(data.data)
+      }).catch(({ response }) => {
+        console.log(response.data)
       })
-      .catch(({response}) => {
-        console.log(response.data);
-      });
-  };
+  }
   const handleSearch = () => {
     const config = {
       headers: {
         'x-access-token': 'bearer ' + token,
       },
     };
-    axios
-      .get(API_URL + '/tranfer/search?name=' + search, config)
-      .then(({data}) => {
-        setContact(data.data);
+    axios.get(API_URL + `/tranfer/search?name=` + search, config)
+      .then(({ data }) => {
+        setContact(data.data)
+      }).catch(({ response }) => {
+        console.log(response.data)
+        setContact([])
       })
-      .catch(({response}) => {
-        console.log(response.data);
-        setContact([]);
-      });
-  };
+  }
 
   const setRecipients = (obj) => {
-    setReceiver(obj);
-  };
+    setReceiver(obj)
+  }
 
   return (
     <View>
@@ -93,10 +94,10 @@ const ContactList = ({navigation, setReceiver}) => {
 
       {/* List contact */}
       <View style={styles.contactHeader}>
-        <Text style={{color: '#514F5B', fontSize: 20, fontWeight: '700'}}>
+        <Text style={{ color: '#514F5B', fontSize: 20, fontWeight: '700' }}>
           Contacts
         </Text>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <Text
             style={{
               color: '#514F5B',
@@ -105,8 +106,10 @@ const ContactList = ({navigation, setReceiver}) => {
               marginTop: 10,
             }}>
             {listContact.length} Contact Founds
-          </Text>
-          <TouchableOpacity onPress={viewAll}>
+        </Text>
+          <TouchableOpacity
+            onPress={viewAll}
+          >
             <Text
               style={{
                 color: '#514F5B',
@@ -115,67 +118,52 @@ const ContactList = ({navigation, setReceiver}) => {
                 marginTop: 10,
               }}>
               View All
-            </Text>
+              </Text>
           </TouchableOpacity>
         </View>
       </View>
       {/* Contact card */}
       <SafeAreaView>
-        <ScrollView style={{height: vh(60)}}>
-          {listContact &&
-            listContact.map(({id, image, name, phone}) => {
+        <ScrollView style={{ height: vh(60) }}>
+          {
+            listContact && listContact.map(({ id, image, name, phone }) => {
               let nameCard = {
                 id: id,
                 image: image,
                 name: name,
-                phone: phone,
-              };
-              const isActive = idSelected == id;
+                phone: phone
+              }
+              const isActive = idSelected == id
               return (
                 <>
-                  <View
-                    style={{
-                      borderColor: isActive ? 'blue' : 'white',
-                      borderWidth: 2,
-                      borderRadius: 10,
-                      marginBottom: 15,
-                      marginHorizontal: vw(1),
-                      marginTop: 10,
-                    }}
-                    key={id}>
-                    <TouchableOpacity
-                      style={styles.contactCard}
-                      onPress={() => setRecipients(nameCard)}>
+                  <View style={{
+                    borderColor: isActive ? 'blue' : 'white', borderWidth: 2, borderRadius: 10, marginBottom: 15, marginHorizontal: vw(1),
+                    marginTop: 10,
+                  }}
+                    key={id}
+                  >
+                    <TouchableOpacity style={styles.contactCard}
+                      onPress={() => setRecipients(nameCard)}
+                    >
+
                       <View style={styles.cardWrapper}>
-                        <Image
-                          source={{uri: API_URL + image, width: 52, height: 52}}
-                          style={styles.profileImage}
-                        />
+                        <Image source={{ uri: API_URL + image, width: 52, height: 52 }} style={styles.profileImage} />
                         <View style={styles.cardText}>
-                          <Text
-                            style={{
-                              fontSize: 16,
-                              color: '#4D4B57',
-                              fontWeight: '700',
-                            }}>
+                          <Text style={{ fontSize: 16, color: '#4D4B57', fontWeight: '700' }}>
                             {name}
                           </Text>
-                          <Text
-                            style={{
-                              fontSize: 14,
-                              color: '#7A7886',
-                              fontWeight: '400',
-                              marginTop: 10,
-                            }}>
+                          <Text style={{ fontSize: 14, color: '#7A7886', fontWeight: '400', marginTop: 10 }}>
                             {phone}
                           </Text>
                         </View>
                       </View>
+
                     </TouchableOpacity>
                   </View>
                 </>
-              );
-            })}
+              )
+            })
+          }
         </ScrollView>
       </SafeAreaView>
     </View>
@@ -184,7 +172,8 @@ const ContactList = ({navigation, setReceiver}) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setReceiver: (data) => dispatch(setReceiver(data)),
+    setReceiver: (data) =>
+      dispatch(setReceiver(data)),
   };
 };
 export default connect(null, mapDispatchToProps)(ContactList);

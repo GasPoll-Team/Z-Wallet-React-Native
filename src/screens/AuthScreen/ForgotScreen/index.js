@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, {useEffect, useState} from 'react';
 import {
   View,
@@ -9,9 +10,41 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Input} from 'react-native-elements';
+import axios from 'axios';
+import { vw, vh, vmax, vmin } from 'react-native-expo-viewport-units'
+//redux ngeod
+import {connect} from 'react-redux'
+import {setEmailForgot} from '../../../utils/redux/action/authAction'
+import { API_URL } from '@env'
 
-const ForgotScreen = ({navigation}) => {
+const ForgotScreen = ({navigation, setEmailForgot}) => {
   const [email, setEmail] = useState('');
+  const [errMsg, setErrMsg] = useState('');
+  const [Msg, setSuccesMsg] = useState('');
+
+  const HandleSubmit = () =>{
+    if(email != ''){
+      const emailFormat = /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+      if(emailFormat.test(email)){
+        const dataEmail = {
+          email:email
+        }
+        axios.post(API_URL+`/auth/forgot`, dataEmail)
+        .then(({data}) =>{
+          setSuccesMsg(data.message)
+          setEmailForgot(email)
+          navigation.navigate('Otp')
+
+        }).catch(({response}) =>{
+          setErrMsg(response.data.message)
+        })
+      }else{
+        setErrMsg('Format email salah!')
+      }
+    }else{
+      setErrMsg('Email tidak boleh kosong!')
+    }
+  }
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -37,12 +70,10 @@ const ForgotScreen = ({navigation}) => {
             onChangeText={(text) => setEmail(text)}
           />
         </View>
-        <View style={{marginTop: 150}}>
-          <TouchableOpacity
-            style={styles.btnActive}
-            onPress={() => {
-              navigation.navigate('Reset');
-            }}>
+        <Text style={{color:'red'}}>{errMsg}</Text>
+        <Text style={{color:'green'}}>{Msg}</Text>
+        <View style={{marginTop: vh(13) }}>
+          <TouchableOpacity style={styles.btnActive} onPress={HandleSubmit}>
             <Text style={styles.textActive}>Confrim</Text>
           </TouchableOpacity>
         </View>
@@ -104,4 +135,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ForgotScreen;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setEmailForgot: (email) =>
+      dispatch(setEmailForgot(email)),
+  };
+};
+export default connect(null, mapDispatchToProps)(ForgotScreen);

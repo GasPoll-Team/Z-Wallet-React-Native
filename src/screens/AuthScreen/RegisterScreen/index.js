@@ -1,3 +1,4 @@
+/* eslint-disable eol-last */
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import {Input} from 'react-native-elements';
@@ -11,10 +12,10 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconUser from 'react-native-vector-icons/Feather';
 // import {API_URL} from '@env';
-// import {API_URL} from "@env"
+import {API_URL} from '@env';
 
 const RegisterScreen = ({navigation}) => {
-  const API_URL = 'http://192.168.1.2:8000';
+  // const API_URL = 'http://192.168.100.179:8000';
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
   const [user, setUser] = useState('');
@@ -233,4 +234,5 @@ const styles = StyleSheet.create({
   },
 });
 
+// eslint-disable-next-line prettier/prettier
 export default RegisterScreen;

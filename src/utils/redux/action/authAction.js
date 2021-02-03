@@ -1,3 +1,6 @@
+/* eslint-disable semi */
+/* eslint-disable comma-dangle */
+/* eslint-disable prettier/prettier */
 import * as actionTypes from '../actionTypes';
 
 export const login = (token, id, email, fullname) => {
@@ -12,20 +15,20 @@ export const login = (token, id, email, fullname) => {
   };
 };
 
-export const setEmailForgot = (email) => {
+export const setEmailForgot = (email) =>{
   return {
-    type: actionTypes.SETEMAIL,
-    payload: {
-      email: email,
-    },
-  };
-};
+    type:actionTypes.SETEMAIL,
+    payload:{
+      email:email
+    }
+  }
+}
 
-export const rmEmail = () => {
+export const rmEmail = () =>{
   return {
-    type: actionTypes.RMEMAIL,
-  };
-};
+    type:actionTypes.RMEMAIL,
+  }
+}
 
 export const logout = (token, id) => {
   return {

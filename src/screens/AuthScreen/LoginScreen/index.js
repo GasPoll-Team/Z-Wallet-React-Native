@@ -1,4 +1,4 @@
-/* eslint-disable no-shadow */
+/* eslint-disable prettier/prettier */
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import {
@@ -7,18 +7,19 @@ import {
   TouchableOpacity,
   ScrollView,
   StyleSheet,
+  ToastAndroid
 } from 'react-native';
 import {Input} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSelector} from 'react-redux';
-import {API_URL} from '@env';
+import {API_URL} from "@env";
 
 // redux
 import {connect} from 'react-redux';
 import {login} from '../../../utils/redux/action/authAction';
 
 const LoginScreen = ({navigation, login}) => {
-  const API_URL = 'http://192.168.100.179:8000';
+  // const API_URL = 'http://192.168.100.179:8000';
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
   const [show, setShow] = useState(true);
@@ -33,8 +34,6 @@ const LoginScreen = ({navigation, login}) => {
       return false;
     }
   };
-
-  console.log(email, pass);
 
   const handleSubmit = () => {
     const emailFormat = /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
@@ -72,8 +71,10 @@ const LoginScreen = ({navigation, login}) => {
             }
           })
           .catch((err) => {
-            console.log(err.response.data);
-            // console.log('error disokin', err);
+            console.log(err.response.data)
+            if(err.response.status == 404){
+              ToastAndroid.show(err.response.data.msg, ToastAndroid.SHORT);
+            }
           });
       }
     }
@@ -156,9 +157,9 @@ const LoginScreen = ({navigation, login}) => {
             </TouchableOpacity>
           </View>
         </ScrollView>
-      ) : (
+      ) : 
         navigation.replace('Home')
-      )}
+      }
     </>
   );
 };
@@ -214,6 +215,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   btnActive: {
+    width: '90%',
     backgroundColor: '#6379F4',
     padding: 18,
     alignItems: 'center',

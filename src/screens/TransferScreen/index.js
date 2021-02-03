@@ -37,7 +37,6 @@ const TransferScreen = ({navigation, setTranfer}) => {
   }
 
 
-  console.log(amount, notes)
   return (
     <View style={styles.container}>
       <StatusBar
@@ -83,7 +82,7 @@ const TransferScreen = ({navigation, setTranfer}) => {
           >Rp.</Text>
           <TextInput
             value={amount}
-            placeholder="0.00"
+            placeholder="0"
             keyboardType={'phone-pad'}
             placeholderTextColor="#B5BDCC"
             style={styles.textInputTf}

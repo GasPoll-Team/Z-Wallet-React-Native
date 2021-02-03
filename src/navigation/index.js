@@ -25,7 +25,10 @@ import {
   HistoryScreen,
   TransferScreen,
   Notification,
-  ConfirmPINScreen
+  ConfirmPINScreen,
+  SuccessScreen,
+  FailScreen,
+  DetailScreen
 } from '../screens';
 
 const Stack = createStackNavigator();
@@ -167,7 +170,7 @@ const Navigation = ({ navigation }) => {
         component={HistoryScreen}
         options={{
           headerShown: true,
-          title: 'Hitory',
+          title: 'History',
           headerStyle: {backgroundColor: '#6379F4', elevation: 0},
           headerTintColor: '#fff',
         }}
@@ -181,6 +184,21 @@ const Navigation = ({ navigation }) => {
           headerStyle: {backgroundColor: '#6379F4', elevation: 0},
           headerTintColor: '#fff',
         }}
+      />
+      <Stack.Screen
+        name="Success"
+        component={SuccessScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Fail"
+        component={FailScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Details"
+        component={DetailScreen}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );

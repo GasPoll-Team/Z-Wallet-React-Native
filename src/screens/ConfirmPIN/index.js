@@ -32,10 +32,14 @@ const NewPIN = ({ navigation }) => {
     console.log(tranferData)
     axios.post(API_URL+`/tranfer/newTranfer`,tranferData,config)
     .then(({data}) =>{
-        alert('sukses tranfer')
+        navigation.replace('Success')
     }).catch(({response}) =>{
+        if(response.data.status == 500){
+            navigation.replace('Fail')
+        }
         console.log(response.data)
         ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
+
     })
 
   }
@@ -49,7 +53,9 @@ const NewPIN = ({ navigation }) => {
         />
         <View style={styles.header2}>
           <View style={{ flexDirection: 'row' }}>
-            <TouchableOpacity style={{ marginTop: 20 }}>
+            <TouchableOpacity style={{ marginTop: 20 }}
+            onPress={()=>{navigation.goBack()}}
+            >
               <Icon name="arrow-left" color="white" size={30} />
             </TouchableOpacity>
             <Text

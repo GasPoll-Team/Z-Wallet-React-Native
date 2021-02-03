@@ -21,7 +21,6 @@ import ConfirmScreen from './ConfirmScreen';
 import Notification from './Notification'
 import HistoryScreen from './HistoryScreen';
 import TransferScreen from './TransferScreen';
-import Notification from './Notification';
 
 export {
     RegisterScreen,

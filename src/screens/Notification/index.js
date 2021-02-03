@@ -56,12 +56,12 @@ const Notification = ({ props }) => {
           Today
         </Text>
         {
-          today && today.map(({ id, name, notes, type, amount }) => {
+          today && today.map(({ id, name, notes, type, amount, index }) => {
             if (type == 'out') {
               return (
                 <>
-                  <TouchableOpacity style={styles.notifCard} key={id}>
-                    <View style={styles.cardWrapper}>
+                  <TouchableOpacity style={styles.notifCard} >
+                    <View style={styles.cardWrapper} key={index}>
                       <Icon name="arrow-up" size={25} color="#FF5B37" />
                       <View style={styles.cardText}>
                         <Text style={{ fontSize: 14, color: '#7A7A7A', fontWeight: '400' }}>

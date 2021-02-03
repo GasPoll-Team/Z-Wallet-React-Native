@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
-import {useSelector} from 'react-redux'
-import { StyleSheet } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
+import {useSelector} from 'react-redux';
+import {StyleSheet} from 'react-native';
+import {createStackNavigator} from '@react-navigation/stack';
 import {
   RegisterScreen,
   LoginScreen,
@@ -29,17 +29,17 @@ import {
   ConfirmPINScreen,
   SuccessScreen,
   FailScreen,
-  DetailScreen
+  DetailScreen,
 } from '../screens';
 
-import { SocketProvider, useSocket } from '../utils/context/SocketProvider'
+import {SocketProvider, useSocket} from '../utils/context/SocketProvider';
 
 const Stack = createStackNavigator();
 
-const Navigation = ({ navigation }) => {
+const Navigation = ({navigation}) => {
   const user_id = useSelector((state) => state.authReducer.id);
-  const socket = useSocket()
-  console.log(socket)
+  const socket = useSocket();
+  console.log(socket);
   return (
     <SocketProvider id={user_id}>
       <Stack.Navigator>
@@ -47,48 +47,48 @@ const Navigation = ({ navigation }) => {
           initialRouteName="Splash"
           name="Splash"
           component={Splash}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Login"
           component={LoginScreen}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Register"
           component={RegisterScreen}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Active"
           component={ActiveScreen}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Pin"
           component={PinScreen}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="PinSuccess"
           component={PinSuccessScreen}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Forgot"
           component={ForgotScreen}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Otp"
           component={OtpScreen}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen name="Reset" component={ResetPassScreen} />
         <Stack.Screen
           name="Home"
           component={HomeScreen}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Topup"
@@ -96,7 +96,7 @@ const Navigation = ({ navigation }) => {
           options={{
             headerShown: true,
             title: 'Topup Balance',
-            headerStyle: { backgroundColor: '#6379F4', elevation: 0 },
+            headerStyle: {backgroundColor: '#6379F4', elevation: 0},
             headerTintColor: '#fff',
           }}
         />
@@ -106,19 +106,19 @@ const Navigation = ({ navigation }) => {
           options={{
             headerShown: true,
             title: 'Find Receiver',
-            headerStyle: { backgroundColor: '#6379F4', elevation: 0 },
+            headerStyle: {backgroundColor: '#6379F4', elevation: 0},
             headerTintColor: '#fff',
           }}
         />
         <Stack.Screen
           name="Profile"
           component={ProfileScreen}
-          options={{ headerShown: false }}
+          options={{title: ''}}
         />
         <Stack.Screen
           name="Personal"
           component={PersonalInformation}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Change"
@@ -130,27 +130,27 @@ const Navigation = ({ navigation }) => {
         <Stack.Screen
           name="ChangePIN"
           component={ChangePIN}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="NewPIN"
           component={NewPIN}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="ConfirmPIN"
           component={ConfirmPINScreen}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="AddNumber"
           component={AddNumber}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Manage"
           component={ManageNumber}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Notification"
@@ -158,7 +158,7 @@ const Navigation = ({ navigation }) => {
           options={{
             headerShown: true,
             title: 'Notification',
-            headerStyle: { backgroundColor: '#6379F4', elevation: 0 },
+            headerStyle: {backgroundColor: '#6379F4', elevation: 0},
             headerTintColor: '#fff',
           }}
         />
@@ -168,7 +168,7 @@ const Navigation = ({ navigation }) => {
           options={{
             headerShown: true,
             title: 'Confirmation',
-            headerStyle: { backgroundColor: '#6379F4', elevation: 0 },
+            headerStyle: {backgroundColor: '#6379F4', elevation: 0},
             headerTintColor: '#fff',
           }}
         />
@@ -178,7 +178,7 @@ const Navigation = ({ navigation }) => {
           options={{
             headerShown: true,
             title: 'History',
-            headerStyle: { backgroundColor: '#6379F4', elevation: 0 },
+            headerStyle: {backgroundColor: '#6379F4', elevation: 0},
             headerTintColor: '#fff',
           }}
         />
@@ -188,24 +188,24 @@ const Navigation = ({ navigation }) => {
           options={{
             headerShown: true,
             title: 'Transfer',
-            headerStyle: { backgroundColor: '#6379F4', elevation: 0 },
+            headerStyle: {backgroundColor: '#6379F4', elevation: 0},
             headerTintColor: '#fff',
           }}
         />
         <Stack.Screen
           name="Success"
           component={SuccessScreen}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Fail"
           component={FailScreen}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Details"
           component={DetailScreen}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
       </Stack.Navigator>
     </SocketProvider>

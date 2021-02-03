@@ -22,6 +22,8 @@ import {
   AddNumber,
   ManageNumber,
   ConfirmScreen,
+  HistoryScreen,
+  TransferScreen,
   Notification
 } from '../screens';
 
@@ -151,6 +153,36 @@ const Navigation = ({ navigation }) => {
           headerShown: true,
           title: 'Confirmation',
           headerStyle: { backgroundColor: '#6379F4', elevation: 0 },
+          headerTintColor: '#fff',
+        }}
+      />
+      <Stack.Screen
+        name="History"
+        component={HistoryScreen}
+        options={{
+          headerShown: true,
+          title: 'Hitory',
+          headerStyle: {backgroundColor: '#6379F4', elevation: 0},
+          headerTintColor: '#fff',
+        }}
+      />
+      <Stack.Screen
+        name="Transfer"
+        component={TransferScreen}
+        options={{
+          headerShown: true,
+          title: 'Hitory',
+          headerStyle: {backgroundColor: '#6379F4', elevation: 0},
+          headerTintColor: '#fff',
+        }}
+      />
+      <Stack.Screen
+        name="Notification"
+        component={Notification}
+        options={{
+          headerShown: true,
+          title: 'Notification',
+          headerStyle: {backgroundColor: '#6379F4', elevation: 0},
           headerTintColor: '#fff',
         }}
       />

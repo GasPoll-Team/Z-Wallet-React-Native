@@ -1,6 +1,6 @@
 import RegisterScreen from './AuthScreen/RegisterScreen';
 import LoginScreen from './AuthScreen/LoginScreen';
-import OtpScreen from './AuthScreen/OtpScreen'
+import OtpScreen from './AuthScreen/OtpScreen';
 import PinScreen from './AuthScreen/PinScreen';
 import ActiveScreen from './AuthScreen/ActiveScreen';
 import PinSuccessScreen from './AuthScreen/PinSuccessScreen';
@@ -19,6 +19,9 @@ import AddNumber from './AddNumber';
 import ManageNumber from './ManageNumber';
 import ConfirmScreen from './ConfirmScreen';
 import Notification from './Notification'
+import HistoryScreen from './HistoryScreen';
+import TransferScreen from './TransferScreen';
+import Notification from './Notification';
 
 export {
     RegisterScreen,
@@ -41,5 +44,7 @@ export {
     AddNumber,
     ManageNumber,
     ConfirmScreen,
-    Notification
+    HistoryScreen,
+    TransferScreen,
+    Notification,
 };

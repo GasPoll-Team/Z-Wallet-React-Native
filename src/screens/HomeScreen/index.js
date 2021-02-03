@@ -13,7 +13,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSelector, connect} from 'react-redux';
 import {setDataUser} from '../../utils/redux/action/myDataAction';
 import {vw, vh, vmax, vmin} from 'react-native-expo-viewport-units';
-import {API_URL} from '@env';
+import {API_URL} from "@env";
 
 import profileImg from '../../assets/images/profile-img.png';
 import spotifyImg from '../../assets/images/spotify.png';

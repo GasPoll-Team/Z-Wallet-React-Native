@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -6,23 +6,29 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import {Image, Button} from 'react-native-elements';
+import { Image, Button } from 'react-native-elements';
+import { useSelector, connect } from 'react-redux'
+import { API_URL } from '@env'
 
-import profileImg from '../../assets/images/profile-img.png';
-
-const ConfirmScreen = () => {
+const ConfirmScreen = ({navigation}) => {
+  const recipient = useSelector((state) => state.contactReducer)
+  const myData = useSelector((state) => state.myDataReducer)
+  const tranferData = useSelector((state => state.tranferReducer))
+  const toPrice = (x) => {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  };
   return (
     <View>
       <View style={styles.header}>
         <TouchableOpacity style={styles.contactCard}>
           <View style={styles.cardWrapper}>
-            <Image source={profileImg} style={styles.profileImage} />
+            <Image source={{ uri: API_URL + recipient.image }} style={styles.profileImage} />
             <View style={styles.cardText}>
-              <Text style={{fontSize: 16, color: '#4D4B57', fontWeight: '700'}}>
-                Samuel Suhi
+              <Text style={{ fontSize: 16, color: '#4D4B57', fontWeight: '700' }}>
+                {recipient.name}
               </Text>
-              <Text style={{fontSize: 14, color: '#7A7886', fontWeight: '400'}}>
-                +62 831-4159-1960
+              <Text style={{ fontSize: 14, color: '#7A7886', fontWeight: '400' }}>
+                {recipient.phone}
               </Text>
             </View>
           </View>
@@ -31,29 +37,30 @@ const ConfirmScreen = () => {
       <View style={styles.wrapper}>
         <View style={styles.card}>
           <Text style={styles.cardHead}>Amount</Text>
-          <Text style={styles.cardDesc}>Rp100.000</Text>
+          <Text style={styles.cardDesc}>Rp. {toPrice(tranferData.amount)}</Text>
         </View>
         <View style={styles.card}>
           <Text style={styles.cardHead}>Balance Left</Text>
-          <Text style={styles.cardDesc}>Rp20.000</Text>
+          <Text style={styles.cardDesc}>Rp. {toPrice(parseInt(myData.balance) - parseInt(tranferData.amount))}</Text>
         </View>
         <View style={styles.card}>
           <Text style={styles.cardHead}>Date</Text>
           <Text style={styles.cardDesc}>May 11, 2020</Text>
+          {/* Disini mas dio  */}
         </View>
         <View style={styles.card}>
           <Text style={styles.cardHead}>Time</Text>
           <Text style={styles.cardDesc}>12.20</Text>
         </View>
       </View>
-      <View style={{padding: 10}}>
+      <View style={{ padding: 10 }}>
         <View style={styles.cardNotes}>
           <Text style={styles.cardHead}>Notes</Text>
-          <Text style={styles.cardDesc}>For buying some socks</Text>
+          <Text style={styles.cardDesc}>{tranferData.notes}</Text>
         </View>
       </View>
       <View style={styles.btnFooter}>
-        <Button title="Continue" buttonStyle={{height: 57, borderRadius: 15}} />
+        <Button title="Continue" buttonStyle={{ height: 57, borderRadius: 15 }} onPress={() => { navigation.navigate('ConfirmPIN') }} />
       </View>
     </View>
   );
@@ -115,8 +122,8 @@ const styles = StyleSheet.create({
     padding: 10,
     justifyContent: 'space-between',
   },
-  cardHead: {fontSize: 16, fontWeight: '400', color: '#7A7886'},
-  cardDesc: {fontSize: 18, fontWeight: '700', color: '#514F5B', marginTop: 5},
+  cardHead: { fontSize: 16, fontWeight: '400', color: '#7A7886' },
+  cardDesc: { fontSize: 18, fontWeight: '700', color: '#514F5B', marginTop: 5 },
   btnFooter: {
     padding: 10,
     marginTop: 40,

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -7,66 +7,145 @@ import {
   ScrollView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useSelector } from 'react-redux'
+import axios from 'axios'
+import { API_URL } from '@env'
 
-import profileImg from '../../assets/images/profile-img.png';
+const Notification = ({ props }) => {
+  const [today, setToday] = useState([])
+  const [thisweek, setThisWeek] = useState([])
+  const token = useSelector((state) => state.authReducer.token);
+  const config = {
+    headers: {
+      'x-access-token': 'bearer ' + token,
+    },
+  };
+  const getToday = () => {
+    axios.get(API_URL + `/home/getAllInvoice?today=true`, config)
+      .then(({ data }) => {
+        setToday(data.data)
+      }).catch(({ response }) => {
+        console.log(response.data)
+      })
+  }
 
-const Notification = () => {
+  const getThisWeek = () => {
+    axios.get(API_URL + `/home/getAllInvoice?thisWeek=true`, config)
+      .then(({ data }) => {
+        setThisWeek(data.data)
+      }).catch(({ response }) => {
+        console.log(response.data)
+      })
+  }
+
+  const toPrice = (x) => {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  };
+
+  useEffect(() => {
+    getToday()
+    getThisWeek()
+  }, [])
+
   return (
     <ScrollView>
       <View style={styles.header} />
       {/* Today notification */}
       <View style={styles.wrapper}>
-        <Text style={{color: '#514F5B', fontSize: 16, fontWeight: '400'}}>
+        <Text style={{ color: '#514F5B', fontSize: 16, fontWeight: '400' }}>
           Today
         </Text>
-        <TouchableOpacity style={styles.notifCard}>
-          <View style={styles.cardWrapper}>
-            <Icon name="arrow-up" size={25} color="#FF5B37" />
-            <View style={styles.cardText}>
-              <Text style={{fontSize: 14, color: '#7A7A7A', fontWeight: '400'}}>
-                Netflix subscription
-              </Text>
-              <Text style={{fontSize: 18, color: '#43484F', fontWeight: '700'}}>
-                Rp220.000
-              </Text>
-            </View>
-          </View>
-        </TouchableOpacity>
+        {
+          today && today.map(({ id, name, notes, type, amount }) => {
+            if (type == 'out') {
+              return (
+                <>
+                  <TouchableOpacity style={styles.notifCard} key={id}>
+                    <View style={styles.cardWrapper}>
+                      <Icon name="arrow-up" size={25} color="#FF5B37" />
+                      <View style={styles.cardText}>
+                        <Text style={{ fontSize: 14, color: '#7A7A7A', fontWeight: '400' }}>
+                          {notes}
+                        </Text>
+                        <Text style={{ fontSize: 18, color: '#43484F', fontWeight: '700' }}>
+                          Rp. {toPrice(amount)}
+                        </Text>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                </>
+              )
+            } else {
+              return (
+                <>
+                  <TouchableOpacity style={styles.notifCard}>
+                    <View style={styles.cardWrapper}>
+                      <Icon name="arrow-down" size={25} color="#4CEDB3" />
+                      <View style={styles.cardText}>
+                        <Text style={{ fontSize: 14, color: '#7A7A7A', fontWeight: '400' }}>
+                          {notes} from {name}
+                        </Text>
+                        <Text style={{ fontSize: 18, color: '#43484F', fontWeight: '700' }}>
+                          Rp. {toPrice(amount)}
+                        </Text>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                </>
+              )
+            }
+          })
+        }
       </View>
 
       {/* This week */}
       <View style={styles.wrapper}>
-        <Text style={{color: '#514F5B', fontSize: 16, fontWeight: '400'}}>
+        <Text style={{ color: '#514F5B', fontSize: 16, fontWeight: '400' }}>
           This Week
         </Text>
-        <TouchableOpacity style={styles.notifCard}>
-          <View style={styles.cardWrapper}>
-            <Icon name="arrow-up" size={25} color="#FF5B37" />
-            <View style={styles.cardText}>
-              <Text style={{fontSize: 14, color: '#7A7A7A', fontWeight: '400'}}>
-                Netflix subscription
-              </Text>
-              <Text style={{fontSize: 18, color: '#43484F', fontWeight: '700'}}>
-                Rp220.000
-              </Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.notifCard}>
-          <View style={styles.cardWrapper}>
-            <Icon name="arrow-down" size={25} color="#4CEDB3" />
-            <View style={styles.cardText}>
-              <Text style={{fontSize: 14, color: '#7A7A7A', fontWeight: '400'}}>
-                Top up from BNI E-Banking
-              </Text>
-              <Text style={{fontSize: 18, color: '#43484F', fontWeight: '700'}}>
-                Rp620.000
-              </Text>
-            </View>
-          </View>
-        </TouchableOpacity>
+        {
+          thisweek && thisweek.map(({ id, name, notes, type, amount }) => {
+            if (type == 'out') {
+              return (
+                <>
+                  <TouchableOpacity style={styles.notifCard}>
+                    <View style={styles.cardWrapper}>
+                      <Icon name="arrow-up" size={25} color="#FF5B37" />
+                      <View style={styles.cardText}>
+                        <Text style={{ fontSize: 14, color: '#7A7A7A', fontWeight: '400' }}>
+                          {notes}
+                        </Text>
+                        <Text style={{ fontSize: 18, color: '#43484F', fontWeight: '700' }}>
+                          Rp. {toPrice(amount)}
+                        </Text>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                </>
+              )
+            } else {
+              return (
+                <>
+                  <TouchableOpacity style={styles.notifCard}>
+                    <View style={styles.cardWrapper}>
+                      <Icon name="arrow-down" size={25} color="#4CEDB3" />
+                      <View style={styles.cardText}>
+                        <Text style={{ fontSize: 14, color: '#7A7A7A', fontWeight: '400' }}>
+                          {notes} dari {name}
+                        </Text>
+                        <Text style={{ fontSize: 18, color: '#43484F', fontWeight: '700' }}>
+                          Rp. {toPrice(amount)}
+                        </Text>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                </>
+              )
+            }
+          })
+        }
       </View>
-    </ScrollView>
+    </ScrollView >
   );
 };
 

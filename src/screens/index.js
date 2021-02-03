@@ -18,36 +18,40 @@ import NewPIN from './NewPin';
 import AddNumber from './AddNumber';
 import ManageNumber from './ManageNumber';
 import ConfirmScreen from './ConfirmScreen';
+import Notification from './Notification'
 import HistoryScreen from './HistoryScreen';
 import TransferScreen from './TransferScreen';
-import Notification from './Notification';
-import SuccessTransfer from './SuccessTransfer';
-import FailTransfer from './FailTransfer';
+import ConfirmPINScreen from './ConfirmPIN'
+import SuccessScreen from './SuccessTransfer'
+import FailScreen from './FailTransfer'
+import DetailScreen from './DetailTranfer'
 
 export {
-  RegisterScreen,
-  LoginScreen,
-  PinScreen,
-  ActiveScreen,
-  PinSuccessScreen,
-  ForgotScreen,
-  OtpScreen,
-  ResetPassScreen,
-  HomeScreen,
-  TopUpScreen,
-  ContactList,
-  Splash,
-  ProfileScreen,
-  PersonalInformation,
-  ChangePassword,
-  ChangePIN,
-  NewPIN,
-  AddNumber,
-  ManageNumber,
-  ConfirmScreen,
-  HistoryScreen,
-  TransferScreen,
-  Notification,
-  SuccessTransfer,
-  FailTransfer,
+    RegisterScreen,
+    LoginScreen,
+    PinScreen,
+    ActiveScreen,
+    PinSuccessScreen,
+    ForgotScreen,
+    OtpScreen,
+    ResetPassScreen,
+    HomeScreen,
+    TopUpScreen,
+    ContactList,
+    Splash,
+    ProfileScreen,
+    PersonalInformation,
+    ChangePassword,
+    ChangePIN,
+    NewPIN,
+    AddNumber,
+    ManageNumber,
+    ConfirmScreen,
+    HistoryScreen,
+    TransferScreen,
+    Notification,
+    ConfirmPINScreen,
+    SuccessScreen,
+    FailScreen,
+    DetailScreen
 };

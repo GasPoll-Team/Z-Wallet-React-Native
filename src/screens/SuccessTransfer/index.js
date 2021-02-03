@@ -7,37 +7,20 @@ import {
   TouchableOpacity,
   ScrollView,
   Image,
-  Alert,
 } from 'react-native';
 // import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon from 'react-native-vector-icons/Feather';
 import user from '../../assets/images/profile-img.png';
-import PushNotification from 'react-native-push-notification';
-import {showNotification} from '../../notification';
+import { useSelector, connect } from 'react-redux'
+import { API_URL } from '@env'
 
 const SuccessTransfer = ({navigation}) => {
-  const channel = 'notification';
-  useEffect(() => {
-    PushNotification.createChannel(
-      {
-        channelId: 'notification',
-        channelName: 'My Notification channel',
-        channelDescription: 'A channel to categories your notification',
-        soundName: 'default',
-        importance: 4,
-        vibrate: true,
-      },
-      (created) => console.log(`createchannel returned ${created}`),
-    );
-    // code to run on component mount
-  }, []);
-
-  useEffect(() => {
-    PushNotification.getChannels((channel_ids) => {
-      console.log('CHANNEL', channel_ids[0]);
-      () => navigation.navigate('Home');
-    });
-  }, []);
+  const recipient = useSelector((state) => state.contactReducer)
+  const myData = useSelector((state) => state.myDataReducer)
+  const tranferData = useSelector((state => state.tranferReducer))
+  const toPrice = (x) => {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  };
   return (
     <>
       <StatusBar
@@ -78,12 +61,12 @@ const SuccessTransfer = ({navigation}) => {
           <View style={styles.subContent}>
             <View style={styles.content2}>
               <Text style={styles.title}>Amount</Text>
-              <Text style={styles.item}>Rp. 10000</Text>
+              <Text style={styles.item}>Rp. {toPrice(tranferData.amount)}</Text>
             </View>
 
             <View style={styles.content3}>
               <Text style={styles.title}>Balance Left</Text>
-              <Text style={styles.item}>Rp. 1000</Text>
+              <Text style={styles.item}>Rp. {toPrice(parseInt(myData.balance) - parseInt(tranferData.amount))}</Text>
             </View>
           </View>
 
@@ -101,7 +84,7 @@ const SuccessTransfer = ({navigation}) => {
 
           <View style={styles.subList}>
             <Text style={styles.title}>Notes</Text>
-            <Text style={styles.item}>ini Test</Text>
+            <Text style={styles.item}>{tranferData.notes}</Text>
           </View>
 
           <Text style={styles.from}>From</Text>
@@ -109,11 +92,11 @@ const SuccessTransfer = ({navigation}) => {
           <View style={styles.receiver}>
             <View style={styles.contact}>
               <View>
-                <Image source={user} style={styles.imgUser} />
+                <Image source={{uri:API_URL+myData.image}} style={styles.imgUser} />
               </View>
               <View>
-                <Text style={styles.name}>Akbar Zulfikar</Text>
-                <Text style={styles.num}>+62.........</Text>
+                <Text style={styles.name}>{myData.name}</Text>
+          <Text style={styles.num}>{myData.phone}</Text>
               </View>
             </View>
           </View>
@@ -123,46 +106,25 @@ const SuccessTransfer = ({navigation}) => {
           <View style={styles.receiver}>
             <View style={styles.contact}>
               <View>
-                <Image source={user} style={styles.imgUser} />
+                <Image source={{uri:API_URL+recipient.image}} style={styles.imgUser} />
               </View>
               <View>
-                <Text style={styles.name}>Akbar Zulfikar</Text>
-                <Text style={styles.num}>+62.........</Text>
+                <Text style={styles.name}>{recipient.name}</Text>
+                <Text style={styles.num}>{recipient.phone}</Text>
               </View>
             </View>
           </View>
+
         </View>
       </ScrollView>
 
-      <View style={{marginBottom: 25}}>
-        <TouchableOpacity style={styles.btnActive}>
-          <Text
-            style={styles.textActive}
-            onPress={() =>
-              Alert.alert(
-                'Confirm',
-                'Are you sure to process this order ?',
-                [
-                  {
-                    text: 'Cancel',
-                    onPress: () => console.log('Cancel Pressed'),
-                    style: 'cancel',
-                  },
-                  {
-                    text: 'OK',
-                    onPress: () => {
-                        showNotification(
-                          'Yeaah!',
-                          'Your transfer success',
-                          channel,
-                        ),
-                        navigation.navigate('FailTrans');
-                    },
-                  },
-                ],
-                {cancelable: false},
-              )
-            }>
+      <View style={{ marginBottom: 25 }}>
+        <TouchableOpacity
+          style={styles.btnActive}
+        >
+          <Text style={styles.textActive} onPress={() => {
+              navigation.navigate('Home')
+          }}>
             Back to home
           </Text>
         </TouchableOpacity>

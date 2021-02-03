@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -11,8 +11,17 @@ import {
 // import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon from 'react-native-vector-icons/Feather';
 import user from '../../assets/images/profile-img.png';
+import { useSelector, connect } from 'react-redux'
+import { API_URL } from '@env'
 
-const FailTransfer = ({navigation}) => {
+
+const FailTransfer = ({ navigation }) => {
+  const recipient = useSelector((state) => state.contactReducer)
+  const myData = useSelector((state) => state.myDataReducer)
+  const tranferData = useSelector((state => state.tranferReducer))
+  const toPrice = (x) => {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  };
   return (
     <>
       <StatusBar
@@ -21,9 +30,9 @@ const FailTransfer = ({navigation}) => {
         translucent={true}
       />
       <View style={styles.header}>
-        <View style={{flexDirection: 'row'}}>
+        <View style={{ flexDirection: 'row' }}>
           <TouchableOpacity
-            style={{marginTop: 20}}
+            style={{ marginTop: 20 }}
             onPress={() => {
               navigation.goBack();
             }}>
@@ -47,18 +56,18 @@ const FailTransfer = ({navigation}) => {
           <View style={styles.rounded}>
             <Icon name="x" size={40} color="white" />
           </View>
-          <Text style={styles.textStatus}>Transfer Success</Text>
+          <Text style={styles.textStatus}>Transfer Failed</Text>
         </View>
         <View style={styles.content}>
           <View style={styles.subContent}>
             <View style={styles.content2}>
               <Text style={styles.title}>Amount</Text>
-              <Text style={styles.item}>Rp. 10000</Text>
+              <Text style={styles.item}>Rp. {toPrice(tranferData.amount)}</Text>
             </View>
 
             <View style={styles.content3}>
               <Text style={styles.title}>Balance Left</Text>
-              <Text style={styles.item}>Rp. 1000</Text>
+              <Text style={styles.item}>Rp. {toPrice(parseInt(myData.balance) - parseInt(tranferData.amount))}</Text>
             </View>
           </View>
 
@@ -76,7 +85,7 @@ const FailTransfer = ({navigation}) => {
 
           <View style={styles.subList}>
             <Text style={styles.title}>Notes</Text>
-            <Text style={styles.item}>ini Test</Text>
+            <Text style={styles.item}>{tranferData.notes}</Text>
           </View>
 
           <Text style={styles.from}>From</Text>
@@ -87,8 +96,8 @@ const FailTransfer = ({navigation}) => {
                 <Image source={user} style={styles.imgUser} />
               </View>
               <View>
-                <Text style={styles.name}>Akbar Zulfikar</Text>
-                <Text style={styles.num}>+62.........</Text>
+                <Text style={styles.name}>{myData.name}</Text>
+                <Text style={styles.num}>{myData.phone}</Text>
               </View>
             </View>
           </View>
@@ -101,8 +110,8 @@ const FailTransfer = ({navigation}) => {
                 <Image source={user} style={styles.imgUser} />
               </View>
               <View>
-                <Text style={styles.name}>Akbar Zulfikar</Text>
-                <Text style={styles.num}>+62.........</Text>
+                <Text style={styles.name}>{recipient.name}</Text>
+                <Text style={styles.num}>{recipient.phone}</Text>
               </View>
             </View>
           </View>
@@ -113,6 +122,9 @@ const FailTransfer = ({navigation}) => {
       <View style={{ marginBottom: 25 }}>
         <TouchableOpacity
           style={styles.btnActive}
+          onPress={() => {
+            navigation.navigate('Confirm')
+          }}
         >
           <Text style={styles.textActive}>
             Try again

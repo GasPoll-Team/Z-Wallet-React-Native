@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
   View,
@@ -8,17 +8,17 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import {Image, Button} from 'react-native-elements';
+import { Image, Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useSelector, connect} from 'react-redux';
-import {setDataUser} from '../../utils/redux/action/myDataAction';
-import {vw, vh, vmax, vmin} from 'react-native-expo-viewport-units';
-import {API_URL} from "@env";
+import { useSelector, connect } from 'react-redux';
+import { setDataUser } from '../../utils/redux/action/myDataAction';
+import { vw, vh, vmax, vmin } from 'react-native-expo-viewport-units';
+// import { API_URL } from "@env";
 
 import profileImg from '../../assets/images/profile-img.png';
 import spotifyImg from '../../assets/images/spotify.png';
 
-const HomeScreen = ({navigation, setDataUser}) => {
+const HomeScreen = ({ navigation, setDataUser }) => {
   const [user, setUser] = useState();
   const [history, setHistory] = useState();
 
@@ -29,7 +29,8 @@ const HomeScreen = ({navigation, setDataUser}) => {
   const token = useSelector((state) => state.authReducer.token);
 
   // 192.168.8.100 bisa diganti sama IP laptop kalian/ pake backend deploy
-  const url = API_URL;
+  const url = 'http://192.168.1.2:8000';
+  const API_URL = 'http://192.168.1.2:8000'; 
 
   useEffect(() => {
     const config = {
@@ -39,7 +40,7 @@ const HomeScreen = ({navigation, setDataUser}) => {
     };
     axios
       .get(`${url}/home/getBalance`, config)
-      .then(({data}) => {
+      .then(({ data }) => {
         console.log(typeof data.data.balance);
         setUser(data.data);
         setDataUser(data.data);
@@ -54,8 +55,8 @@ const HomeScreen = ({navigation, setDataUser}) => {
       },
     };
     axios
-      .get(`${url}/home/getAllInvoice?thisWeek=true`, config)
-      .then(({data}) => {
+      .get(`${url}/home/getAllInvoice?today=true`, config)
+      .then(({ data }) => {
         setHistory(data.data);
       })
       .catch((err) => console.log(err));
@@ -75,35 +76,35 @@ const HomeScreen = ({navigation, setDataUser}) => {
                 }}>
                 {user !== undefined ? (
                   <Image
-                    source={{uri: API_URL + user.image, width: 52, height: 52}}
+                    source={{ uri: API_URL + user.image, width: 52, height: 52 }}
                     style={styles.profileImage}
                   />
                 ) : (
-                  <Image
-                    source={{
-                      uri:
-                        'http://damuthtaxidermy.com/Content/Staff-Gary-Damuth.png',
-                      width: 52,
-                      height: 52,
-                    }}
-                    style={styles.profileImage}
-                  />
-                )}
+                    <Image
+                      source={{
+                        uri:
+                          'http://damuthtaxidermy.com/Content/Staff-Gary-Damuth.png',
+                        width: 52,
+                        height: 52,
+                      }}
+                      style={styles.profileImage}
+                    />
+                  )}
               </TouchableOpacity>
 
               <View style={styles.balanceWrapper}>
-                <Text style={{color: 'white', fontSize: 14, fontWeight: '400'}}>
+                <Text style={{ color: 'white', fontSize: 14, fontWeight: '400' }}>
                   {user !== undefined ? user.name : ''}
                 </Text>
                 {/* Price will integrated with backend */}
-                <Text style={{color: 'white', fontSize: 24, fontWeight: '700'}}>
+                <Text style={{ color: 'white', fontSize: 24, fontWeight: '700' }}>
                   Rp. {user !== undefined ? toPrice(user.balance) : null}
                 </Text>
               </View>
             </View>
             <TouchableOpacity
               onPress={() => navigation.navigate('Notification')}
-              style={{marginTop: 75}}>
+              style={{ marginTop: 75, marginRight: vw(5) }}>
               <Icon name="bell-outline" size={30} color="white" />
             </TouchableOpacity>
           </View>
@@ -131,11 +132,11 @@ const HomeScreen = ({navigation, setDataUser}) => {
           {/* Transaction history */}
           <View>
             <View style={styles.transactionHeader}>
-              <Text style={{color: '#514F5B', fontSize: 18, fontWeight: '700'}}>
+              <Text style={{ color: '#514F5B', fontSize: 18, fontWeight: '700' }}>
                 Transaction History
               </Text>
               <TouchableOpacity onPress={() => navigation.navigate('History')}>
-                <Text style={{color: '#6379F4', fontSize: 14, marginTop: 1}}>
+                <Text style={{ color: '#6379F4', fontSize: 14, marginTop: 1 }}>
                   See all
                 </Text>
               </TouchableOpacity>
@@ -143,45 +144,51 @@ const HomeScreen = ({navigation, setDataUser}) => {
             {/* Card transaction */}
             {history !== undefined
               ? history.map((data) => (
-                  <TouchableOpacity
-                    style={styles.cardTransaction}
-                    key={data.id}>
-                    <View style={styles.cardWrapper}>
-                      <Image
-                        source={{uri: `${API_URL}${data.image}`}}
-                        style={styles.profileImage}
-                      />
-                      <View style={styles.cardText}>
-                        <Text
-                          style={{
-                            fontSize: 16,
-                            color: '#4D4B57',
-                            fontWeight: '700',
-                          }}>
-                          {data.name}
-                        </Text>
-                        <Text
-                          style={{
-                            fontSize: 14,
-                            color: '#4D4B57',
-                            fontWeight: '400',
-                            marginTop: 10,
-                          }}>
-                          {data.notes}
-                        </Text>
-                      </View>
-                    </View>
-                    {data.type === 'out' ? (
+                <TouchableOpacity
+                  style={styles.cardTransaction}
+                  key={data.id}
+                  onPress={() => {
+                    navigation.navigate('Details', {
+                      id: data.id,
+                    })
+                  }}
+                >
+                  <View style={styles.cardWrapper}>
+                    <Image
+                      source={{ uri: `${API_URL}${data.image}` }}
+                      style={styles.profileImage}
+                    />
+                    <View style={styles.cardText}>
                       <Text
                         style={{
-                          fontSize: 18,
-                          color: '#FF5B37',
+                          fontSize: 16,
+                          color: '#4D4B57',
                           fontWeight: '700',
-                          marginTop: 20,
                         }}>
-                        -Rp. {toPrice(data.amount)}
+                        {data.name}
                       </Text>
-                    ) : (
+                      <Text
+                        style={{
+                          fontSize: 14,
+                          color: '#4D4B57',
+                          fontWeight: '400',
+                          marginTop: 10,
+                        }}>
+                        {data.notes}
+                      </Text>
+                    </View>
+                  </View>
+                  {data.type === 'out' ? (
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        color: '#FF5B37',
+                        fontWeight: '700',
+                        marginTop: 20,
+                      }}>
+                      -Rp. {toPrice(data.amount)}
+                    </Text>
+                  ) : (
                       <Text
                         style={{
                           fontSize: 18,
@@ -192,14 +199,14 @@ const HomeScreen = ({navigation, setDataUser}) => {
                         +Rp. {toPrice(data.amount)}
                       </Text>
                     )}
-                  </TouchableOpacity>
-                ))
+                </TouchableOpacity>
+              ))
               : null}
           </View>
         </ScrollView>
       ) : (
-        navigation.replace('Login')
-      )}
+          navigation.replace('Login')
+        )}
     </>
   );
 };

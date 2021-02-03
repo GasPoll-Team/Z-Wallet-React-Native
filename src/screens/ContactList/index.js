@@ -11,13 +11,13 @@ import {
 import { SearchBar, Image } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { vw, vh, vmax, vmin } from 'react-native-expo-viewport-units'
-// import { API_URL } from '@env'
+import { API_URL } from '@env'
 import { useSelector, connect } from 'react-redux';
 import { setReceiver } from '../../utils/redux/action/contactAction'
 import axios from 'axios'
 
 const ContactList = ({ navigation, setReceiver }) => {
-  const API_URL = 'http://192.168.1.2:8000'; 
+   
   const [search, setSearch] = useState('');
   const [listContact, setContact] = useState([])
   const token = useSelector((state) => state.authReducer.token);

@@ -7,14 +7,13 @@ import {
   StatusBar,
   TouchableOpacity,
   ScrollView,
-  ActivityIndicator
 } from 'react-native';
 import { Image, Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useSelector, connect } from 'react-redux';
 import { setDataUser } from '../../utils/redux/action/myDataAction';
 import { vw, vh, vmax, vmin } from 'react-native-expo-viewport-units';
-// import { API_URL } from "@env";
+import { API_URL } from "@env";
 
 import profileImg from '../../assets/images/profile-img.png';
 import spotifyImg from '../../assets/images/spotify.png';
@@ -30,8 +29,7 @@ const HomeScreen = ({ navigation, setDataUser }) => {
   const token = useSelector((state) => state.authReducer.token);
 
   // 192.168.8.100 bisa diganti sama IP laptop kalian/ pake backend deploy
-  const url = 'http://192.168.1.2:8000';
-  const API_URL = 'http://192.168.1.2:8000'; 
+  const url = API_URL;
 
   useEffect(() => {
     const config = {
@@ -77,35 +75,35 @@ const HomeScreen = ({ navigation, setDataUser }) => {
                 }}>
                 {user !== undefined ? (
                   <Image
-                    source={{uri: API_URL + user.image, width: 52, height: 52}}
+                    source={{ uri: API_URL + user.image, width: 52, height: 52 }}
                     style={styles.profileImage}
                   />
                 ) : (
-                  <Image
-                    source={{
-                      uri:
-                        'http://damuthtaxidermy.com/Content/Staff-Gary-Damuth.png',
-                      width: 52,
-                      height: 52,
-                    }}
-                    style={styles.profileImage}
-                  />
-                )}
+                    <Image
+                      source={{
+                        uri:
+                          'http://damuthtaxidermy.com/Content/Staff-Gary-Damuth.png',
+                        width: 52,
+                        height: 52,
+                      }}
+                      style={styles.profileImage}
+                    />
+                  )}
               </TouchableOpacity>
 
               <View style={styles.balanceWrapper}>
-                <Text style={{color: 'white', fontSize: 14, fontWeight: '400'}}>
+                <Text style={{ color: 'white', fontSize: 14, fontWeight: '400' }}>
                   {user !== undefined ? user.name : ''}
                 </Text>
                 {/* Price will integrated with backend */}
-                <Text style={{color: 'white', fontSize: 24, fontWeight: '700'}}>
+                <Text style={{ color: 'white', fontSize: 24, fontWeight: '700' }}>
                   Rp. {user !== undefined ? toPrice(user.balance) : null}
                 </Text>
               </View>
             </View>
             <TouchableOpacity
               onPress={() => navigation.navigate('Notification')}
-              style={{marginTop: 75, marginRight: vw(5)}}>
+              style={{ marginTop: 75, marginRight: vw(5) }}>
               <Icon name="bell-outline" size={30} color="white" />
             </TouchableOpacity>
           </View>
@@ -133,29 +131,30 @@ const HomeScreen = ({ navigation, setDataUser }) => {
           {/* Transaction history */}
           <View>
             <View style={styles.transactionHeader}>
-              <Text style={{color: '#514F5B', fontSize: 18, fontWeight: '700'}}>
+              <Text style={{ color: '#514F5B', fontSize: 18, fontWeight: '700' }}>
                 Transaction History
               </Text>
               <TouchableOpacity onPress={() => navigation.navigate('History')}>
-                <Text style={{color: '#6379F4', fontSize: 14, marginTop: 1}}>
+                <Text style={{ color: '#6379F4', fontSize: 14, marginTop: 1 }}>
                   See all
                 </Text>
               </TouchableOpacity>
             </View>
             {/* Card transaction */}
-            {history !== undefined ? (
-              history.map((data) => (
+            {history !== undefined
+              ? history.map((data) => (
                 <TouchableOpacity
                   style={styles.cardTransaction}
                   key={data.id}
                   onPress={() => {
                     navigation.navigate('Details', {
                       id: data.id,
-                    });
-                  }}>
+                    })
+                  }}
+                >
                   <View style={styles.cardWrapper}>
                     <Image
-                      source={{uri: `${API_URL}${data.image}`}}
+                      source={{ uri: `${API_URL}${data.image}` }}
                       style={styles.profileImage}
                     />
                     <View style={styles.cardText}>
@@ -189,26 +188,24 @@ const HomeScreen = ({ navigation, setDataUser }) => {
                       -Rp. {toPrice(data.amount)}
                     </Text>
                   ) : (
-                    <Text
-                      style={{
-                        fontSize: 18,
-                        color: 'green',
-                        fontWeight: '700',
-                        marginTop: 20,
-                      }}>
-                      +Rp. {toPrice(data.amount)}
-                    </Text>
-                  )}
+                      <Text
+                        style={{
+                          fontSize: 18,
+                          color: 'green',
+                          fontWeight: '700',
+                          marginTop: 20,
+                        }}>
+                        +Rp. {toPrice(data.amount)}
+                      </Text>
+                    )}
                 </TouchableOpacity>
               ))
-            ) : (
-              <ActivityIndicator size="large" color="#6379F4" />
-            )}
+              : null}
           </View>
         </ScrollView>
       ) : (
-        navigation.replace('Login')
-      )}
+          navigation.replace('Login')
+        )}
     </>
   );
 };

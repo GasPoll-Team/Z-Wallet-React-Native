@@ -14,14 +14,13 @@ import OTPField from 'react-native-otp-field';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useSelector } from 'react-redux';
 import 'axios'
-// import { API_URL } from '@env'
+import { API_URL } from '@env'
 import PushNotification from 'react-native-push-notification';
 import { showNotification } from '../../notification';
 
 
 
-const NewPIN = ({ navigation }) => {
-  const API_URL = 'http://192.168.1.2:8000'; 
+const NewPIN = ({ navigation }) => { 
   const [pin, setPin] = useState('');
 
   const token = useSelector((state) => state.authReducer.token);

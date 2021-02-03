@@ -14,7 +14,9 @@ import { useSelector, connect } from 'react-redux';
 import { setDataUser } from '../../utils/redux/action/myDataAction';
 import { vw, vh, vmax, vmin } from 'react-native-expo-viewport-units';
 import { API_URL } from "@env";
-import {useSocket} from './../../utils/context/SocketProvider'
+import { useSocket } from './../../utils/context/SocketProvider'
+import PushNotification from 'react-native-push-notification';
+import { showNotification } from '../../notification';
 
 
 import profileImg from '../../assets/images/profile-img.png';
@@ -33,6 +35,28 @@ const HomeScreen = ({ navigation, setDataUser }) => {
 
   // 192.168.8.100 bisa diganti sama IP laptop kalian/ pake backend deploy
   const url = API_URL;
+
+  const channel = 'notification';
+  useEffect(() => {
+    PushNotification.createChannel(
+      {
+        channelId: 'notification',
+        channelName: 'My Notification channel',
+        channelDescription: 'A channel to categories your notification',
+        soundName: 'default',
+        importance: 4,
+        vibrate: true,
+      },
+      (created) => console.log(`createchannel returned ${created}`),
+    );
+    // code to run on component mount
+  }, []);
+  useEffect(() => {
+    PushNotification.getChannels((channel_ids) => {
+      console.log('CHANNEL', channel_ids[0]);
+      () => navigation.navigate('Home');
+    });
+  }, []);
 
   useEffect(() => {
     const config = {
@@ -65,13 +89,43 @@ const HomeScreen = ({ navigation, setDataUser }) => {
       .catch((err) => console.log(err));
   }, [token]);
 
-  useEffect (() =>{
-    socket.on('tranferOut', (message) =>{
-      console.log('Transaksi Keluar OKE')
+  useEffect(() => {
+    socket.on('tranferOut', (message) => {
       console.log(message)
-      console.log('ini di home')
+      showNotification(
+        'Ingfo!',
+        message,
+        channel,
+      )
     })
-  },[])
+  }, [])
+
+  useEffect(() => {
+    socket.on('tranferIn', (message) => {
+      console.log(message)
+      showNotification(
+        'Ingfo!',
+        message,
+        channel,
+      )
+    })
+  }, [])
+
+  // Cek ketika history transaction kosong maka menampilkan pesan ini
+  let emptyHistory;
+  history !== undefined && history.length === 0
+    ? (emptyHistory = (
+      <View
+        style={{
+          padding: 10,
+          alignSelf: 'center',
+          marginTop: 100,
+        }}>
+        <Text style={{ fontSize: 26, color: '#608DE2' }}>Empty?</Text>
+        <Text style={{ fontSize: 18 }}>Let's make some transaction.</Text>
+      </View>
+    ))
+    : null;
 
   return (
     <>
@@ -161,9 +215,8 @@ const HomeScreen = ({ navigation, setDataUser }) => {
                   onPress={() => {
                     navigation.navigate('Details', {
                       id: data.id,
-                    })
-                  }}
-                >
+                    });
+                  }}>
                   <View style={styles.cardWrapper}>
                     <Image
                       source={{ uri: `${API_URL}${data.image}` }}
@@ -213,6 +266,7 @@ const HomeScreen = ({ navigation, setDataUser }) => {
                 </TouchableOpacity>
               ))
               : null}
+            {emptyHistory}
           </View>
         </ScrollView>
       ) : (

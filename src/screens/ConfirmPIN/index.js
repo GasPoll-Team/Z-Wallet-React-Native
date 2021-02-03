@@ -7,7 +7,8 @@ import {
   ScrollView,
   StyleSheet,
   StatusBar,
-  ToastAndroid
+  ToastAndroid,
+  Alert,
 } from 'react-native';
 import OTPField from 'react-native-otp-field';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -15,6 +16,9 @@ import { useSelector } from 'react-redux';
 import 'axios'
 import { API_URL } from '@env'
 import { useSocket } from './../../utils/context/SocketProvider'
+// import PushNotification from 'react-native-push-notification';
+// import { showNotification } from '../../notification';
+
 
 
 const NewPIN = ({ navigation }) => {
@@ -26,7 +30,6 @@ const NewPIN = ({ navigation }) => {
   const id = useSelector((state) => state.authReducer.id);
   const name = useSelector((state) => state.contactReducer.name)
   const tranferData = useSelector((state) => state.tranferReducer);
-  let counter = 0
 
   const handleSubmit = () => {
     const config = {
@@ -38,14 +41,14 @@ const NewPIN = ({ navigation }) => {
     console.log(tranferData)
     axios.post(API_URL + `/tranfer/newTranfer`, tranferData, config)
       .then(({ data }) => {
-        const dataX = {
-          sender_id:id,
+        const notifData = {
+          id: id,
           sender: name,
           recipient: receiver.id,
           amount: tranferData.amount,
           notes: tranferData.notes
         }
-        socket.emit('transfer', dataX)
+        socket.emit('transfer', notifData)
         console.log('sukses')
         // navigation.replace('Success')
       }).catch(({ response }) => {

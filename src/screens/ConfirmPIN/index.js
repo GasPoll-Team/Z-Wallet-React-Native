@@ -28,7 +28,7 @@ const NewPIN = ({ navigation }) => {
   const receiver = useSelector((state) => state.contactReducer)
   const token = useSelector((state) => state.authReducer.token);
   const id = useSelector((state) => state.authReducer.id);
-  const name = useSelector((state) => state.contactReducer.name)
+  const name = useSelector((state) => state.myDataReducer.name)
   const tranferData = useSelector((state) => state.tranferReducer);
 
   const handleSubmit = () => {

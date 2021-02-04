@@ -15,6 +15,7 @@ import { vw, vh, vmax, vmin } from 'react-native-expo-viewport-units';
 import { useSelector, connect } from 'react-redux'
 import { API_URL } from '@env'
 import axios from 'axios'
+import moment from 'moment'
 
 const DetailTranfer = ({ navigation, route }) => {
     const [detail, setDetail] = useState({})
@@ -45,37 +46,37 @@ const DetailTranfer = ({ navigation, route }) => {
 
     return (
         <>
-        <StatusBar
-                            barStyle="light-content"
-                            backgroundColor="#6379F4"
-                            translucent={true}
-                        />
-                        <View style={styles.header}>
-                            <View style={{ flexDirection: 'row' }}>
-                                <TouchableOpacity
-                                    style={{ marginTop: 20 }}
-                                    onPress={() => {
-                                        navigation.goBack();
-                                    }}>
-                                    <Icon name="arrow-left" color="white" size={30} />
-                                </TouchableOpacity>
-                                <Text
-                                    style={{
-                                        marginLeft: 10,
-                                        marginTop: 20,
-                                        color: 'white',
-                                        fontSize: 20,
-                                        fontWeight: '700',
-                                        lineHeight: 30,
-                                    }}>
-                                    Transfer Details
+            <StatusBar
+                barStyle="light-content"
+                backgroundColor="#6379F4"
+                translucent={true}
+            />
+            <View style={styles.header}>
+                <View style={{ flexDirection: 'row' }}>
+                    <TouchableOpacity
+                        style={{ marginTop: 20 }}
+                        onPress={() => {
+                            navigation.goBack();
+                        }}>
+                        <Icon name="arrow-left" color="white" size={30} />
+                    </TouchableOpacity>
+                    <Text
+                        style={{
+                            marginLeft: 10,
+                            marginTop: 20,
+                            color: 'white',
+                            fontSize: 20,
+                            fontWeight: '700',
+                            lineHeight: 30,
+                        }}>
+                        Transfer Details
           </Text>
-                            </View>
-                        </View>
+                </View>
+            </View>
             {
                 Object.keys(detail).length != 0 ? (
                     <>
-                        
+
                         <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
                             <View style={styles.status}>
                                 <View style={styles.rounded}>
@@ -94,12 +95,14 @@ const DetailTranfer = ({ navigation, route }) => {
                                 <View style={styles.subContent}>
                                     <View style={styles.content2}>
                                         <Text style={styles.title}>Date</Text>
-                <Text style={styles.item}>{detail.created_at.split(" ")[0]}</Text>
+                                        <Text style={styles.item}>{new Date(moment(detail.created_at.split(' ')[0])).toDateString()}</Text>
+                                        {console.log(new Date(moment(detail.created_at.split(' ')[0])).toDateString())}
+
                                     </View>
 
                                     <View style={styles.content3}>
                                         <Text style={styles.title}>Time</Text>
-                                        <Text style={styles.item}>{detail.created_at.split(" ")[1]}</Text>
+                                        <Text style={styles.item}>{detail.created_at.split(' ')[1].split('.')[0]}</Text>
                                     </View>
                                 </View>
 
@@ -140,21 +143,21 @@ const DetailTranfer = ({ navigation, route }) => {
                         </ScrollView>
                     </>
                 ) : (
-                        <View style={{height:vh(72.5)}} />
+                        <View style={{ height: vh(72.5) }} />
                     )
             }
-            
+
             <View style={{ marginBottom: 25 }}>
-                            <TouchableOpacity
-                                style={styles.btnActive}
-                            >
-                                <Text style={styles.textActive} onPress={() => {
-                                    navigation.navigate('Home')
-                                }}>
-                                    Back to home
+                <TouchableOpacity
+                    style={styles.btnActive}
+                >
+                    <Text style={styles.textActive} onPress={() => {
+                        navigation.navigate('Home')
+                    }}>
+                        Back to home
           </Text>
-                            </TouchableOpacity>
-                        </View>
+                </TouchableOpacity>
+            </View>
         </>
     );
 };
@@ -251,6 +254,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         marginTop: 20,
         fontWeight: 'bold',
+        marginBottom:5
     },
     receiver: {
         backgroundColor: 'white',

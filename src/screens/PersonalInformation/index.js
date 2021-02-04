@@ -145,6 +145,7 @@ const PersonalInformation = ({navigation}) => {
       </ActionSheet>
 
       {/* Action Sheet  Lastname*/}
+      {/* Aku bikin 2 kaya gini mas, kalo mau di konditional rendering ya monggo */}
       <ActionSheet ref={actionSheetRef2}>
         <KeyboardAvoidingView>
           <View style={styles.list}>

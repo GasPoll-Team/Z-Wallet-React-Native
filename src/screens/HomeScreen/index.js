@@ -108,6 +108,11 @@ const HomeScreen = ({ navigation, setDataUser }) => {
     })
   }, [])
 
+  const refreshData = () => {
+    getBalance();
+    getHistory()
+  }
+
   useEffect(() => {
     socket.on('tranferIn', (message) => {
       console.log(message)
@@ -168,9 +173,13 @@ const HomeScreen = ({ navigation, setDataUser }) => {
               </TouchableOpacity>
 
               <View style={styles.balanceWrapper}>
-                <Text style={{ color: 'white', fontSize: 14, fontWeight: '400' }}>
-                  {user !== undefined ? user.name : ''}
-                </Text>
+                <TouchableOpacity
+                  onPress={refreshData}
+                >
+                  <Text style={{ color: 'white', fontSize: 14, fontWeight: '400' }}>
+                    {user !== undefined ? user.name : ''}
+                  </Text>
+                </TouchableOpacity>
                 {/* Price will integrated with backend */}
                 <Text style={{ color: 'white', fontSize: 24, fontWeight: '700' }}>
                   Rp. {user !== undefined ? toPrice(user.balance) : null}
@@ -306,6 +315,7 @@ const styles = StyleSheet.create({
   profileImage: {
     width: 52,
     height: 52,
+    borderRadius: 10,
   },
   profileWrapper: {
     flexDirection: 'row',

@@ -9,14 +9,17 @@ import {
 import { Image, Button } from 'react-native-elements';
 import { useSelector, connect } from 'react-redux'
 import { API_URL } from '@env'
+import moment from 'moment'
 
-const ConfirmScreen = ({navigation}) => {
+const ConfirmScreen = ({ navigation }) => {
   const recipient = useSelector((state) => state.contactReducer)
   const myData = useSelector((state) => state.myDataReducer)
   const tranferData = useSelector((state => state.tranferReducer))
   const toPrice = (x) => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
   };
+  const date = new Date(Date.now()).toString().split(' ')
+
   return (
     <View>
       <View style={styles.header}>
@@ -45,12 +48,12 @@ const ConfirmScreen = ({navigation}) => {
         </View>
         <View style={styles.card}>
           <Text style={styles.cardHead}>Date</Text>
-          <Text style={styles.cardDesc}>May 11, 2020</Text>
+          <Text style={styles.cardDesc}>{`${date[1]}, ${date[2]}   ${date[3]}`}</Text>
           {/* Disini mas dio  */}
         </View>
         <View style={styles.card}>
           <Text style={styles.cardHead}>Time</Text>
-          <Text style={styles.cardDesc}>12.20</Text>
+          <Text style={styles.cardDesc}>{date[4]}</Text>
         </View>
       </View>
       <View style={{ padding: 10 }}>

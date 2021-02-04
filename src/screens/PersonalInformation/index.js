@@ -1,4 +1,4 @@
-import React, {useEffect, useState, createRef} from 'react';
+import React, { useEffect, useState, createRef } from 'react';
 import {
   View,
   Text,
@@ -8,35 +8,68 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   TextInput,
+  ToastAndroid
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconUser from 'react-native-vector-icons/Feather';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import axios from 'axios';
-import {API_URL} from '@env';
+import { API_URL } from '@env';
 import ActionSheet from 'react-native-actions-sheet';
-import {Input} from 'react-native-elements';
+import { Input } from 'react-native-elements';
 
-const PersonalInformation = ({navigation}) => {
+const PersonalInformation = ({ navigation }) => {
   const actionSheetRef = createRef();
   const actionSheetRef2 = createRef();
 
   const token = useSelector((state) => state.authReducer.token);
   const [userData, setUserData] = useState({});
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+
+  const config = {
+    headers: {
+      'x-access-token': 'bearer ' + token,
+    },
+  };
+
+  const changeFirstname = () => {
+    const body = {
+      firstname: firstName
+    }
+    axios.patch(API_URL + `/user/changeInfo`, body, config)
+      .then(({ data }) => {
+        ToastAndroid.show(data.message, ToastAndroid.SHORT);
+        navigation.replace('Personal')
+      }).catch(({ response }) => {
+        ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
+      })
+  }
+
+  const changeLastName = () => {
+    const body = {
+      lastname: lastName
+    }
+    axios.patch(API_URL + `/user/changeInfo`, body, config)
+      .then(({ data }) => {
+        ToastAndroid.show(data.message, ToastAndroid.SHORT);
+        navigation.replace('Personal')
+      }).catch(({ response }) => {
+        ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
+      })
+  }
 
   useEffect(() => {
-    const config = {
-      headers: {
-        'x-access-token': 'bearer ' + token,
-      },
-    };
+
     axios
       .get(API_URL + `/user/myProfile`, config)
-      .then(({data}) => {
+      .then(({ data }) => {
         // console.log('ini halaman personal info')
         setUserData(data.data);
+        setFirstName(data.data.firstname)
+        setLastName(data.data.lastname)
       })
-      .catch(({response}) => {
+      .catch(({ response }) => {
         console.log(response.data);
       });
   }, []);
@@ -48,9 +81,9 @@ const PersonalInformation = ({navigation}) => {
         translucent={true}
       />
       <View style={styles.header}>
-        <View style={{flexDirection: 'row'}}>
+        <View style={{ flexDirection: 'row' }}>
           <TouchableOpacity
-            style={{marginTop: 20}}
+            style={{ marginTop: 20 }}
             onPress={() => {
               navigation.goBack();
             }}>
@@ -127,16 +160,18 @@ const PersonalInformation = ({navigation}) => {
             <Text style={styles.listTitle}>First Name</Text>
             <TextInput
               style={styles.subTitle}
-              value={userData !== undefined ? userData.firstname : ''}
+              value={userData !== undefined ? firstName : ''}
               placeholder="Edit First Name"
-              onChangeText={(userData) => {
-                setUserData(userData);
+              onChangeText={(text) => {
+                setFirstName(text);
               }}
             />
           </View>
-          <View style={{paddingHorizontal: 10, marginBottom: 10}}>
-            <TouchableOpacity style={styles.btnTransfer}>
-              <Text style={{color: '#fff', fontSize: 18, marginTop: 10}}>
+          <View style={{ paddingHorizontal: 10, marginBottom: 10 }}>
+            <TouchableOpacity style={styles.btnTransfer}
+              onPress={changeFirstname}
+            >
+              <Text style={{ color: '#fff', fontSize: 18, marginTop: 10 }}>
                 Save
               </Text>
             </TouchableOpacity>
@@ -152,16 +187,18 @@ const PersonalInformation = ({navigation}) => {
             <Text style={styles.listTitle}>Last Name</Text>
             <TextInput
               style={styles.subTitle}
-              value={userData !== undefined ? userData.lastname : ''}
+              value={userData !== undefined ? lastName : ''}
               placeholder="Edit Last Name"
-              onChangeText={(userData) => {
-                setUserData(userData);
+              onChangeText={(text) => {
+                setLastName(text);
               }}
             />
           </View>
-          <View style={{paddingHorizontal: 10, marginBottom: 10}}>
+          <View style={{ paddingHorizontal: 10, marginBottom: 10 }}>
             <TouchableOpacity style={styles.btnTransfer}>
-              <Text style={{color: '#fff', fontSize: 18, marginTop: 10}}>
+              <Text style={{ color: '#fff', fontSize: 18, marginTop: 10 }}
+                onPress={changeLastName}
+              >
                 Save
               </Text>
             </TouchableOpacity>

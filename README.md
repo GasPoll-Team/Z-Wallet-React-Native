@@ -43,3 +43,5 @@ Aplikasi mobile banking yang memudahkan kehidupan anda sehari-hari. Aplikasi ini
 - [Arief Widiyatmoko](https://github.com/ariefw96)
   
 - [Dhiya Reksa Kusumojati Brameswanto](https://github.com/dhiyo7)
+
+Dan berikut backend untuk aplikasi Z-Wallet [disini](https://github.com/GasPoll-Team/Z-Wallet-RESTAPI)
